@@ -16,9 +16,12 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        ig: "linear-gradient(to right,#833ab4,#fd1d1d,#fcb045)",
+        theme: "linear-gradient(135deg,  #8e44ad, #4a90e2)",
       },
       backgroundImage: {
         theme: "linear-gradient(135deg,  #8e44ad, #4a90e2)",
+        ig: "linear-gradient(to right,#833ab4,#fd1d1d,#fcb045)",
       },
       fontSize: {
         base: "16px",

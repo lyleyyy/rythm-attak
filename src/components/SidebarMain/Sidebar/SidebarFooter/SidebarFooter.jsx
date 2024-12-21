@@ -5,7 +5,7 @@ import { GrLanguage } from "react-icons/gr";
 function SidebarFooter() {
   return (
     <div className="flex w-full flex-col">
-      <div className="flex gap-6 text-sm text-zinc-500">
+      <div className="flex gap-6 text-sm text-zinc-400">
         <Link href="#" target="_blank">
           Legal
         </Link>
@@ -19,7 +19,7 @@ function SidebarFooter() {
           Privacy Policy
         </Link>
       </div>
-      <span className="mb-4 text-sm text-zinc-500">
+      <span className="mb-4 text-sm text-zinc-400">
         © 2024 RythmAttak Inc. All Rights Reserved.
       </span>
       <Button bgColor="bg-black" borderWidth={true} isHover={true}>

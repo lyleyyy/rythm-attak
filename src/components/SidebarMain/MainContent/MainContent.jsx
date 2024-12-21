@@ -64,17 +64,29 @@ const artistsList = [
 
 function MainContent() {
   return (
-    <div className="w-3/4 space-y-10 rounded-xl bg-zinc-900 p-4">
-      <MediaListContainer
-        label="Popular songs"
-        mediaList={songsList}
-        mediaCategory={MediaCategory.Song}
-      />
-      <MediaListContainer
-        label="Trending artists"
-        mediaList={artistsList}
-        mediaCategory={MediaCategory.Artist}
-      />
+    <div className="flex-1 overflow-y-auto rounded-xl bg-zinc-900 p-4">
+      <div className="mb-20 space-y-10">
+        <MediaListContainer
+          label="Popular songs"
+          mediaList={songsList}
+          mediaCategory={MediaCategory.Song}
+        />
+        <MediaListContainer
+          label="Trending artists"
+          mediaList={artistsList}
+          mediaCategory={MediaCategory.Artist}
+        />
+        <MediaListContainer
+          label="Funk Musics"
+          mediaList={songsList}
+          mediaCategory={MediaCategory.Song}
+        />
+        <MediaListContainer
+          label="RA Picks"
+          mediaList={songsList}
+          mediaCategory={MediaCategory.Song}
+        />
+      </div>
       <MainContentFooter />
     </div>
   );

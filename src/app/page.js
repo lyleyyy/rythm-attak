@@ -1,9 +1,10 @@
 import Main from "@/components/Main/Main";
 import HeadNav from "@/components/HeadNav/HeadNav";
-import Sidebar from "@/components/Sidebar/Sidebar";
-import MainContent from "@/components/MainContent/MainContent";
+import Sidebar from "@/components/SidebarMain/Sidebar/Sidebar";
+import MainContent from "@/components/SidebarMain/MainContent/MainContent";
 import SidebarMain from "@/components/SidebarMain/SidebarMain";
 import PromotionFooter from "@/components/PromotionFooter/PromotionFooter";
+import Player from "@/components/Player/Player";
 
 export default function Page() {
   return (
@@ -13,7 +14,8 @@ export default function Page() {
         <Sidebar />
         <MainContent />
       </SidebarMain>
-      <PromotionFooter />
+      {/* <PromotionFooter /> */}
+      <Player />
     </Main>
   );
 }
