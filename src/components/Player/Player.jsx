@@ -7,11 +7,13 @@ import { IoPlaySkipBackSharp } from "react-icons/io5";
 import { IoPlaySkipForwardSharp } from "react-icons/io5";
 import { RiShuffleFill } from "react-icons/ri";
 import { RiRepeatFill } from "react-icons/ri";
+import { FaVolumeUp } from "react-icons/fa";
 import IconButton from "@/ui/IconButton";
 import MusicCard from "./MusicCard/MusicCard";
 import PlayerController from "./PlayerController/PlayerController";
 import PlayerUserOperation from "./PlayerUserOperation/PlayerUserOperation";
-import { MAX_MUSIC_DURATION } from "@/constants/music";
+import convertSecsToHrsMinsSecs from "@/helper/convertSecsToHrsMinsSecs";
+import * as Slider from "@radix-ui/react-slider";
 
 const music = {
   id: 1,
@@ -19,20 +21,28 @@ const music = {
   name: "Feeling Free",
   artist: "nicole willis",
   imageUrl: "/images/song-covers/feelingfree.jpg",
+  url: "/audios/the computer sound of genesis.mp3",
 };
 
 function Player() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [playerTimer, setPlayerTimer] = useState(0);
+  const [isHoverSlider, setIsHoverSlider] = useState(false);
+  const [isHoverVolume, setIsHoverVolume] = useState(false);
 
   const song = new Howl({
-    src: ["/audios/the computer sound of genesis.mp3"],
+    src: music.url,
     html5: true,
+    preload: false,
     onload: () => setDuration(song.duration()),
+    onend: () => setIsPlaying(false),
   });
 
   const songRef = useRef(song);
+
+  const loadStatus = songRef.current.state();
 
   function onClickHandler() {
     if (!isPlaying) {
@@ -44,18 +54,25 @@ function Player() {
     setIsPlaying((isPlaying) => !isPlaying);
   }
 
+  //player timer
   useEffect(
     function () {
       if (isPlaying) {
         const interval = setInterval(() => {
-          // console.log(
-          //   songRef.current.seek(),
-          //   "seek",
-          //   duration,
-          //   "duration",
-          //   (songRef.current.seek() / duration) * 100,
-          //   "calProgress",
-          // );
+          setPlayerTimer((playerTimer) => playerTimer + 1);
+        }, 1000);
+
+        return () => clearInterval(interval);
+      }
+    },
+    [isPlaying],
+  );
+
+  //progress bar
+  useEffect(
+    function () {
+      if (isPlaying) {
+        const interval = setInterval(() => {
           setProgress((songRef.current.seek() / duration) * 100);
         }, 1000);
 
@@ -65,8 +82,10 @@ function Player() {
     [isPlaying, duration],
   );
 
-  function progressChangeHandler() {
-    console.log(progress, "progs");
+  function progressChangeHandler(e) {
+    const newSeek = (e.at(0) / 100) * duration;
+    songRef.current.seek(newSeek);
+    setProgress(e);
   }
 
   return (
@@ -111,15 +130,49 @@ function Player() {
           >
             <RiRepeatFill />
           </IconButton>
+          <IconButton
+            iconSize="text-lg"
+            textColor="text-zinc-400"
+            hoverTextColor="hover:text-white"
+            position="fixed translate-x-36"
+          >
+            {isHoverVolume && (
+              <span className="fixed -translate-y-10">wqdqwdqwd</span>
+            )}
+            <FaVolumeUp
+              onMouseEnter={() => setIsHoverVolume(true)}
+              onMouseLeave={() => setIsHoverVolume(false)}
+            />
+          </IconButton>
         </div>
-        <div>
-          <input
-            type="range"
-            min="0"
-            max={MAX_MUSIC_DURATION}
-            value={progress}
-            onChange={progressChangeHandler}
-          />
+        <div className="flex w-full items-center justify-center gap-2 text-center">
+          <span className="w-[40px] pb-0.5 text-sm text-zinc-400">
+            {loadStatus === "loaded"
+              ? convertSecsToHrsMinsSecs(playerTimer)
+              : "-:--"}
+          </span>
+          <Slider.Root
+            className="relative flex h-1 w-3/5 items-center rounded bg-zinc-400 hover:cursor-pointer"
+            min={0}
+            max={100}
+            value={[progress]}
+            onValueChange={progressChangeHandler}
+            onMouseEnter={() => setIsHoverSlider(true)}
+            onMouseLeave={() => setIsHoverSlider(false)}
+            disabled={isPlaying ? false : true}
+          >
+            <Slider.Track className="relative h-full w-full grow rounded-full bg-zinc-400">
+              <Slider.Range className="absolute h-full rounded-full bg-white" />
+            </Slider.Track>
+            <Slider.Thumb
+              className={`${isPlaying && isHoverSlider ? "block" : "hidden"} h-3 w-3 rounded-full bg-white`}
+            />
+          </Slider.Root>
+          <span className="w-[40px] pb-0.5 text-sm text-zinc-400">
+            {loadStatus === "loaded"
+              ? convertSecsToHrsMinsSecs(duration)
+              : "-:--"}
+          </span>
         </div>
       </PlayerController>
       <PlayerUserOperation />

@@ -24,3 +24,48 @@ body {
   overscroll-behavior: none;
   overflow-x: hidden;
 }
+/* 
+@layer base {
+  input[type="range"]::-webkit-slider-runnable-track {
+    background-color: gray;
+    height: 2px;
+    border-radius: 5px;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    width: 1px;
+    height: 1px;
+    background-color: red;
+  }
+
+  input[type="range"]::-moz-range-track {
+    -moz-appearance: none;
+    background-color: gray;
+    height: 1px;
+    border-radius: 5px;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    -moz-appearance: none;
+    width: 1px;
+    height: 1px;
+    background-color: red;
+  }
+} */
+
+/* input[type="range"]::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  height: 2px;
+  background-color: gray;
+  cursor: pointer;
+} */
+
+/* input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 96px;
+  height: 96px;
+  background-color: red;
+  border-radius: 50%;
+  cursor: pointer;
+} */
