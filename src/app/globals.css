@@ -23,4 +23,5 @@ body {
   box-sizing: border-box;
   overscroll-behavior: none;
   overflow-x: hidden;
+  font-variant-numeric: tabular-nums;
 }

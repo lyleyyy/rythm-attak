@@ -133,15 +133,17 @@ function Artist({ id }) {
       </div>
       <div className="flex gap-4 p-4">
         <div className="w-1/2">
-          <h3 className="text-xl">Popular Tracks</h3>
+          <h3 className="mb-4 text-xl font-bold">Popular Tracks</h3>
           <div>
             {tracksList.map((track) => (
               <TrackPreview index={track.id} track={track} key={track.id} />
             ))}
           </div>
         </div>
-        <section className="w-1/2">
-          <h3 className="text-xl">About ArtistName</h3>
+        <section className="w-1/3">
+          <h3 className="mb-4 text-xl font-bold">
+            About {capitalizeEachWord(name)}
+          </h3>
           <p>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry&apos;s standard dummy
