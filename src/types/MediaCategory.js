@@ -1,6 +1,6 @@
 const MediaCategory = {
   Artist: "ARTIST",
-  Song: "SONG",
+  Track: "TRACK",
   Album: "ALBUM",
 };
 

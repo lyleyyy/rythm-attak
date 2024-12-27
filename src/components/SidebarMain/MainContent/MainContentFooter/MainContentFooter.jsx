@@ -7,7 +7,7 @@ import Link from "next/link";
 
 function MainContentFooter() {
   return (
-    <div className="mx-4 mb-10">
+    <div className="mx-4 mb-10 p-4">
       <div className="flex justify-between border-b border-zinc-600 pb-8">
         <div className="flex w-3/4 justify-between">
           <MainContentFooterCategory

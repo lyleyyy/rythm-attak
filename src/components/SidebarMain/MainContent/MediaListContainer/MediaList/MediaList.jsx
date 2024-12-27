@@ -1,10 +1,10 @@
 import Media from "./Media/Media";
 
-function MediaList({ mediaList, mediaCategory }) {
+function MediaList({ mediaList }) {
   return (
     <div className="flex items-center justify-start">
       {mediaList.map((media) => (
-        <Media key={media.id} media={media} mediaCategory={mediaCategory} />
+        <Media key={media.id} media={media} />
       ))}
     </div>
   );

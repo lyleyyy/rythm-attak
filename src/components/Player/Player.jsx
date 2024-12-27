@@ -1,5 +1,5 @@
 "use client";
-import { Howl, Howler } from "howler";
+import { Howl } from "howler";
 import { useEffect, useRef, useState } from "react";
 import { RiPlayLargeFill } from "react-icons/ri";
 import { IoPause } from "react-icons/io5";

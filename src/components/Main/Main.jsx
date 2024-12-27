@@ -1,6 +1,6 @@
 function Main({ children }) {
   return (
-    <div className="flex h-screen w-full flex-col bg-black">{children}</div>
+    <main className="flex h-screen w-full flex-col bg-black">{children}</main>
   );
 }
 

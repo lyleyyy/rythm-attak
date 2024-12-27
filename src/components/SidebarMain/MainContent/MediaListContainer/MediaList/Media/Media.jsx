@@ -2,11 +2,12 @@
 import capitalizeEachWord from "@/helper/capitalizeEachWord";
 import MediaCategory from "@/types/MediaCategory";
 import IconButton from "@/ui/IconButton";
+import Link from "next/link";
 import { useState } from "react";
 import { RiPlayLargeFill } from "react-icons/ri";
 
-function Media({ media, mediaCategory }) {
-  const { type, name, artist, imageUrl } = media;
+function Media({ media }) {
+  const { id, type, name, artist, imageUrl } = media;
   const [isHover, setIsHover] = useState(false);
 
   return (
@@ -15,14 +16,30 @@ function Media({ media, mediaCategory }) {
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <img src={imageUrl} alt={name} className="h-48 w-48" />
-      <span>{capitalizeEachWord(name)}</span>
-      {mediaCategory === MediaCategory.Song && (
-        <span className="text-sm text-zinc-400">
+      <div className="max-h-[188px] max-w-[188px] overflow-hidden">
+        <img src={imageUrl} alt={name} className="h-full w-full object-cover" />
+      </div>
+      <Link
+        href={
+          type === MediaCategory.Track
+            ? `/track/${id}`
+            : type === MediaCategory.Artist
+              ? `/artist/${id}`
+              : `/album/${id}`
+        }
+        className="hover:underline"
+      >
+        {capitalizeEachWord(name)}
+      </Link>
+      {(type === MediaCategory.Track || type === MediaCategory.Album) && (
+        <Link
+          href="/artist/artistID"
+          className="text-sm text-zinc-400 hover:underline"
+        >
           {capitalizeEachWord(artist)}
-        </span>
+        </Link>
       )}
-      {mediaCategory === MediaCategory.Song && isHover && (
+      {type === MediaCategory.Track && isHover && (
         <IconButton
           position="absolute top-1/2 right-1/2"
           bgColor="bg-purple-700"
@@ -35,7 +52,7 @@ function Media({ media, mediaCategory }) {
         </IconButton>
       )}
 
-      {mediaCategory === MediaCategory.Artist && (
+      {type === MediaCategory.Artist && (
         <span className="text-sm text-zinc-400">
           {capitalizeEachWord(type)}
         </span>

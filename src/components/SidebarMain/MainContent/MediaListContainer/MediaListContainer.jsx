@@ -1,7 +1,7 @@
 import Link from "next/link";
 import MediaList from "./MediaList/MediaList";
 
-function MediaListContainer({ label, mediaList, mediaCategory }) {
+function MediaListContainer({ label, mediaList }) {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex justify-between">
@@ -10,7 +10,7 @@ function MediaListContainer({ label, mediaList, mediaCategory }) {
           Show All
         </Link>
       </div>
-      <MediaList mediaList={mediaList} mediaCategory={mediaCategory} />
+      <MediaList mediaList={mediaList} />
     </div>
   );
 }
