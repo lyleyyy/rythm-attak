@@ -7,10 +7,13 @@ function Button({
   hoverTextColor = "",
   hoverBgColor = "",
   children,
+  height = "h-10",
+  width = "w-36",
+  borderRadius = "rounded-lg",
 }) {
   return (
     <button
-      className={`${borderWidth && "border-2"} ${borderColor} ${textColor} ${bgColor} h-10 w-36 rounded-lg text-center ${borderWidth ? "leading-9" : "leading-10"} ${isHover && "transition-all duration-300 ease-in-out hover:scale-105"} ${hoverTextColor} ${hoverBgColor} font-bold`}
+      className={`${borderWidth && "border-2"} ${borderColor} ${textColor} ${bgColor} ${height} ${width} ${borderRadius} text-center ${borderWidth ? "leading-9" : "leading-10"} ${isHover && "transition-all duration-300 ease-in-out hover:scale-105"} ${hoverTextColor} ${hoverBgColor} font-bold`}
     >
       {children}
     </button>

@@ -1,7 +1,9 @@
+import Artist from "@/components/Artist/Artist";
+
 function ArtistPage({ params }) {
   const { id } = params;
 
-  return <div>ArtistPage, ID: {id}</div>;
+  return <Artist id={id}>ArtistPage, ID: {id}</Artist>;
 }
 
 export default ArtistPage;
