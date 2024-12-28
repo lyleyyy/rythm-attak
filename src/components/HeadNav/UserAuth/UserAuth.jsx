@@ -1,5 +1,5 @@
 "use client";
-import RegisterModal from "@/components/Modals/RegisterModal/RegisterModal";
+import RegisterModal from "@/components/Modals/AuthModal/RegisterModal/RegisterModal";
 import Button from "@/ui/Button";
 import { useState } from "react";
 

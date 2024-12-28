@@ -5,7 +5,7 @@ function MediaListContainer({ label, mediaList }) {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex justify-between">
-        <h2 className="text-bold text-3xl">{label}</h2>
+        <h2 className="text-3xl font-medium">{label}</h2>
         <Link href="#" className="hover:underline">
           Show All
         </Link>

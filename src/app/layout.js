@@ -9,19 +9,18 @@ import MainContentContainer from "@/components/SidebarMain/MainContentContainer/
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <title>Rythm Attak</title>
+      </head>
       <body>
-        {/* Layout UI */}
-        {/* Place children where you want to render a page or nested layout */}
         <Main>
           <HeadNav />
           <SidebarMain>
             <Sidebar />
             <MainContentContainer>{children}</MainContentContainer>
           </SidebarMain>
-          {/* <PromotionFooter /> */}
           <Player />
         </Main>
-        {/* <main>{children}</main> */}
       </body>
     </html>
   );

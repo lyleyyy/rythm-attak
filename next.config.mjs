@@ -7,13 +7,14 @@ const nextConfig = {
         loader: "file-loader",
         options: {
           name: "[name].[hash].[ext]",
-          outputPath: "/public/audios/",
+          outputPath: "audios/",
         },
       },
     });
 
     return config;
   },
+  reactStrictMode: true,
 };
 
 export default nextConfig;
