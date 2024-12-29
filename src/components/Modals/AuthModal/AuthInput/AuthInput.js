@@ -5,6 +5,7 @@ function AuthInput({ label, error, ...props }) {
       <input
         className="h-12 w-72 rounded border border-zinc-600 bg-black p-2 outline-none focus:border-white"
         {...props}
+        placeholder={label === "Email" ? "name@domain.com" : ""}
       />
       {error && <span className="w-72 text-red-500">{error.message}</span>}
     </div>

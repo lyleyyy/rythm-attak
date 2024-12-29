@@ -8,6 +8,7 @@ import Button from "@/ui/Button";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa6";
 import SeparateLine from "../SeparateLine/SeparateLine";
+import AuthModalContainer from "../AuthModalContainer/AuthModalContainer";
 
 function RegisterModal({ onClick }) {
   const {
@@ -20,6 +21,7 @@ function RegisterModal({ onClick }) {
       Password: "",
       Name: "",
     },
+    mode: "onBlur",
   });
 
   const [step, setStep] = useState(1);
@@ -33,7 +35,7 @@ function RegisterModal({ onClick }) {
   }
 
   return (
-    <div className="fixed left-0 top-0 z-50 flex h-screen w-screen flex-col items-center gap-8 bg-zinc-900 pt-8">
+    <AuthModalContainer>
       <ModalCloseBtn onClick={onClick} />
       <AuthModalHeader>
         Start your musical journey <br />
@@ -104,6 +106,8 @@ function RegisterModal({ onClick }) {
 
         {(step === 1 || step === 2) && (
           <button
+            // here i set key for all inputs and buttons, is because i wanna avoid the same component for render caching and to destroy the previous rendering, so the variation of input field wont be cached and validation of previous state wont be carried to the next state
+            key={`step${step}`}
             className="h-12 w-72 rounded-full bg-purple-700 text-lg font-medium outline-none hover:cursor-pointer hover:bg-purple-600"
             onClick={onClickHandler}
           >
@@ -161,7 +165,7 @@ function RegisterModal({ onClick }) {
             here
           </Link>
         </span>
-        <span>
+        <span className="text-sm">
           This site is protected by reCAPTCHA and the Google{" "}
           <Link
             href="https://policies.google.com/privacy"
@@ -181,7 +185,7 @@ function RegisterModal({ onClick }) {
           apply.
         </span>
       </div>
-    </div>
+    </AuthModalContainer>
   );
 }
 
