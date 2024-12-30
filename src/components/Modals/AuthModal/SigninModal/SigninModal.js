@@ -7,6 +7,8 @@ import { FaFacebook } from "react-icons/fa6";
 import { Controller, useForm } from "react-hook-form";
 import AuthInput from "../AuthInput/AuthInput";
 import { getUser } from "@/services/apiUsers";
+import { useState } from "react";
+import IncorrectNote from "./IncorrectNote/IncorrectNote";
 
 function SigninModal({ closeModal }) {
   const {
@@ -21,16 +23,26 @@ function SigninModal({ closeModal }) {
     mode: "onBlur",
   });
 
+  const [isEmailPwdWrong, setIsEmailPwdWrong] = useState(false);
+
   async function formSubmitHandler(data) {
-    const { email, password } = data;
-    const fetchedUser = await getUser(email, password);
-    // can start to render login, may need nextAuth
+    try {
+      const { email, password } = data;
+      const res = await getUser(email, password);
+      // console.log(res, "res");
+      // can start to render login, may need nextAuth
+    } catch (err) {
+      console.error("Error in sign in formSubmitHandler: ", err.message);
+      setIsEmailPwdWrong(true);
+      throw err;
+    }
   }
 
   return (
     <AuthModalContainer>
       <ModalCloseBtn onClick={closeModal} />
       <AuthModalHeader>Sign in to RythmAttak</AuthModalHeader>
+      {isEmailPwdWrong && <IncorrectNote />}
       <div className="flex flex-col gap-4">
         <Button
           width="w-72"

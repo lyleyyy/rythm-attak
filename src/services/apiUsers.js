@@ -8,7 +8,7 @@ export async function getUser(email, password) {
 
     console.log(res, typeof res.status);
 
-    if (res.status !== 200) throw new Error();
+    if (res.data.length === 0) throw new Error("Email not found");
 
     const user = res.data.at(0);
     const hashedPwd = user.password_hash;
