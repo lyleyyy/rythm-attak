@@ -9,8 +9,8 @@ function UserAuth() {
   const [signin, setSignin] = useState(false);
 
   return (
-    <>
-      <div className="flex gap-4">
+    <div className="w-1/3">
+      <div className="flex justify-end gap-4">
         <Button
           borderWidth={true}
           bgColor="black"
@@ -21,12 +21,17 @@ function UserAuth() {
         >
           Sign in
         </Button>
-        <Button onClick={() => setRegister(true)}>Create Account</Button>
+        <Button
+          onClick={() => setRegister(true)}
+          hoverBgColor="hover:bg-purple-600"
+        >
+          Create Account
+        </Button>
       </div>
 
-      {register && <RegisterModal onClick={() => setRegister(false)} />}
-      {signin && <SigninModal onClick={() => setSignin(false)} />}
-    </>
+      {register && <RegisterModal closeModal={() => setRegister(false)} />}
+      {signin && <SigninModal closeModal={() => setSignin(false)} />}
+    </div>
   );
 }
 

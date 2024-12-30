@@ -6,27 +6,30 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa6";
 import { Controller, useForm } from "react-hook-form";
 import AuthInput from "../AuthInput/AuthInput";
+import { getUser } from "@/services/apiUsers";
 
-function SigninModal({ onClick }) {
+function SigninModal({ closeModal }) {
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      Email: "",
-      Password: "",
+      email: "",
+      password: "",
     },
     mode: "onBlur",
   });
 
-  function formSubmitHandler(data) {
-    console.log(data);
+  async function formSubmitHandler(data) {
+    const { email, password } = data;
+    const fetchedUser = await getUser(email, password);
+    // can start to render login, may need nextAuth
   }
 
   return (
     <AuthModalContainer>
-      <ModalCloseBtn onClick={onClick} />
+      <ModalCloseBtn onClick={closeModal} />
       <AuthModalHeader>Sign in to RythmAttak</AuthModalHeader>
       <div className="flex flex-col gap-4">
         <Button
@@ -62,20 +65,20 @@ function SigninModal({ onClick }) {
 
       <form onSubmit={handleSubmit(formSubmitHandler)} className="space-y-4">
         <Controller
-          name="Email"
+          name="email"
           control={control}
           rules={{ required: "Email is required." }}
           render={({ field }) => (
-            <AuthInput label="Email" error={errors.Email} {...field} />
+            <AuthInput label="Email" error={errors.email} {...field} />
           )}
         />
 
         <Controller
-          name="Password"
+          name="password"
           control={control}
           rules={{ required: "Password is required." }}
           render={({ field }) => (
-            <AuthInput label="Password" error={errors.Password} {...field} />
+            <AuthInput label="Password" error={errors.password} {...field} />
           )}
         />
 

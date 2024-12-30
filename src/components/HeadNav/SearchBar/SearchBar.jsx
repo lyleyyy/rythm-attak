@@ -23,7 +23,7 @@ function SearchBar() {
   }
 
   return (
-    <form className="ml-36 flex items-center justify-center rounded-lg bg-zinc-800">
+    <form className="mx-52 flex w-1/3 items-center justify-center rounded-lg bg-zinc-800">
       <div className="flex items-center justify-center p-2 text-3xl">
         <IoSearch />
       </div>
