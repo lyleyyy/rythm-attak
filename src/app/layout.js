@@ -6,12 +6,11 @@ import Sidebar from "@/components/SidebarMain/Sidebar/Sidebar";
 import Player from "@/components/Player/Player";
 import MainContentContainer from "@/components/SidebarMain/MainContentContainer/MainContentContainer";
 
+export const metadata = { title: "RA" };
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
-        <title>Rythm Attak</title>
-      </head>
       <body>
         <Main>
           <HeadNav />

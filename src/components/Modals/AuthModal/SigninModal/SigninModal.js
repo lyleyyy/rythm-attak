@@ -9,6 +9,8 @@ import AuthInput from "../AuthInput/AuthInput";
 import { getUser } from "@/services/apiUsers";
 import { useState } from "react";
 import IncorrectNote from "./IncorrectNote/IncorrectNote";
+import { signIn } from "@/services/auth";
+import Link from "next/link";
 
 function SigninModal({ closeModal }) {
   const {
@@ -43,7 +45,14 @@ function SigninModal({ closeModal }) {
       <ModalCloseBtn onClick={closeModal} />
       <AuthModalHeader>Sign in to RythmAttak</AuthModalHeader>
       {isEmailPwdWrong && <IncorrectNote />}
-      <div className="flex flex-col gap-4">
+      <div
+        // action={async () => {
+        //   "use server";
+        //   await signIn("google");
+        // }}
+        className="flex flex-col gap-4"
+      >
+        {/* <button type="submit">Sign in with google</button> */}
         <Button
           width="w-72"
           height="h-12"
@@ -56,6 +65,9 @@ function SigninModal({ closeModal }) {
           <span className="flex h-full w-full items-center justify-start gap-8 pl-4">
             <FcGoogle className="text-2xl" />
             Sign in with Google
+            {/* <Link href="http://localhost:3000/api/auth/signin">
+              Sign in with Google
+            </Link> */}
           </span>
         </Button>
         <Button
