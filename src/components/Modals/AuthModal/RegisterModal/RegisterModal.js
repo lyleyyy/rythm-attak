@@ -9,6 +9,7 @@ import { createUser } from "@/services/apiUsers";
 import RegisterModalFooter from "./RegisterModalFooter/RegisterModalFooter";
 import ThirdPartySignup from "./ThirdPartySignup/ThirdPartySignup";
 import FinishRegister from "./FinishRegister/FinishRegister";
+import OAuthForm from "../OAuthForm";
 
 function RegisterModal({ closeModal }) {
   const {
@@ -139,7 +140,7 @@ function RegisterModal({ closeModal }) {
             )}
           </form>
           <SeparateLine />
-          <ThirdPartySignup />
+          <OAuthForm provider="google" />
           <RegisterModalFooter />
         </>
       )}

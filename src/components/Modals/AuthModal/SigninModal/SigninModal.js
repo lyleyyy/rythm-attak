@@ -9,8 +9,7 @@ import AuthInput from "../AuthInput/AuthInput";
 import { getUser } from "@/services/apiUsers";
 import { useState } from "react";
 import IncorrectNote from "./IncorrectNote/IncorrectNote";
-import { signIn } from "@/services/auth";
-import Link from "next/link";
+import OAuthForm from "../OAuthForm";
 
 function SigninModal({ closeModal }) {
   const {
@@ -45,45 +44,9 @@ function SigninModal({ closeModal }) {
       <ModalCloseBtn onClick={closeModal} />
       <AuthModalHeader>Sign in to RythmAttak</AuthModalHeader>
       {isEmailPwdWrong && <IncorrectNote />}
-      <div
-        // action={async () => {
-        //   "use server";
-        //   await signIn("google");
-        // }}
-        className="flex flex-col gap-4"
-      >
-        {/* <button type="submit">Sign in with google</button> */}
-        <Button
-          width="w-72"
-          height="h-12"
-          bgColor="bg-black"
-          borderRadius="rounded-full"
-          borderWidth={true}
-          borderColor="border-zinc-600"
-          hoverBorder="hover:border-white"
-        >
-          <span className="flex h-full w-full items-center justify-start gap-8 pl-4">
-            <FcGoogle className="text-2xl" />
-            Sign in with Google
-            {/* <Link href="http://localhost:3000/api/auth/signin">
-              Sign in with Google
-            </Link> */}
-          </span>
-        </Button>
-        <Button
-          width="w-72"
-          height="h-12"
-          bgColor="bg-black"
-          borderRadius="rounded-full"
-          borderWidth={true}
-          borderColor="border-zinc-600"
-          hoverBorder="hover:border-white"
-        >
-          <span className="flex h-full w-full items-center justify-start gap-8 pl-4">
-            <FaFacebook className="rounded-full bg-white text-2xl text-blue-500" />
-            Sign in with Facebook
-          </span>
-        </Button>
+      <div className="flex flex-col gap-4">
+        <OAuthForm provider="google" />
+        {/* <OAuthForm provider="facebook" /> */}
       </div>
       <hr className="h-px w-1/5 rounded border-0 bg-zinc-400" />
 

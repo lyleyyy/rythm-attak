@@ -1,5 +1,5 @@
 import Button from "@/ui/Button";
-import { FaFacebook } from "react-icons/fa6";
+// import { FaFacebook } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 
 function ThirdPartySignup() {
@@ -19,7 +19,7 @@ function ThirdPartySignup() {
           Sign up with Google
         </span>
       </Button>
-      <Button
+      {/* <Button
         width="w-72"
         height="h-12"
         bgColor="bg-black"
@@ -32,7 +32,7 @@ function ThirdPartySignup() {
           <FaFacebook className="rounded-full bg-white text-2xl text-blue-500" />
           Sign up with Facebook
         </span>
-      </Button>
+      </Button> */}
     </div>
   );
 }

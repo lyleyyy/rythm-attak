@@ -1,4 +1,5 @@
 function Button({
+  type = "",
   borderWidth = false,
   borderColor = "border-white",
   textColor = "",
@@ -15,6 +16,7 @@ function Button({
 }) {
   return (
     <button
+      type={type}
       className={`${borderWidth && "border-2"} ${borderColor} ${textColor} ${bgColor} ${height} ${width} ${borderRadius} text-center ${borderWidth ? "leading-9" : "leading-10"} ${hoverBorder} ${isHover && "transition-all duration-300 ease-in-out hover:scale-105"} ${hoverTextColor} ${hoverBgColor} font-medium`}
       onClick={onClick}
     >
