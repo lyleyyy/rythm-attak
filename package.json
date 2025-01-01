@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/supabase-adapter": "^1.7.4",
     "@radix-ui/react-slider": "^1.2.2",
     "@supabase/supabase-js": "^2.47.10",
     "bcryptjs": "^2.4.3",
