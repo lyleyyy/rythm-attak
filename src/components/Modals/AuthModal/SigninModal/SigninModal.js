@@ -10,6 +10,7 @@ import { getUser } from "@/services/apiUsers";
 import { useState } from "react";
 import IncorrectNote from "./IncorrectNote/IncorrectNote";
 import OAuthForm from "../OAuthForm";
+import { CredentialsSignIn } from "@/lib/auth-action";
 
 function SigninModal({ closeModal }) {
   const {
@@ -46,11 +47,31 @@ function SigninModal({ closeModal }) {
       {isEmailPwdWrong && <IncorrectNote />}
       <div className="flex flex-col gap-4">
         <OAuthForm provider="google" />
-        {/* <OAuthForm provider="facebook" /> */}
       </div>
       <hr className="h-px w-1/5 rounded border-0 bg-zinc-400" />
 
-      <form onSubmit={handleSubmit(formSubmitHandler)} className="space-y-4">
+      <form
+        action={async (formData) => {
+          const res = await CredentialsSignIn("credentials", formData);
+          console.log(res);
+          if (!res.success) {
+            alert(`Error: ${res.message}`);
+          }
+        }}
+        className="text-black"
+      >
+        <label>
+          Email
+          <input name="email" type="email" />
+        </label>
+        <label>
+          Password
+          <input name="password" type="password" />
+        </label>
+        <button>Sign In</button>
+      </form>
+
+      {/* <form onSubmit={handleSubmit(formSubmitHandler)} className="space-y-4">
         <Controller
           name="email"
           control={control}
@@ -75,7 +96,7 @@ function SigninModal({ closeModal }) {
         >
           Sign in
         </button>
-      </form>
+      </form> */}
 
       <span className="text-zinc-300 underline hover:cursor-pointer hover:text-white">
         Forgot Password?

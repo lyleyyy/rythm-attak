@@ -4,23 +4,21 @@ import checkPwd from "@/utils/checkPwd";
 
 export async function getUser(email, password) {
   try {
-    const res = await supabase.from("users").select("*").eq("email", email);
+    const { data, error } = await supabase
+      .schema("next_auth")
+      .from("users")
+      .select("*")
+      .eq("email", email);
 
-    console.log(res, typeof res.status);
+    if (error) throw new Error("Email not found");
 
-    if (res.data.length === 0) throw new Error("Email not found");
-
-    const user = res.data.at(0);
+    const user = data.at(0);
     const hashedPwd = user.password_hash;
 
-    const isPwdCorrect = checkPwd(password, hashedPwd);
-
-    if (!isPwdCorrect) throw new Error();
+    if (!checkPwd(password, hashedPwd))
+      throw new Error("Passsword is incorrect.");
 
     return user;
-    // console.log(user, error);
-    // console.log(user.at(0).password_hash);
-    // console.log(checkPwd("!Nnoy590923", user.at(0).password_hash), "waya");
   } catch (err) {
     console.error("Errors in getUser: ", err.message);
     throw err;
@@ -29,7 +27,12 @@ export async function getUser(email, password) {
 
 export async function getAllEmails() {
   try {
-    let { data: emails, error } = await supabase.from("users").select("email");
+    let { data: emails, error } = await supabase
+      .schema("next_auth")
+      .from("users")
+      .select("email");
+
+    if (error) throw error;
 
     return emails;
   } catch (err) {
@@ -53,11 +56,14 @@ export async function createUser(userData) {
     const hashedPwd = hashPlaintextPwd(password);
 
     const { data, error } = await supabase
+      .schema("next_auth")
       .from("users")
-      .insert([{ email, password_hash: hashedPwd, user_name: name }])
+      .insert([{ email, password_hash: hashedPwd, name: name }])
       .select();
 
-    return { data, error };
+    if (error) throw error;
+
+    return data;
   } catch (err) {
     console.error("Error in createUser:", err.message);
     throw err;
