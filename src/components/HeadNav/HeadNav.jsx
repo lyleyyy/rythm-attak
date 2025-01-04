@@ -4,44 +4,31 @@ import SearchBar from "./SearchBar/SearchBar";
 import UserAuth from "./UserAuth/UserAuth";
 import Image from "next/image";
 import { useEffect } from "react";
-import axios, { AxiosError } from "axios";
-import { getToken } from "next-auth/jwt";
-import { decode } from "next-auth/jwt";
+import axios from "axios";
 
 function HeadNav() {
   // useEffect(function () {
-  //   async function getEmails() {
-  //     const res = await getAllEmails();
+  //   async function getSigninToken() {
+  //     try {
+  //       const res = await axios.get("/api/auth/signin");
+  //       const data = res.data;
 
-  //     console.log(res);
-  //     return res;
+  //       console.log(data.token, "waay");
+
+  //       return {
+  //         user: data.token,
+  //         error: null,
+  //       };
+  //     } catch (err) {
+  //       return {
+  //         user: null,
+  //         error: err,
+  //       };
+  //     }
   //   }
 
-  //   getEmails();
+  //   getSigninToken();
   // }, []);
-
-  useEffect(function () {
-    async function isSignin() {
-      try {
-        const res = await axios.get("/api/auth/signin");
-        const data = res.data;
-
-        console.log(data.token, "waay");
-
-        return {
-          user: data,
-          error: null,
-        };
-      } catch (err) {
-        return {
-          user: null,
-          error: err,
-        };
-      }
-    }
-
-    isSignin();
-  }, []);
 
   return (
     <div className="mt-2 flex h-14 w-full items-center justify-between px-4">

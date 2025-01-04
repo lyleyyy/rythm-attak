@@ -25,6 +25,25 @@ export async function getUser(email, password) {
   }
 }
 
+export async function getUserByEmail(email) {
+  try {
+    const { data, error } = await supabase
+      .schema("next_auth")
+      .from("users")
+      .select("*")
+      .eq("email", email);
+
+    if (error) throw new Error("Email not found");
+
+    const user = data.at(0);
+
+    return user;
+  } catch (err) {
+    console.error("Errors in getUserByEmail: ", err.message);
+    throw err;
+  }
+}
+
 export async function getAllEmails() {
   try {
     let { data: emails, error } = await supabase
