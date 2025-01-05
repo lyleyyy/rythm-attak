@@ -8,42 +8,43 @@ const AuthContext = createContext();
 function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
-  // const [loading, setLoading] = useState(true);
+  const [authContextLoading, setAuthContextLoading] = useState(true);
 
   useEffect(function () {
     async function getLoggedInToken() {
       try {
         const res = await axios.get("/api/auth/signin");
+
         const data = res.data;
         const token = data.token;
-
-        console.log(token.email, "waya");
 
         if (token) {
           const user = await getUserByEmail(token.email);
           setLoggedInUser(user);
           setIsLoggedIn(true);
-          console.log("waaaaa!!!");
         }
       } catch (err) {
+        if (err.status === 401) return;
         console.error(err.message);
         throw err;
+      } finally {
+        setAuthContextLoading(false);
       }
-      // finally {
-      //   setLoading(false);
-      // }
     }
 
     getLoggedInToken();
   }, []);
 
-  // if (loading) {
-  //   return <div>Loading...</div>; // 或者可以返回一个 loading spinner
-  // }
-
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, setIsLoggedIn, loggedInUser, setLoggedInUser }}
+      value={{
+        isLoggedIn,
+        setIsLoggedIn,
+        loggedInUser,
+        setLoggedInUser,
+        authContextLoading,
+        setAuthContextLoading,
+      }}
     >
       {children}
     </AuthContext.Provider>

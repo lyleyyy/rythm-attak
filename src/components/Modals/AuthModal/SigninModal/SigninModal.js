@@ -1,16 +1,13 @@
-import Button from "@/ui/Button";
 import ModalCloseBtn from "../../ModalCloseBtn/ModalCloseBtn";
 import AuthModalContainer from "../AuthModalContainer/AuthModalContainer";
 import AuthModalHeader from "../AuthModalHeader/AuthModalHeader";
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa6";
 import { Controller, useForm } from "react-hook-form";
-import AuthInput from "../AuthInput/AuthInput";
 import { getUser } from "@/services/apiUsers";
 import { useState } from "react";
 import IncorrectNote from "./IncorrectNote/IncorrectNote";
 import OAuthForm from "../OAuthForm";
 import { CredentialsSignIn } from "@/lib/auth-action";
+import AuthInput from "../AuthInput/AuthInput";
 
 function SigninModal({ closeModal }) {
   const {
@@ -31,7 +28,6 @@ function SigninModal({ closeModal }) {
     try {
       const { email, password } = data;
       const res = await getUser(email, password);
-      // console.log(res, "res");
       // can start to render login, may need nextAuth
     } catch (err) {
       console.error("Error in sign in formSubmitHandler: ", err.message);
@@ -52,23 +48,51 @@ function SigninModal({ closeModal }) {
 
       <form
         action={async (formData) => {
+          // try {
+          //   await CredentialsSignIn("credentials", formData);
+          //   setIsEmailPwdWrong(false);
+          // } catch (err) {
+          //   console.error(err);
+          //   setIsEmailPwdWrong(true);
+          // }
           const res = await CredentialsSignIn("credentials", formData);
           console.log(res);
           if (!res.success) {
             alert(`Error: ${res.message}`);
           }
         }}
-        className="text-black"
+        className="flex flex-col gap-2"
       >
-        <label>
-          Email
-          <input name="email" type="email" />
-        </label>
-        <label>
-          Password
-          <input name="password" type="password" />
-        </label>
-        <button>Sign In</button>
+        <Controller
+          name="email"
+          control={control}
+          rules={{ required: "Email is required." }}
+          render={({ field }) => (
+            <AuthInput
+              name="name"
+              type="email"
+              error={errors.email}
+              {...field}
+            />
+          )}
+        />
+
+        <Controller
+          name="password"
+          control={control}
+          rules={{ required: "Password is required." }}
+          render={({ field }) => (
+            <AuthInput
+              name="password"
+              type="password"
+              error={errors.password}
+              {...field}
+            />
+          )}
+        />
+        <button className="mt-2 h-12 w-72 rounded-full bg-purple-700 text-lg font-medium outline-none hover:cursor-pointer hover:bg-purple-600">
+          Sign In
+        </button>
       </form>
 
       {/* <form onSubmit={handleSubmit(formSubmitHandler)} className="space-y-4">
