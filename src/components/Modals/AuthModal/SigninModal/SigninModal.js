@@ -2,16 +2,17 @@ import ModalCloseBtn from "../../ModalCloseBtn/ModalCloseBtn";
 import AuthModalContainer from "../AuthModalContainer/AuthModalContainer";
 import AuthModalHeader from "../AuthModalHeader/AuthModalHeader";
 import { Controller, useForm } from "react-hook-form";
-import { getUser } from "@/services/apiUsers";
 import { useState } from "react";
 import IncorrectNote from "./IncorrectNote/IncorrectNote";
 import OAuthForm from "../OAuthForm";
 import { CredentialsSignIn } from "@/lib/auth-action";
 import AuthInput from "../AuthInput/AuthInput";
+import { useRouter } from "next/router";
+import { useAuth } from "@/contexts/AuthContext";
 
 function SigninModal({ closeModal }) {
   const {
-    handleSubmit,
+    // handleSubmit,
     control,
     formState: { errors },
   } = useForm({
@@ -23,18 +24,22 @@ function SigninModal({ closeModal }) {
   });
 
   const [isEmailPwdWrong, setIsEmailPwdWrong] = useState(false);
+  const { setIsLoggedIn } = useAuth();
 
-  async function formSubmitHandler(data) {
-    try {
-      const { email, password } = data;
-      const res = await getUser(email, password);
-      // can start to render login, may need nextAuth
-    } catch (err) {
-      console.error("Error in sign in formSubmitHandler: ", err.message);
-      setIsEmailPwdWrong(true);
-      throw err;
-    }
-  }
+  // async function formSubmitHandler(data) {
+  //   try {
+  //     const { email, password } = data;
+  //     console.log(email, password, "wWwqdwdqw");
+  //     // const res = await getUser(email, password);
+  //     // can start to render login, may need nextAuth
+
+  //     await CredentialsSignIn("credentials", formData);
+  //   } catch (err) {
+  //     console.error("Error in sign in formSubmitHandler: ", err.message);
+  //     setIsEmailPwdWrong(true);
+  //     throw err;
+  //   }
+  // }
 
   return (
     <AuthModalContainer>
@@ -48,17 +53,12 @@ function SigninModal({ closeModal }) {
 
       <form
         action={async (formData) => {
-          // try {
-          //   await CredentialsSignIn("credentials", formData);
-          //   setIsEmailPwdWrong(false);
-          // } catch (err) {
-          //   console.error(err);
-          //   setIsEmailPwdWrong(true);
-          // }
-          const res = await CredentialsSignIn("credentials", formData);
-          console.log(res);
-          if (!res.success) {
-            alert(`Error: ${res.message}`);
+          try {
+            await CredentialsSignIn("credentials", formData);
+            setIsLoggedIn(true);
+            closeModal();
+          } catch (e) {
+            setIsEmailPwdWrong(true);
           }
         }}
         className="flex flex-col gap-2"

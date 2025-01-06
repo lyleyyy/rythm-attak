@@ -10,30 +10,33 @@ function AuthProvider({ children }) {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [authContextLoading, setAuthContextLoading] = useState(true);
 
-  useEffect(function () {
-    async function getLoggedInToken() {
-      try {
-        const res = await axios.get("/api/auth/signin");
+  useEffect(
+    function () {
+      async function getLoggedInToken() {
+        try {
+          const res = await axios.get("/api/auth/signin");
 
-        const data = res.data;
-        const token = data.token;
+          const data = res.data;
+          const token = data.token;
 
-        if (token) {
-          const user = await getUserByEmail(token.email);
-          setLoggedInUser(user);
-          setIsLoggedIn(true);
+          if (token) {
+            const user = await getUserByEmail(token.email);
+            setLoggedInUser(user);
+            setIsLoggedIn(true);
+          }
+        } catch (err) {
+          if (err.status === 401) return;
+          console.error(err.message);
+          // throw err;
+        } finally {
+          setAuthContextLoading(false);
         }
-      } catch (err) {
-        if (err.status === 401) return;
-        console.error(err.message);
-        throw err;
-      } finally {
-        setAuthContextLoading(false);
       }
-    }
 
-    getLoggedInToken();
-  }, []);
+      getLoggedInToken();
+    },
+    [isLoggedIn],
+  );
 
   return (
     <AuthContext.Provider

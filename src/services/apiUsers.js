@@ -10,13 +10,14 @@ export async function getUser(email, password) {
       .select("*")
       .eq("email", email);
 
-    if (error) throw new Error("Email not found");
+    // if (error) throw new Error("Internal error when getting user");
+    // if (data.length === 0) throw new Error("Email not founded.");
 
     const user = data.at(0);
     const hashedPwd = user.password_hash;
 
-    if (!checkPwd(password, hashedPwd))
-      throw new Error("Passsword is incorrect.");
+    if (!checkPwd(password, hashedPwd)) return null;
+    // throw new Error("Passsword is incorrect.");
 
     return user;
   } catch (err) {

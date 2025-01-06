@@ -27,16 +27,13 @@ const authConfig = {
           const user = await getUser(credentials.email, credentials.password);
 
           if (!user) {
-            throw new Error("Email or Password is incorrect.");
+            return null;
           }
 
-          console.log("success!!!");
           return user;
         } catch (err) {
-          return null;
-          // err.cause.err.code === "credentials";
           // console.error(err.message);
-          // throw err;
+          return null;
         }
       },
     }),
