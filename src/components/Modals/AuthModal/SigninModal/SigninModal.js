@@ -7,12 +7,10 @@ import IncorrectNote from "./IncorrectNote/IncorrectNote";
 import OAuthForm from "../OAuthForm";
 import { CredentialsSignIn } from "@/lib/auth-action";
 import AuthInput from "../AuthInput/AuthInput";
-import { useRouter } from "next/router";
 import { useAuth } from "@/contexts/AuthContext";
 
 function SigninModal({ closeModal }) {
   const {
-    // handleSubmit,
     control,
     formState: { errors },
   } = useForm({
@@ -24,6 +22,7 @@ function SigninModal({ closeModal }) {
   });
 
   const [isEmailPwdWrong, setIsEmailPwdWrong] = useState(false);
+  const [isSigningin, setIsSigningin] = useState(false);
   const { setIsLoggedIn } = useAuth();
 
   // async function formSubmitHandler(data) {
@@ -59,8 +58,10 @@ function SigninModal({ closeModal }) {
             closeModal();
           } catch (e) {
             setIsEmailPwdWrong(true);
+            setIsSigningin(false);
           }
         }}
+        onSubmit={() => setIsSigningin(true)}
         className="flex flex-col gap-2"
       >
         <Controller
@@ -90,8 +91,11 @@ function SigninModal({ closeModal }) {
             />
           )}
         />
-        <button className="mt-2 h-12 w-72 rounded-full bg-purple-700 text-lg font-medium outline-none hover:cursor-pointer hover:bg-purple-600">
-          Sign In
+        <button
+          className="mt-2 h-12 w-72 rounded-full bg-purple-700 text-lg font-medium outline-none hover:cursor-pointer hover:bg-purple-600 disabled:cursor-not-allowed disabled:bg-gray-400"
+          disabled={isSigningin}
+        >
+          {isSigningin ? "Signing in..." : "Sign in"}
         </button>
       </form>
 
