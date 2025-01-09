@@ -4,7 +4,8 @@ function UserTypeSelector({ onClickUser, onClickArtist }) {
   return (
     <div className="flex flex-col gap-4">
       <Button
-        width="w-44"
+        width="w-48"
+        height="h-12"
         borderWidth={true}
         bgColor="bg-black"
         textColor="text-white"
@@ -15,7 +16,8 @@ function UserTypeSelector({ onClickUser, onClickArtist }) {
         Sign Up as a User
       </Button>
       <Button
-        width="w-44"
+        width="w-48"
+        height="h-12"
         hoverBgColor="hover:bg-purple-600"
         onClick={onClickArtist}
       >

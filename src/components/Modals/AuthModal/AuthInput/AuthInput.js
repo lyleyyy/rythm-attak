@@ -7,8 +7,12 @@ function AuthInput({ name, type, error, ...props }) {
         <label>{capitalizeEachWord(name)}</label>
         <textarea
           className="h-60 w-72 rounded border border-zinc-600 bg-black p-2 outline-none focus:border-white"
-          placeholder="Your biography will be displayed on the Artist page."
+          placeholder="Your biography will be displayed on the Artist page. Filling out your biography is optional during sign-up. You can update it anytime later."
+          {...props}
+          name={name}
+          type={type}
         />
+        {error && <span className="w-72 text-red-500">{error.message}</span>}
       </div>
     );
 
