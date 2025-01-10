@@ -62,12 +62,7 @@ export async function getAllEmails() {
 }
 
 export async function createUser(userData) {
-  const { email, password, name, biography } = userData;
-
-  console.log(email, "email");
-  console.log(password, "password");
-  console.log(name, "name");
-  console.log(biography, "biography");
+  const { email, password, name, biography, artist } = userData;
 
   try {
     const registeredEmails = await getAllEmails();
@@ -80,11 +75,19 @@ export async function createUser(userData) {
 
     const hashedPwd = hashPlaintextPwd(password);
 
+    const isArtist = artist === "true" ? true : false;
+
     const { data, error } = await supabase
       .schema("next_auth")
       .from("users")
       .insert([
-        { email, password_hash: hashedPwd, name: name, biography: biography },
+        {
+          email,
+          password_hash: hashedPwd,
+          name: name,
+          biography: biography,
+          artist: isArtist,
+        },
       ])
       .select();
 

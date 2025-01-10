@@ -1,5 +1,8 @@
+"use client";
 import MediaCategory from "@/types/MediaCategory";
 import MediaListContainer from "./MediaListContainer/MediaListContainer";
+import { useAuth } from "@/contexts/AuthContext";
+import ArtistDashboard from "@/components/ArtistDashboard/ArtistDashboard";
 
 const songsList = [
   {
@@ -87,6 +90,10 @@ const artistsList = [
 ];
 
 function MainContent() {
+  const { loggedInUser } = useAuth();
+
+  if (loggedInUser.artist) return <ArtistDashboard />;
+
   return (
     <div className="mb-20 space-y-10 p-4">
       <MediaListContainer label="Popular songs" mediaList={songsList} />

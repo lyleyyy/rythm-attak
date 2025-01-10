@@ -1,6 +1,6 @@
 import { useForm, Controller } from "react-hook-form";
 import AuthInput from "../AuthInput/AuthInput";
-import ModalCloseBtn from "../../ModalCloseBtn/ModalCloseBtn";
+import ModalCloseBtn from "../../../../ui/ModalCloseBtn";
 import AuthModalHeader from "../AuthModalHeader/AuthModalHeader";
 import { useState } from "react";
 import SeparateLine from "../SeparateLine/SeparateLine";
@@ -13,6 +13,7 @@ import UserTypeSelector from "./UserTypeSelector/UserTypeSelector";
 
 function RegisterModal({ closeModal }) {
   const {
+    register,
     handleSubmit,
     control,
     formState: { errors },
@@ -22,6 +23,7 @@ function RegisterModal({ closeModal }) {
       password: "",
       name: "",
       biography: "",
+      // artist: false,
     },
     mode: "onBlur",
   });
@@ -38,7 +40,6 @@ function RegisterModal({ closeModal }) {
 
   async function formSubmitHandler(data) {
     setIsSigningUp(true);
-
     try {
       await createUser(data);
       setIsFinishRegister(true);
@@ -261,9 +262,6 @@ function RegisterModal({ closeModal }) {
                   <Controller
                     name="biography"
                     control={control}
-                    // rules={{
-                    //   required: "Biography is required.",
-                    // }}
                     render={({ field }) => (
                       <AuthInput
                         label="Biography"
@@ -274,6 +272,13 @@ function RegisterModal({ closeModal }) {
                   />
                 </div>
               </div>
+
+              <input
+                type="hidden"
+                name="artist"
+                value={true}
+                {...register("artist")}
+              />
 
               <button
                 type="submit"

@@ -1,4 +1,4 @@
-import ModalCloseBtn from "../../ModalCloseBtn/ModalCloseBtn";
+import ModalCloseBtn from "../../../../ui/ModalCloseBtn";
 import AuthModalContainer from "../AuthModalContainer/AuthModalContainer";
 import AuthModalHeader from "../AuthModalHeader/AuthModalHeader";
 import { Controller, useForm } from "react-hook-form";
