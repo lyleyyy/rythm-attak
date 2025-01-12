@@ -1,4 +1,6 @@
 function convertSecsToHrsMinsSecs(secs) {
+  if (typeof secs === "string") secs = +secs;
+
   const hours = Math.floor(secs / 3600);
   const minutes = Math.floor(secs / 60);
   const seconds = Math.floor(secs % 60);

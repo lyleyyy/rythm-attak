@@ -1,20 +1,35 @@
 import Button from "@/ui/Button";
 import DragDrop from "../../DragDrop/DragDrop";
 import { uploadTrack } from "@/services/apiTracks";
-import getTrackInfo from "@/utils/getTrackInfo";
+import getTrackDuration from "@/utils/getTrackDuration";
+import { useAuth } from "@/contexts/AuthContext";
 
 function TracksUploader() {
+  const { loggedInUser } = useAuth();
+
   async function onSubmitHandler(e) {
     e.preventDefault();
+    if (!loggedInUser) return;
+
     const formData = new FormData(e.currentTarget);
-    const singleCover = formData.get("single cover");
-    const trackAudio = formData.get("track");
+
     const trackName = formData.get("track name");
+    const artistId = loggedInUser.id;
+    const trackAudio = formData.get("track");
+    const trackDuration = await getTrackDuration(trackAudio);
+    const isSingle = true;
     const trackStory = formData.get("track story");
+    const singleCover = formData.get("single cover");
 
-    getTrackInfo(trackAudio);
-
-    // await uploadTrack(singleCover, trackAudio, trackName, trackStory);
+    await uploadTrack(
+      trackName,
+      artistId,
+      trackDuration,
+      isSingle,
+      trackStory,
+      singleCover,
+      trackAudio,
+    );
   }
 
   return (
