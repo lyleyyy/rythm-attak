@@ -4,14 +4,14 @@ import DashboardNavButton from "./DashboardNav/DashboarNavButton/DashboardNavBut
 import AllSingles from "./AllSingles/AllSingles";
 import AllAlbums from "./AllAlbums/AllAlbums";
 import AllTracks from "./AllTracks/AllTracks";
-import ArtistAvatarAndCover from "./ArtistAvatarAndCover/ArtistAvatarAndCover";
+import ArtistAvatarAndBanner from "./ArtistAvatarAndBanner/ArtistAvatarAndBanner";
 import Biography from "./Biography/Biography";
 
 const dashboardNavTags = [
   "All Singles",
   "All Albums",
   "All Tracks",
-  "Avatar / Cover",
+  "Avatar / Banner",
   "Biography",
 ];
 
@@ -35,7 +35,7 @@ function ArtistDashboard() {
         <AllSingles />,
         <AllAlbums />,
         <AllTracks />,
-        <ArtistAvatarAndCover />,
+        <ArtistAvatarAndBanner />,
         <Biography />,
       ].at(activeIndex)}
     </div>

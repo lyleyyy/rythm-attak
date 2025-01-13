@@ -1,20 +1,17 @@
-import { useState } from "react";
 import SinglesContainer from "./SinglesContainer/SinglesContainer";
 import TracksUploader from "./TracksUploader/TracksUploader";
 import Button from "@/ui/Button";
 import ModalContainer from "@/ui/ModalContainer";
+import useModalToggle from "@/hooks/useModalToggle";
 
 function AllSingles() {
-  const [isTrackUploaderModalOpen, setIsTrackUploaderModalOpen] =
-    useState(false);
+  const [isModalOpen, setIsModalOpen] = useModalToggle();
 
   return (
     <div className="">
-      <Button onClick={() => setIsTrackUploaderModalOpen(true)}>
-        Track Upload
-      </Button>
-      {isTrackUploaderModalOpen && (
-        <ModalContainer onClick={() => setIsTrackUploaderModalOpen(false)}>
+      <Button onClick={() => setIsModalOpen(true)}>Track Upload</Button>
+      {isModalOpen && (
+        <ModalContainer onClick={() => setIsModalOpen(false)}>
           <TracksUploader />
         </ModalContainer>
       )}

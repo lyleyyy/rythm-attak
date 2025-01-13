@@ -92,7 +92,7 @@ const artistsList = [
 function MainContent() {
   const { loggedInUser } = useAuth();
 
-  if (loggedInUser.artist) return <ArtistDashboard />;
+  if (loggedInUser && loggedInUser.is_artist) return <ArtistDashboard />;
 
   return (
     <div className="mb-20 space-y-10 p-4">
