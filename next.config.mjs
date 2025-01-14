@@ -19,11 +19,19 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "lh3.googleusercontent.com",
-        port: "",
-        pathname: "/a/**",
-        search: "",
+        // hostname: "lh3.googleusercontent.com",
+        hostname: "**",
+        // port: "",
+        // pathname: "/a/**",
+        // search: "",
       },
+      // {
+      //   protocol: "https",
+      //   hostname: "rzybqapngtswcbfvwpgw.supabase.co",
+      //   port: "",
+      //   pathname: "/storage/v1/object/sign/track_cover/**",
+      //   search: "",
+      // },
     ],
   },
   reactStrictMode: true,

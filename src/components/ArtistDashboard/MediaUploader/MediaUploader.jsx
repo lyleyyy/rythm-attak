@@ -4,13 +4,21 @@ import { uploadTrack } from "@/services/apiTracks";
 import getTrackDuration from "@/utils/getTrackDuration";
 import { useAuth } from "@/contexts/AuthContext";
 import { createAlbum } from "@/services/apiAlbums";
+import { useState } from "react";
 
-function MediaUploader({ isSingle = false, isAlbum = false }) {
+function MediaUploader({
+  isSingle = false,
+  isAlbum = false,
+  closeModal,
+  setIsUnloadFinished,
+}) {
   const { loggedInUser } = useAuth();
+  const [isUploading, setIsUploading] = useState(false);
 
   async function onSubmitHandler(e) {
     e.preventDefault();
     if (!loggedInUser) return;
+    setIsUploading(true);
 
     const formData = new FormData(e.currentTarget);
     const artistId = loggedInUser.id;
@@ -42,7 +50,9 @@ function MediaUploader({ isSingle = false, isAlbum = false }) {
       res = await createAlbum(albumName, artistId, albumStory, albumCover);
     }
 
-    console.log(res, "wa!!!!!");
+    // console.log(res, "wa!!!!!");
+    setIsUnloadFinished(true);
+    closeModal();
   }
 
   return (
@@ -91,8 +101,9 @@ function MediaUploader({ isSingle = false, isAlbum = false }) {
         </div>
       </div>
 
-      <Button type="submit">
-        {isSingle ? "Upload" : isAlbum ? "Create" : ""}
+      <Button type="submit" disabled={isUploading}>
+        {!isUploading && (isSingle ? "Upload" : isAlbum ? "Create" : "")}
+        {isUploading && "Uploading..."}
       </Button>
     </form>
   );

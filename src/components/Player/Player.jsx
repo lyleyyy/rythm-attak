@@ -33,7 +33,8 @@ function Player() {
   const [isHoverVolume, setIsHoverVolume] = useState(false);
 
   const song = new Howl({
-    src: music.url,
+    // src: music.url,
+    src: "https://rzybqapngtswcbfvwpgw.supabase.co/storage/v1/object/sign/track_audio/lyleLemenTree_audio_1736765850377_78.mp3?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0cmFja19hdWRpby9seWxlTGVtZW5UcmVlX2F1ZGlvXzE3MzY3NjU4NTAzNzdfNzgubXAzIiwiaWF0IjoxNzM2NzY1ODUxLCJleHAiOjQ4NTg4Mjk4NTF9.4yKrpT407M1Vv40nfrPQ2LoQhzxEknOrkTdR5CG3OzE",
     html5: true,
     preload: false,
     onload: () => setDuration(song.duration()),

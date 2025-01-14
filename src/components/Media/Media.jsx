@@ -7,7 +7,7 @@ import { useState } from "react";
 import { RiPlayLargeFill } from "react-icons/ri";
 
 function Media({ media }) {
-  const { id, type, name, artist, imageUrl } = media;
+  let { id, type, name, artist, imageUrl } = media;
   const [isHover, setIsHover] = useState(false);
 
   return (
