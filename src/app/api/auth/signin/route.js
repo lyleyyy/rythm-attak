@@ -25,9 +25,9 @@ export async function GET(req, res) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    console.log("Decoded Token:", token);
+    // console.log("Decoded Token:", token);
 
-    // 返回解码后的 token
+    // decoded token
     // res.status(200).json({ message: "Token is valid", token });
     return NextResponse.json(
       { message: "Token is valid", token },

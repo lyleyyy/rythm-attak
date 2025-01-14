@@ -1,4 +1,4 @@
-import Media from "./Media/Media";
+import Media from "@/components/Media/Media";
 
 function MediaList({ mediaList }) {
   return (

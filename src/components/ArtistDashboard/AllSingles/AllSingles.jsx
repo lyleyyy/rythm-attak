@@ -1,5 +1,5 @@
 import SinglesContainer from "./SinglesContainer/SinglesContainer";
-import TracksUploader from "./TracksUploader/TracksUploader";
+import MediaUploader from "../MediaUploader/MediaUploader";
 import Button from "@/ui/Button";
 import ModalContainer from "@/ui/ModalContainer";
 import useModalToggle from "@/hooks/useModalToggle";
@@ -12,7 +12,7 @@ function AllSingles() {
       <Button onClick={() => setIsModalOpen(true)}>Track Upload</Button>
       {isModalOpen && (
         <ModalContainer onClick={() => setIsModalOpen(false)}>
-          <TracksUploader />
+          <MediaUploader isSingle={true} />
         </ModalContainer>
       )}
       <SinglesContainer />

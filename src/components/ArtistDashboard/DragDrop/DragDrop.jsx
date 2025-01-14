@@ -44,7 +44,7 @@ function DragDrop({ label, name }) {
   const hiddenInputRef = useRef(null);
 
   const acceptFileFormats =
-    label === "Single Cover"
+    label === "Single Cover" || label === "Album Cover"
       ? acceptImgFormats
       : label === "Track"
         ? acceptAudioFormats
@@ -103,7 +103,7 @@ function DragDrop({ label, name }) {
         <input
           type="file"
           name={name}
-          required={label === "Track" ? true : false}
+          required={name === "track" || name === "album cover" ? true : false}
           style={{ opacity: 0 }}
           ref={hiddenInputRef}
         />
@@ -117,7 +117,7 @@ function DragDrop({ label, name }) {
               <>
                 <li>Only 1 file can be uploaded.</li>
                 <li>
-                  {label === "Single Cover"
+                  {name === "single cover" || name === "album cover"
                     ? "Only .jpg .jpeg .png formats are accepted."
                     : "Only .mp3 .aac formats are accepted."}
                 </li>
