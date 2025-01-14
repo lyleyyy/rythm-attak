@@ -20,20 +20,28 @@ function ArtistSingleCard({ single }) {
     likes,
   } = single;
 
+  const [isPlayable, setIsPlayable] = useState(false);
   const [isPublished, setIsPublished] = useState(is_published);
+  const [isPublishing, setIsPublishing] = useState(false);
 
   async function clickForPublish() {
+    setIsPublishing(true);
+
     try {
       const res = await updateTrackPublish(id, artistId);
-      setIsPublished(res.is_published);
-      console.log(res, "wayayay!!");
+      setIsPublished(res.at(0).is_published);
+      setIsPublishing(false);
     } catch (err) {
       console.log(err);
     }
   }
 
   return (
-    <div className="relative flex flex-col gap-2 rounded-lg p-2 transition-all duration-200 ease-in-out hover:bg-zinc-800">
+    <div
+      className="relative flex flex-col gap-2 rounded-lg p-2 transition-all duration-200 ease-in-out hover:bg-zinc-800"
+      onMouseEnter={() => setIsPlayable(true)}
+      onMouseLeave={() => setIsPlayable(false)}
+    >
       <div style={{ width: "180px", height: "180px", position: "relative" }}>
         <Image
           src={coverUrl}
@@ -46,16 +54,18 @@ function ArtistSingleCard({ single }) {
         {trackName.length > 15 ? trackName.slice(0, 15) + "..." : trackName}
       </h3>
 
-      <IconButton
-        position="absolute top-1/2 right-1/2"
-        bgColor="bg-purple-700"
-        width="w-12"
-        height="h-12"
-        isHover={true}
-        isTranslateCenter={true}
-      >
-        <RiPlayLargeFill />
-      </IconButton>
+      {isPlayable && (
+        <IconButton
+          position="absolute top-1/2 right-1/2"
+          bgColor="bg-purple-700"
+          width="w-12"
+          height="h-12"
+          isHover={true}
+          isTranslateCenter={true}
+        >
+          <RiPlayLargeFill />
+        </IconButton>
+      )}
 
       <div className="flex w-full justify-center">
         <Button
@@ -63,7 +73,8 @@ function ArtistSingleCard({ single }) {
           onClick={clickForPublish}
           disabled={isPublished}
         >
-          {isPublished ? "Published" : "Publish"}
+          {!isPublishing && (isPublished ? "Published" : "Publish")}
+          {isPublishing && "Publishing"}
         </Button>
       </div>
     </div>
