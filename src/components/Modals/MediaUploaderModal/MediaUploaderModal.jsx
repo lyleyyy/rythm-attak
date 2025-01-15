@@ -10,7 +10,8 @@ function MediaUploaderModal({
   isSingle = false,
   isAlbum = false,
   closeModal,
-  setIsUnloadFinished,
+  setIsUploadFinished,
+  setIsCreateFinished,
 }) {
   const { loggedInUser } = useAuth();
   const [isUploading, setIsUploading] = useState(false);
@@ -40,6 +41,7 @@ function MediaUploaderModal({
         singleCover,
         trackAudio,
       );
+      setIsUploadFinished(true);
     }
 
     if (isAlbum) {
@@ -48,10 +50,10 @@ function MediaUploaderModal({
       const albumCover = formData.get("album cover");
 
       res = await createAlbum(albumName, artistId, albumStory, albumCover);
+      setIsCreateFinished(true);
     }
 
     // console.log(res, "wa!!!!!");
-    setIsUnloadFinished(true);
     closeModal();
   }
 
@@ -103,7 +105,8 @@ function MediaUploaderModal({
 
       <Button type="submit" disabled={isUploading}>
         {!isUploading && (isSingle ? "Upload" : isAlbum ? "Create" : "")}
-        {isUploading && "Uploading..."}
+        {isUploading &&
+          (isSingle ? "Uploading..." : isAlbum ? "Creating..." : "")}
       </Button>
     </form>
   );

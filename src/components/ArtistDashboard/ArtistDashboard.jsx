@@ -62,12 +62,8 @@ function ArtistDashboard() {
         ))}
       </DashboardNav>
       {[
-        <AllSingles
-          // singles={singles}
-          // setSingles={setSingles}
-          artistId={artistId}
-        />,
-        <AllAlbums />,
+        <AllSingles artistId={artistId} />,
+        <AllAlbums artistId={artistId} />,
         <AllTracks />,
         <ArtistProfile />,
       ].at(activeIndex)}

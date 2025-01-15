@@ -2,18 +2,74 @@ import useModalToggle from "@/hooks/useModalToggle";
 import Button from "@/ui/Button";
 import ModalContainer from "@/ui/ModalContainer";
 import MediaUploader from "../../Modals/MediaUploaderModal/MediaUploaderModal";
+import ArtistMediasContainer from "../ArtistMediasContainer/ArtistMediasContainer";
+import { useEffect, useState } from "react";
+import LoadingSpinner from "@/ui/LoadingSpinner";
+import { getAllAlbumsOfArtist } from "@/services/apiAlbums";
+import ArtistAlbumCard from "./ArtistAlbumCard/ArtistAlbumCard";
+import MediaUploaderModal from "../../Modals/MediaUploaderModal/MediaUploaderModal";
 
-function AllAlbums() {
+function AllAlbums({ artistId }) {
+  const [albums, setAlbums] = useState(null);
   const [isModalOpen, setIsModalOpen] = useModalToggle();
+  const [isCreateFinished, setIsCreateFinished] = useState(false);
+  const [isDeleteFinished, setIsDeleteFinished] = useState(false);
+  const [isPublishFinished, setIsPublishFinished] = useState(false);
+  const [selectedAlbum, setSelectedAlbum] = useState(null);
+
+  useEffect(
+    function () {
+      async function fetchMediasOfArtist() {
+        try {
+          const albums = await getAllAlbumsOfArtist(artistId);
+          setAlbums(albums);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
+      fetchMediasOfArtist();
+      setIsDeleteFinished(false);
+      setIsCreateFinished(false);
+      setIsPublishFinished(false);
+    },
+    [isCreateFinished, isDeleteFinished, isPublishFinished],
+  );
+
+  function clickSelectHandler(e, index) {
+    if (["svg", "path", "BUTTON"].includes(e.target.tagName))
+      setSelectedAlbum(index);
+
+    console.log(index);
+  }
 
   return (
-    <div className="">
+    <div className="flex flex-col gap-10">
       <Button onClick={() => setIsModalOpen(true)}>Create Album</Button>
       {isModalOpen && (
         <ModalContainer onClick={() => setIsModalOpen(false)}>
-          <MediaUploader isAlbum={true} />
+          <MediaUploaderModal
+            isAlbum={true}
+            closeModal={() => setIsModalOpen(false)}
+            setIsCreateFinished={setIsCreateFinished}
+          />
         </ModalContainer>
       )}
+
+      <ArtistMediasContainer>
+        {!albums && <LoadingSpinner />}
+        {albums &&
+          albums.map((album, index) => (
+            <ArtistAlbumCard
+              key={album.id}
+              album={album}
+              isSelected={selectedAlbum === index}
+              setIsDeleteFinished={setIsDeleteFinished}
+              setIsPublishFinished={setIsPublishFinished}
+              onClick={(e) => clickSelectHandler(e, index)}
+            />
+          ))}
+      </ArtistMediasContainer>
     </div>
   );
 }

@@ -6,11 +6,12 @@ import ArtistSingleCard from "./ArtistSingleCard/ArtistSingleCard";
 import ArtistMediasContainer from "../ArtistMediasContainer/ArtistMediasContainer";
 import { useEffect, useState } from "react";
 import { getAllSinglesOfArtist } from "@/services/apiTracks";
+import LoadingSpinner from "@/ui/LoadingSpinner";
 
 function AllSingles({ artistId }) {
   const [singles, setSingles] = useState(null);
   const [isModalOpen, setIsModalOpen] = useModalToggle();
-  const [isUploadFinished, setIsUnloadFinished] = useState(false);
+  const [isUploadFinished, setIsUploadFinished] = useState(false);
   const [isDeleteFinished, setIsDeleteFinished] = useState(false);
   const [isPublishFinished, setIsPublishFinished] = useState(false);
 
@@ -27,7 +28,7 @@ function AllSingles({ artistId }) {
 
       fetchMediasOfArtist();
       setIsDeleteFinished(false);
-      setIsUnloadFinished(false);
+      setIsUploadFinished(false);
       setIsPublishFinished(false);
     },
     [isUploadFinished, isDeleteFinished, isPublishFinished],
@@ -46,13 +47,13 @@ function AllSingles({ artistId }) {
           <MediaUploader
             isSingle={true}
             closeModal={() => setIsModalOpen(false)}
-            setIsUnloadFinished={setIsUnloadFinished}
+            setIsUploadFinished={setIsUploadFinished}
           />
         </ModalContainer>
       )}
 
       <ArtistMediasContainer>
-        {!singles && "Loadinggggggg....."}
+        {!singles && <LoadingSpinner />}
         {singles &&
           singles.map((single) => (
             <ArtistSingleCard
