@@ -1,4 +1,4 @@
-import MediaUploader from "../MediaUploader/MediaUploader";
+import MediaUploader from "../../Modals/MediaUploaderModal/MediaUploaderModal";
 import Button from "@/ui/Button";
 import ModalContainer from "@/ui/ModalContainer";
 import useModalToggle from "@/hooks/useModalToggle";
@@ -7,9 +7,12 @@ import ArtistMediasContainer from "../ArtistMediasContainer/ArtistMediasContaine
 import { useEffect, useState } from "react";
 import { getAllSinglesOfArtist } from "@/services/apiTracks";
 
-function AllSingles({ singles, setSingles, artistId }) {
+function AllSingles({ artistId }) {
+  const [singles, setSingles] = useState(null);
   const [isModalOpen, setIsModalOpen] = useModalToggle();
   const [isUploadFinished, setIsUnloadFinished] = useState(false);
+  const [isDeleteFinished, setIsDeleteFinished] = useState(false);
+  const [isPublishFinished, setIsPublishFinished] = useState(false);
 
   useEffect(
     function () {
@@ -23,8 +26,11 @@ function AllSingles({ singles, setSingles, artistId }) {
       }
 
       fetchMediasOfArtist();
+      setIsDeleteFinished(false);
+      setIsUnloadFinished(false);
+      setIsPublishFinished(false);
     },
-    [isUploadFinished],
+    [isUploadFinished, isDeleteFinished, isPublishFinished],
   );
 
   return (
@@ -49,7 +55,12 @@ function AllSingles({ singles, setSingles, artistId }) {
         {!singles && "Loadinggggggg....."}
         {singles &&
           singles.map((single) => (
-            <ArtistSingleCard key={single.id} single={single} />
+            <ArtistSingleCard
+              key={single.id}
+              single={single}
+              setIsDeleteFinished={setIsDeleteFinished}
+              setIsPublishFinished={setIsPublishFinished}
+            />
           ))}
       </ArtistMediasContainer>
     </div>

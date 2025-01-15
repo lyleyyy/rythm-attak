@@ -1,38 +1,15 @@
-import sanitizedFilePathName from "@/utils/sanitizedFilePathName";
 import supabase from "./supabase";
-import uploadFile from "./uploadFile";
 
-export async function createAlbum(albumName, artistId, albumStory, albumCover) {
+export async function getAllAlbumsOfArtist(artistId) {
   try {
-    // upload to storage
-    let coverUrl = null;
-    if (albumCover.name) {
-      coverUrl = await uploadFile(
-        "album_covers",
-        albumCover,
-        sanitizedFilePathName(albumCover, albumName),
-      );
-      //   console.log(coverUrl, "coverUrl");
-    }
-
-    // write into database
-    const { data, error } = await supabase
+    let { data: albums, error } = await supabase
       .from("albums")
-      .insert([
-        {
-          album_name: albumName,
-          artist_id: artistId,
-          album_story: albumStory,
-          album_cover_url: coverUrl,
-        },
-      ])
-      .select();
+      .select("*")
+      .eq("artist_id", artistId);
 
-    if (error) throw new Error("Write into database issue: " + error);
-    // console.log(data, "write into database success");
-    return data;
+    if (error) throw new Error("Albums not found.");
+    return albums;
   } catch (err) {
-    // need to check and operate:
-    // if (coverUrl) delete uploaded cover
+    console.error("getAllAlbumsOfArtist issue: " + err);
   }
 }

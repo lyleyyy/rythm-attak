@@ -1,6 +1,6 @@
 function DashboardNav({ children }) {
   return (
-    <div className="flex h-14 w-full items-center justify-center">
+    <div className="mb-10 flex h-16 w-full items-center justify-center">
       {children}
     </div>
   );

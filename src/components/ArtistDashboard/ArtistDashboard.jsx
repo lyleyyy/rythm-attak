@@ -24,32 +24,32 @@ function ArtistDashboard() {
   const artistId = loggedInUser.is_artist && loggedInUser.id;
 
   const [activeIndex, setActiveIndex] = useState(0);
-  const [singles, setSingles] = useState(null);
+  // const [singles, setSingles] = useState(null);
   const [albums, setAlbums] = useState(null);
   const [tracks, setTracks] = useState(null);
 
-  useEffect(function () {
-    async function fetchMediasOfArtist() {
-      try {
-        const singles = await getAllSinglesOfArtist(artistId);
-        // const albums = await getAllAlbumsOfArtist(artistId);
-        // const tracks = await getAllTracksOfArtist(artistId);
+  // useEffect(function () {
+  //   async function fetchMediasOfArtist() {
+  //     try {
+  //       const singles = await getAllSinglesOfArtist(artistId);
+  //       // const albums = await getAllAlbumsOfArtist(artistId);
+  //       // const tracks = await getAllTracksOfArtist(artistId);
 
-        console.log(singles, "singlessingles");
-        // console.log(albums, "albumsalbums");
-        // console.log(tracks, "trackstracks");
+  //       // console.log(singles, "singlessingles");
+  //       // console.log(albums, "albumsalbums");
+  //       // console.log(tracks, "trackstracks");
 
-        setSingles(singles);
-      } catch (err) {
-        console.error(err);
-      }
-    }
+  //       setSingles(singles);
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   }
 
-    fetchMediasOfArtist();
-  }, []);
+  //   fetchMediasOfArtist();
+  // }, []);
 
   return (
-    <div className="mb-10 h-full px-8">
+    <div className="mb-20 h-full px-8">
       <DashboardNav>
         {dashboardNavTags.map((el, i) => (
           <DashboardNavButton
@@ -63,8 +63,8 @@ function ArtistDashboard() {
       </DashboardNav>
       {[
         <AllSingles
-          singles={singles}
-          setSingles={setSingles}
+          // singles={singles}
+          // setSingles={setSingles}
           artistId={artistId}
         />,
         <AllAlbums />,

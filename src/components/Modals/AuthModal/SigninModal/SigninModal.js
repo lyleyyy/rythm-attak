@@ -1,4 +1,3 @@
-import ModalCloseBtn from "../../../../ui/ModalCloseBtn";
 import AuthModalContainer from "../AuthModalContainer/AuthModalContainer";
 import AuthModalHeader from "../AuthModalHeader/AuthModalHeader";
 import { Controller, useForm } from "react-hook-form";
@@ -8,6 +7,7 @@ import OAuthForm from "../OAuthForm";
 import { CredentialsSignIn } from "@/lib/auth-action";
 import AuthInput from "../AuthInput/AuthInput";
 import { useAuth } from "@/contexts/AuthContext";
+import ModalCloseBtn from "@/ui/ModalCloseBtn";
 
 function SigninModal({ closeModal }) {
   const {

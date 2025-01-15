@@ -1,7 +1,7 @@
 import useModalToggle from "@/hooks/useModalToggle";
 import Button from "@/ui/Button";
 import ModalContainer from "@/ui/ModalContainer";
-import MediaUploader from "../MediaUploader/MediaUploader";
+import MediaUploader from "../../Modals/MediaUploaderModal/MediaUploaderModal";
 
 function AllAlbums() {
   const [isModalOpen, setIsModalOpen] = useModalToggle();

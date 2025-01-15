@@ -1,12 +1,12 @@
 import Button from "@/ui/Button";
-import DragDrop from "../DragDrop/DragDrop";
-import { uploadTrack } from "@/services/apiTracks";
+import DragDrop from "../../ArtistDashboard/DragDrop/DragDrop";
+import { uploadTrack } from "@/services/apiTrack";
 import getTrackDuration from "@/utils/getTrackDuration";
 import { useAuth } from "@/contexts/AuthContext";
-import { createAlbum } from "@/services/apiAlbums";
+import { createAlbum } from "@/services/apiAlbum";
 import { useState } from "react";
 
-function MediaUploader({
+function MediaUploaderModal({
   isSingle = false,
   isAlbum = false,
   closeModal,
@@ -109,4 +109,4 @@ function MediaUploader({
   );
 }
 
-export default MediaUploader;
+export default MediaUploaderModal;

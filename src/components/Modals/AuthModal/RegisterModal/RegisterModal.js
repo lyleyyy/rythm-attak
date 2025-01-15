@@ -1,15 +1,15 @@
 import { useForm, Controller } from "react-hook-form";
 import AuthInput from "../AuthInput/AuthInput";
-import ModalCloseBtn from "../../../../ui/ModalCloseBtn";
 import AuthModalHeader from "../AuthModalHeader/AuthModalHeader";
 import { useState } from "react";
-import SeparateLine from "../SeparateLine/SeparateLine";
+import SeparateLine from "../../../../ui/SeparateLine";
 import AuthModalContainer from "../AuthModalContainer/AuthModalContainer";
 import { createUser } from "@/services/apiUsers";
 import RegisterModalFooter from "./RegisterModalFooter/RegisterModalFooter";
 import FinishRegister from "./FinishRegister/FinishRegister";
 import OAuthForm from "../OAuthForm";
 import UserTypeSelector from "./UserTypeSelector/UserTypeSelector";
+import ModalCloseBtn from "@/ui/ModalCloseBtn";
 
 function RegisterModal({ closeModal }) {
   const {
