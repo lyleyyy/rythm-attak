@@ -6,11 +6,7 @@ import AllAlbums from "./AllAlbums/AllAlbums";
 import AllTracks from "./AllTracks/AllTracks";
 import ArtistProfile from "./ArtistProfile/ArtistProfile";
 import { useAuth } from "@/contexts/AuthContext";
-import {
-  getAllAlbumsOfArtist,
-  getAllSinglesOfArtist,
-  getAllTracksOfArtist,
-} from "@/services/apiTracks";
+import { useCurrentAlbum } from "@/contexts/CurrentAlbumContext";
 
 const dashboardNavTags = [
   "All Singles",
@@ -23,30 +19,8 @@ function ArtistDashboard() {
   const { loggedInUser } = useAuth();
   const artistId = loggedInUser.is_artist && loggedInUser.id;
 
+  const { setIsOnAlbums, setCurrentAlbum } = useCurrentAlbum();
   const [activeIndex, setActiveIndex] = useState(0);
-  // const [singles, setSingles] = useState(null);
-  const [albums, setAlbums] = useState(null);
-  const [tracks, setTracks] = useState(null);
-
-  // useEffect(function () {
-  //   async function fetchMediasOfArtist() {
-  //     try {
-  //       const singles = await getAllSinglesOfArtist(artistId);
-  //       // const albums = await getAllAlbumsOfArtist(artistId);
-  //       // const tracks = await getAllTracksOfArtist(artistId);
-
-  //       // console.log(singles, "singlessingles");
-  //       // console.log(albums, "albumsalbums");
-  //       // console.log(tracks, "trackstracks");
-
-  //       setSingles(singles);
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   }
-
-  //   fetchMediasOfArtist();
-  // }, []);
 
   return (
     <div className="mb-20 h-full px-8">
@@ -57,7 +31,15 @@ function ArtistDashboard() {
             index={i}
             name={el}
             isActive={activeIndex === i}
-            setActiveIndex={setActiveIndex}
+            onClick={() => {
+              setActiveIndex(i);
+              if (dashboardNavTags.at(i) === "All Albums") {
+                setIsOnAlbums(true);
+              } else {
+                setIsOnAlbums(false);
+                setCurrentAlbum(null);
+              }
+            }}
           />
         ))}
       </DashboardNav>

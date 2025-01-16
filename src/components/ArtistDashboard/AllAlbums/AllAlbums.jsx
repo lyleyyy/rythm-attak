@@ -1,13 +1,13 @@
 import useModalToggle from "@/hooks/useModalToggle";
 import Button from "@/ui/Button";
 import ModalContainer from "@/ui/ModalContainer";
-import MediaUploader from "../../Modals/MediaUploaderModal/MediaUploaderModal";
 import ArtistMediasContainer from "../ArtistMediasContainer/ArtistMediasContainer";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "@/ui/LoadingSpinner";
 import { getAllAlbumsOfArtist } from "@/services/apiAlbums";
 import ArtistAlbumCard from "./ArtistAlbumCard/ArtistAlbumCard";
 import MediaUploaderModal from "../../Modals/MediaUploaderModal/MediaUploaderModal";
+import { useCurrentAlbum } from "@/contexts/CurrentAlbumContext";
 
 function AllAlbums({ artistId }) {
   const [albums, setAlbums] = useState(null);
@@ -16,6 +16,7 @@ function AllAlbums({ artistId }) {
   const [isDeleteFinished, setIsDeleteFinished] = useState(false);
   const [isPublishFinished, setIsPublishFinished] = useState(false);
   const [selectedAlbum, setSelectedAlbum] = useState(null);
+  const { setCurrentAlbum } = useCurrentAlbum();
 
   useEffect(
     function () {
@@ -37,10 +38,10 @@ function AllAlbums({ artistId }) {
   );
 
   function clickSelectHandler(e, index) {
-    if (["svg", "path", "BUTTON"].includes(e.target.tagName))
+    if (!["svg", "path", "BUTTON"].includes(e.target.tagName)) {
       setSelectedAlbum(index);
-
-    console.log(index);
+      setCurrentAlbum(albums.at(index));
+    }
   }
 
   return (

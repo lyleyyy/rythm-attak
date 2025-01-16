@@ -31,9 +31,13 @@ function ArtistAlbumCard({
 
   return (
     <div
-      className={`relative flex flex-col gap-2 rounded-lg p-2 transition-all duration-200 ease-in-out hover:bg-zinc-800 ${isSelected && "bg-zinc-700"}`}
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
+      className={`relative flex flex-col gap-2 rounded-lg p-2 transition-all duration-200 ease-in-out ${!isSelected && "hover:bg-zinc-800"} ${isSelected && "bg-zinc-700"}`}
+      onMouseEnter={() => {
+        setIsHover(true);
+      }}
+      onMouseLeave={() => {
+        setIsHover(false);
+      }}
       onClick={onClick}
     >
       <div style={{ width: "180px", height: "180px", position: "relative" }}>
@@ -50,7 +54,7 @@ function ArtistAlbumCard({
         {albumName.length > 15 ? albumName.slice(0, 15) + "..." : albumName}
       </h3>
 
-      {isHover && !isPublished && (
+      {(isHover || isSelected) && !isPublished && (
         <MediaOperationButtonsContainer>
           <MediaOperationButton info={true} />
           <MediaOperationButton edit={true} />
@@ -58,13 +62,13 @@ function ArtistAlbumCard({
         </MediaOperationButtonsContainer>
       )}
 
-      {isHover && isPublished && (
+      {(isHover || isSelected) && isPublished && (
         <MediaOperationButtonsContainer>
           <MediaOperationButton info={true} />
         </MediaOperationButtonsContainer>
       )}
 
-      {isHover && (
+      {(isHover || isSelected) && (
         <IconButton
           position="absolute top-1/2 right-1/2"
           bgColor="bg-purple-700"

@@ -1,15 +1,31 @@
-import Button from "@/ui/Button";
+"use client";
 import SidebarContent from "./SidebarContent/SidebarContent";
 import SidebarFooter from "./SidebarFooter/SidebarFooter";
 import SidebarHeader from "./SidebarHeader/SidebarHeader";
+import SidebarContainer from "./SidebarContainer/SidebarContainer";
+import { useAuth } from "@/contexts/AuthContext";
+import { useCurrentAlbum } from "@/contexts/CurrentAlbumContext";
 
 function Sidebar() {
+  const { loggedInUser, isArtist } = useAuth();
+  const { isOnAlbums, currentAlbum } = useCurrentAlbum();
+
   return (
-    <div className="flex w-1/4 flex-col gap-4 rounded-xl bg-zinc-900 p-4">
-      <SidebarHeader />
-      <SidebarContent />
+    <SidebarContainer>
+      <SidebarHeader
+        loggedInUser={loggedInUser}
+        isArtist={isArtist}
+        isOnAlbums={isOnAlbums}
+        currentAlbum={currentAlbum}
+      />
+      <SidebarContent
+        loggedInUser={loggedInUser}
+        isArtist={isArtist}
+        isOnAlbums={isOnAlbums}
+        currentAlbum={currentAlbum}
+      />
       <SidebarFooter />
-    </div>
+    </SidebarContainer>
   );
 }
 

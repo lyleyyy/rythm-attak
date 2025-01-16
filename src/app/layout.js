@@ -6,6 +6,7 @@ import Sidebar from "@/components/SidebarMain/Sidebar/Sidebar";
 import Player from "@/components/Player/Player";
 import MainContentContainer from "@/components/SidebarMain/MainContentContainer/MainContentContainer";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { CurrentAlbumProvider } from "@/contexts/CurrentAlbumContext";
 
 export const metadata = { title: "RA" };
 
@@ -14,14 +15,16 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <AuthProvider>
-          <Main>
-            <HeadNav />
-            <SidebarMain>
-              <Sidebar />
-              <MainContentContainer>{children}</MainContentContainer>
-            </SidebarMain>
-            <Player />
-          </Main>
+          <CurrentAlbumProvider>
+            <Main>
+              <HeadNav />
+              <SidebarMain>
+                <Sidebar />
+                <MainContentContainer>{children}</MainContentContainer>
+              </SidebarMain>
+              <Player />
+            </Main>
+          </CurrentAlbumProvider>
         </AuthProvider>
       </body>
     </html>

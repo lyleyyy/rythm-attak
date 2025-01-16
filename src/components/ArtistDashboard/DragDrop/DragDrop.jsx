@@ -44,9 +44,9 @@ function DragDrop({ label, name }) {
   const hiddenInputRef = useRef(null);
 
   const acceptFileFormats =
-    label === "Single Cover" || label === "Album Cover"
+    name === "single cover" || name === "album cover"
       ? acceptImgFormats
-      : label === "Track"
+      : name === "track"
         ? acceptAudioFormats
         : null;
 

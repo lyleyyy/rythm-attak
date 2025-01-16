@@ -8,6 +8,7 @@ const AuthContext = createContext();
 function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
+  const [isArtist, setIsArtist] = useState(null);
   const [authContextLoading, setAuthContextLoading] = useState(true);
 
   useEffect(
@@ -23,6 +24,7 @@ function AuthProvider({ children }) {
             const user = await getUserByEmail(token.email);
             setLoggedInUser(user);
             setIsLoggedIn(true);
+            setIsArtist(user.is_artist);
           }
         } catch (err) {
           if (err.status === 401) return;
@@ -44,6 +46,7 @@ function AuthProvider({ children }) {
         isLoggedIn,
         setIsLoggedIn,
         loggedInUser,
+        isArtist,
         setLoggedInUser,
         authContextLoading,
         setAuthContextLoading,

@@ -1,8 +1,8 @@
-function DashboardNavButton({ name, index, isActive, setActiveIndex }) {
+function DashboardNavButton({ name, isActive, onClick }) {
   return (
     <button
       className={`h-full w-1/4 border-b-4 border-transparent text-lg font-bold ${!isActive && "text-zinc-500"} ${isActive && "border-white text-white"} hover:text-white`}
-      onClick={() => setActiveIndex(index)}
+      onClick={onClick}
     >
       {name}
     </button>
