@@ -1,6 +1,6 @@
 import { MdErrorOutline } from "react-icons/md";
 
-function IncorrectNote() {
+function ErrorMessage() {
   return (
     <div className="flex h-12 w-1/3 items-center gap-2 bg-red-600 pl-4 leading-9">
       <MdErrorOutline className="text-2xl" />
@@ -9,4 +9,4 @@ function IncorrectNote() {
   );
 }
 
-export default IncorrectNote;
+export default ErrorMessage;

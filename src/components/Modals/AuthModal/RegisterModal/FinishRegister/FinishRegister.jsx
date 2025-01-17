@@ -1,6 +1,7 @@
-import Button from "@/ui/Button";
 import { FcOk } from "react-icons/fc";
 import { BiSolidErrorCircle } from "react-icons/bi";
+import ThemeButton from "@/ui/ThemeButton";
+import PlainButton from "@/ui/PlainButton";
 
 function FinishRegister({ label, closeModal }) {
   return (
@@ -24,13 +25,14 @@ function FinishRegister({ label, closeModal }) {
         </>
       )}
 
-      <Button
-        width={label === "success" ? "w-52" : "w-36"}
-        hoverBgColor="hover:bg-purple-600"
-        onClick={closeModal}
-      >
-        {label === "success" ? "Continue Your Journey" : "Close"}
-      </Button>
+      {label === "success" && (
+        <ThemeButton width="w-52" onClick={closeModal}>
+          Continue Your Journey
+        </ThemeButton>
+      )}
+      {label === "fail" && (
+        <PlainButton onClick={closeModal}>Close</PlainButton>
+      )}
     </div>
   );
 }

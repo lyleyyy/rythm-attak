@@ -1,4 +1,4 @@
-import Button from "@/ui/Button";
+import ThemeButton from "@/ui/ThemeButton";
 import DragDrop from "../../ArtistDashboard/DragDrop/DragDrop";
 import { uploadTrack } from "@/services/apiTrack";
 import getTrackDuration from "@/utils/getTrackDuration";
@@ -103,11 +103,11 @@ function MediaUploaderModal({
         </div>
       </div>
 
-      <Button type="submit" disabled={isUploading}>
+      <ThemeButton type="submit" disabled={isUploading}>
         {!isUploading && (isSingle ? "Upload" : isAlbum ? "Create" : "")}
         {isUploading &&
           (isSingle ? "Uploading..." : isAlbum ? "Creating..." : "")}
-      </Button>
+      </ThemeButton>
     </form>
   );
 }

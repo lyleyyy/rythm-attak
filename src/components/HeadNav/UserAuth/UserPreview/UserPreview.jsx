@@ -1,6 +1,6 @@
-import UserMenuModal from "@/components/Modals/UserMenuModal/UserMenuModal";
-import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import UserMenuModal from "@/components/Modals/UserMenuModal/UserMenuModal";
 
 function UserPreview({ loggedInUser }) {
   const { image } = loggedInUser;

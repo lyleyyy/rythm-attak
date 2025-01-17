@@ -1,4 +1,4 @@
-import Button from "@/ui/Button";
+import BorderedButton from "@/ui/BorderedButton";
 import Link from "next/link";
 import { GrLanguage } from "react-icons/gr";
 
@@ -22,12 +22,12 @@ function SidebarFooter() {
       <span className="mb-4 text-sm text-zinc-400">
         © 2024 RythmAttak Inc. All Rights Reserved.
       </span>
-      <Button bgColor="bg-black" borderWidth={true} isHover={true}>
-        <div className="flex items-center justify-center gap-2">
+      <BorderedButton>
+        <span className="flex items-center justify-center gap-2">
           <GrLanguage />
           <span>English (EU)</span>
-        </div>
-      </Button>
+        </span>
+      </BorderedButton>
     </div>
   );
 }

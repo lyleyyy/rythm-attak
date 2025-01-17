@@ -1,5 +1,4 @@
-import MediaUploader from "../../Modals/MediaUploaderModal/MediaUploaderModal";
-import Button from "@/ui/Button";
+import ThemeButton from "@/ui/ThemeButton";
 import ModalContainer from "@/ui/ModalContainer";
 import useModalToggle from "@/hooks/useModalToggle";
 import ArtistSingleCard from "./ArtistSingleCard/ArtistSingleCard";
@@ -7,6 +6,7 @@ import ArtistMediasContainer from "../ArtistMediasContainer/ArtistMediasContaine
 import { useEffect, useState } from "react";
 import { getAllSinglesOfArtist } from "@/services/apiTracks";
 import LoadingSpinner from "@/ui/LoadingSpinner";
+import MediaUploaderModal from "@/components/Modals/MediaUploaderModal/MediaUploaderModal";
 
 function AllSingles({ artistId }) {
   const [singles, setSingles] = useState(null);
@@ -36,15 +36,12 @@ function AllSingles({ artistId }) {
 
   return (
     <div className="flex flex-col gap-10">
-      <Button
-        hoverBgColor="hover:bg-purple-600"
-        onClick={() => setIsModalOpen(true)}
-      >
+      <ThemeButton onClick={() => setIsModalOpen(true)}>
         Track Upload
-      </Button>
+      </ThemeButton>
       {isModalOpen && (
         <ModalContainer onClick={() => setIsModalOpen(false)}>
-          <MediaUploader
+          <MediaUploaderModal
             isSingle={true}
             closeModal={() => setIsModalOpen(false)}
             setIsUploadFinished={setIsUploadFinished}

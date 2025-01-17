@@ -1,16 +1,34 @@
-import DragDrop from "@/components/ArtistDashboard/DragDrop/DragDrop";
+import ThemeButton from "@/ui/ThemeButton";
+import AlbumTrackInput from "./AlbumTrackInput/AlbumTrackInput";
+import IconButton from "@/ui/IconButton";
+import { RiAddLargeFill } from "react-icons/ri";
 
 function AlbumTracksUploaderModal() {
+  function addAlbumTrackInput(e) {
+    e.preventDefault();
+    console.log("add waya");
+  }
+
+  function deleteAlbumTrackInput(e) {
+    e.preventDefault();
+    console.log("delete waya");
+  }
+
   return (
-    <div className="flex h-3/4 w-1/3 flex-col items-center rounded bg-black">
-      <div className="flex">
-        <div className="flex flex-col">
-          <label>Track Name</label>
-          <input className="rounded border border-white bg-black" />
-        </div>
-        <input type="file" />
+    <form className="flex h-3/4 w-3/5 flex-col items-center justify-between rounded bg-black p-6">
+      <div className="flex flex-col items-center gap-2">
+        <AlbumTrackInput />
+        <IconButton
+          iconSize="text-3xl"
+          textColor="text-zinc-400"
+          mt="mt-6"
+          onClick={addAlbumTrackInput}
+        >
+          <RiAddLargeFill />
+        </IconButton>
       </div>
-    </div>
+      <ThemeButton>Upload</ThemeButton>
+    </form>
   );
 }
 

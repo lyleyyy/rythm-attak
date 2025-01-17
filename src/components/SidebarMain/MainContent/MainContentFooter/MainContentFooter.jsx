@@ -1,4 +1,3 @@
-import IconButton from "@/ui/IconButton";
 import MainContentFooterCategory from "./MainContentFooterCategory/MainContentFooterCategory";
 import { FaFacebook } from "react-icons/fa";
 import { FaInstagramSquare } from "react-icons/fa";
@@ -45,7 +44,6 @@ function MainContentFooter() {
             className="rounded-sm text-3xl hover:bg-white hover:text-purple-500"
           >
             <FaInstagramSquare />
-            {/* <img src="/Instagram-icon.png" alt="ig-icon" width={28} height={28} /> */}
           </Link>
           <Link
             href="#"

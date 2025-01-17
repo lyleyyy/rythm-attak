@@ -1,5 +1,5 @@
 import { deleteTrack, updateTrackPublish } from "@/services/apiTrack";
-import Button from "@/ui/Button";
+import ThemeButton from "@/ui/ThemeButton";
 import MediaOperationButton from "@/ui/MediaOperationButton";
 import IconButton from "@/ui/IconButton";
 import Image from "next/image";
@@ -115,14 +115,13 @@ function ArtistSingleCard({
       )}
 
       <span className="flex w-full justify-center">
-        <Button
-          hoverBgColor="hover:bg-purple-600"
+        <ThemeButton
           onClick={confirmPublish}
           disabled={isPublished || isPublishing}
         >
           {!isPublishing && isPublished ? "Published" : "Publish"}
           {isPublishing && "Publishing..."}
-        </Button>
+        </ThemeButton>
       </span>
 
       {isModalOpen && (

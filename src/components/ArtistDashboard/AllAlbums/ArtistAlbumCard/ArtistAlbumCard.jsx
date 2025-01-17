@@ -1,6 +1,6 @@
 import ConfirmationModal from "@/components/Modals/ConfirmationModal/ConfirmationModal";
 import useModalToggle from "@/hooks/useModalToggle";
-import Button from "@/ui/Button";
+import ThemeButton from "@/ui/ThemeButton";
 import IconButton from "@/ui/IconButton";
 import MediaOperationButton from "@/ui/MediaOperationButton";
 import MediaOperationButtonsContainer from "@/ui/MediaOperationButtonsContainer";
@@ -82,14 +82,10 @@ function ArtistAlbumCard({
       )}
 
       <span className="flex w-full justify-center">
-        <Button
-          hoverBgColor="hover:bg-purple-600"
-          //   onClick={confirmPublish}
-          disabled={isPublished || isPublishing}
-        >
+        <ThemeButton disabled={isPublished || isPublishing}>
           {!isPublishing && isPublished ? "Published" : "Publish"}
           {isPublishing && "Publishing..."}
-        </Button>
+        </ThemeButton>
       </span>
 
       {isModalOpen && (

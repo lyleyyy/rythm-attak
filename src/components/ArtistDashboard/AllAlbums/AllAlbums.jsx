@@ -1,5 +1,5 @@
 import useModalToggle from "@/hooks/useModalToggle";
-import Button from "@/ui/Button";
+import ThemeButton from "@/ui/ThemeButton";
 import ModalContainer from "@/ui/ModalContainer";
 import ArtistMediasContainer from "../ArtistMediasContainer/ArtistMediasContainer";
 import { useEffect, useState } from "react";
@@ -46,7 +46,9 @@ function AllAlbums({ artistId }) {
 
   return (
     <div className="flex flex-col gap-10">
-      <Button onClick={() => setIsModalOpen(true)}>Create Album</Button>
+      <ThemeButton onClick={() => setIsModalOpen(true)}>
+        Create Album
+      </ThemeButton>
       {isModalOpen && (
         <ModalContainer onClick={() => setIsModalOpen(false)}>
           <MediaUploaderModal

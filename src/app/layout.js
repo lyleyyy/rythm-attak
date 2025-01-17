@@ -1,10 +1,10 @@
-import Main from "@/components/Main/Main";
 import "./globals.css";
 import HeadNav from "@/components/HeadNav/HeadNav";
 import SidebarMain from "@/components/SidebarMain/SidebarMain";
 import Sidebar from "@/components/SidebarMain/Sidebar/Sidebar";
-import Player from "@/components/Player/Player";
 import MainContentContainer from "@/components/SidebarMain/MainContentContainer/MainContentContainer";
+import Main from "@/components/Main/Main";
+import Player from "@/components/Player/Player";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CurrentAlbumProvider } from "@/contexts/CurrentAlbumContext";
 

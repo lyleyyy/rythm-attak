@@ -1,4 +1,5 @@
-import Button from "@/ui/Button";
+import ThemeButton from "@/ui/ThemeButton";
+import PlainButton from "@/ui/PlainButton";
 
 function ConfirmationModal({ confirmation, action, closeModal }) {
   function onClickYes() {
@@ -16,12 +17,8 @@ function ConfirmationModal({ confirmation, action, closeModal }) {
       </span>
 
       <div className="space-x-8">
-        <Button hoverBgColor="hover:bg-purple-600" onClick={onClickYes}>
-          Yes
-        </Button>
-        <Button bgColor="bg-white" textColor="text-black" onClick={closeModal}>
-          No
-        </Button>
+        <ThemeButton onClick={onClickYes}>Yes</ThemeButton>
+        <PlainButton onClick={closeModal}>No</PlainButton>
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
 import capitalizeEachWord from "@/helper/capitalizeEachWord";
 import MediaCategory from "@/types/MediaCategory";
 import ThemePlayButton from "@/ui/ThemePlayButton";
-import Button from "@/ui/Button";
-import TrackPreview from "../TrackPreview/TrackPreview";
+import ThemeButton from "@/ui/ThemeButton";
+// import TrackPreview from "../TrackPreview/TrackPreview";
 
 const artistsList = [
   {
@@ -114,21 +114,10 @@ function Artist({ id }) {
       <div className="p-4">
         <div className="flex items-center gap-8">
           <ThemePlayButton />
-          <Button
-            borderColor="border-zinc-400"
-            width="w-24"
-            bgColor=""
-            borderRadius="rounded-3xl"
-            borderWidth={true}
-            textColor="text-zinc-400"
-            hoverTextColor="hover:text-white hover:border-white"
-            isHover={true}
-          >
+          <ThemeButton width="w-24" borderRadius="rounded-3xl">
             Follow
-          </Button>
-          <Button isHover={true} width="w-28">
-            Subscribe
-          </Button>
+          </ThemeButton>
+          <ThemeButton width="w-28">Subscribe</ThemeButton>
         </div>
       </div>
       <div className="flex gap-4 p-4">
@@ -136,7 +125,8 @@ function Artist({ id }) {
           <h3 className="mb-4 text-xl font-bold">Popular Tracks</h3>
           <div>
             {tracksList.map((track) => (
-              <TrackPreview index={track.id} track={track} key={track.id} />
+              // <TrackPreview index={track.id} track={track} key={track.id} />
+              <span>track</span>
             ))}
           </div>
         </div>

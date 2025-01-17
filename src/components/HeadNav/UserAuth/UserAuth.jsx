@@ -1,10 +1,11 @@
 "use client";
-import RegisterModal from "@/components/Modals/AuthModal/RegisterModal/RegisterModal";
-import SigninModal from "@/components/Modals/AuthModal/SigninModal/SigninModal";
-import Button from "@/ui/Button";
+import ThemeButton from "@/ui/ThemeButton";
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import UserPreview from "./UserPreview/UserPreview";
+import BorderedButton from "@/ui/BorderedButton";
+import RegisterModal from "@/components/Modals/AuthModal/RegisterModal/RegisterModal";
+import SigninModal from "@/components/Modals/AuthModal/SigninModal/SigninModal";
 
 function UserAuth() {
   const [register, setRegister] = useState(false);
@@ -17,34 +18,21 @@ function UserAuth() {
       <div className="flex items-center justify-end gap-4">
         {!loggedInUser && (
           <>
-            <Button
-              borderWidth={true}
-              bgColor="black"
-              isHover={true}
-              hoverTextColor="hover:text-black"
-              hoverBgColor="hover:bg-white"
-              onClick={() => setSignin(true)}
-            >
+            <BorderedButton onClick={() => setSignin(true)}>
               Sign in
-            </Button>
-            <Button
+            </BorderedButton>
+            <ThemeButton
               onClick={() => setRegister(true)}
               hoverBgColor="hover:bg-purple-600"
             >
               Create Account
-            </Button>
+            </ThemeButton>
           </>
         )}
 
         {loggedInUser && (
           <>
-            <Button
-              bgColor="bg-purple-700"
-              textColor="text-white"
-              hoverBgColor="hover:bg-purple-600"
-            >
-              Subscribe RA
-            </Button>
+            <ThemeButton>Subscribe RA</ThemeButton>
             <UserPreview loggedInUser={loggedInUser} />
           </>
         )}

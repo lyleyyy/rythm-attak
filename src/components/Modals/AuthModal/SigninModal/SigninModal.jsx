@@ -1,13 +1,13 @@
-import AuthModalContainer from "../AuthModalContainer/AuthModalContainer";
-import AuthModalHeader from "../AuthModalHeader/AuthModalHeader";
 import { Controller, useForm } from "react-hook-form";
 import { useState } from "react";
-import IncorrectNote from "./IncorrectNote/IncorrectNote";
-import OAuthForm from "../OAuthForm";
 import { CredentialsSignIn } from "@/lib/auth-action";
-import AuthInput from "../AuthInput/AuthInput";
 import { useAuth } from "@/contexts/AuthContext";
 import ModalCloseBtn from "@/ui/ModalCloseBtn";
+import OAuthForm from "../OAuthForm/OAuthForm";
+import AuthModalContainer from "../AuthModalContainer/AuthModalContainer";
+import AuthModalHeader from "../AuthModalHeader/AuthModalHeader";
+import AuthInput from "../AuthInput/AuthInput";
+import ErrorMessage from "./ErrorMessage/ErrorMessage";
 
 function SigninModal({ closeModal }) {
   const {
@@ -25,26 +25,11 @@ function SigninModal({ closeModal }) {
   const [isSigningin, setIsSigningin] = useState(false);
   const { setIsLoggedIn } = useAuth();
 
-  // async function formSubmitHandler(data) {
-  //   try {
-  //     const { email, password } = data;
-  //     console.log(email, password, "wWwqdwdqw");
-  //     // const res = await getUser(email, password);
-  //     // can start to render login, may need nextAuth
-
-  //     await CredentialsSignIn("credentials", formData);
-  //   } catch (err) {
-  //     console.error("Error in sign in formSubmitHandler: ", err.message);
-  //     setIsEmailPwdWrong(true);
-  //     throw err;
-  //   }
-  // }
-
   return (
     <AuthModalContainer>
       <ModalCloseBtn onClick={closeModal} />
       <AuthModalHeader>Sign in to RythmAttak</AuthModalHeader>
-      {isEmailPwdWrong && <IncorrectNote />}
+      {isEmailPwdWrong && <ErrorMessage />}
       <div className="flex flex-col gap-4">
         <OAuthForm provider="google" />
       </div>
@@ -98,33 +83,6 @@ function SigninModal({ closeModal }) {
           {isSigningin ? "Signing in..." : "Sign in"}
         </button>
       </form>
-
-      {/* <form onSubmit={handleSubmit(formSubmitHandler)} className="space-y-4">
-        <Controller
-          name="email"
-          control={control}
-          rules={{ required: "Email is required." }}
-          render={({ field }) => (
-            <AuthInput label="Email" error={errors.email} {...field} />
-          )}
-        />
-
-        <Controller
-          name="password"
-          control={control}
-          rules={{ required: "Password is required." }}
-          render={({ field }) => (
-            <AuthInput label="Password" error={errors.password} {...field} />
-          )}
-        />
-
-        <button
-          type="submit"
-          className="h-12 w-72 rounded-full bg-purple-700 text-lg font-medium outline-none hover:cursor-pointer hover:bg-purple-600"
-        >
-          Sign in
-        </button>
-      </form> */}
 
       <span className="text-zinc-300 underline hover:cursor-pointer hover:text-white">
         Forgot Password?
