@@ -1,10 +1,10 @@
 import "./globals.css";
+import Main from "@/components/Main/Main";
 import HeadNav from "@/components/HeadNav/HeadNav";
 import SidebarMain from "@/components/SidebarMain/SidebarMain";
 import Sidebar from "@/components/SidebarMain/Sidebar/Sidebar";
 import MainContentContainer from "@/components/SidebarMain/MainContentContainer/MainContentContainer";
-import Main from "@/components/Main/Main";
-import Player from "@/components/Player/Player";
+import PromoPlayerContainer from "@/components/PromoPlayerContainer /PromoPlayerContainer";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CurrentAlbumProvider } from "@/contexts/CurrentAlbumContext";
 
@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
                 <Sidebar />
                 <MainContentContainer>{children}</MainContentContainer>
               </SidebarMain>
-              <Player />
+              <PromoPlayerContainer />
             </Main>
           </CurrentAlbumProvider>
         </AuthProvider>

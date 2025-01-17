@@ -38,7 +38,7 @@ function SidebarHeader({ loggedInUser, isArtist, isOnAlbums, currentAlbum }) {
 
       {loggedInUser && isArtist && isModalOpen && (
         <ModalContainer onClick={() => setIsModalOpen(false)}>
-          <AlbumTracksUploaderModal />
+          <AlbumTracksUploaderModal setIsModalOpen={setIsModalOpen} />
         </ModalContainer>
       )}
     </div>

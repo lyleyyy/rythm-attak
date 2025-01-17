@@ -8,17 +8,21 @@ export async function uploadTrack(
   trackDuration,
   isSingle,
   trackStory,
-  singleCover,
+  trackCover,
   trackAudio,
+  trackNumber = null,
+  albumId = null,
 ) {
   try {
     // upload to storage
     let coverUrl = null;
     let coverPathName = null;
-    if (singleCover.name) {
-      coverPathName = sanitizedFilePathName(singleCover, trackName);
-      coverUrl = await uploadFile("track_cover", singleCover, coverPathName);
+    if (isSingle) {
+      coverPathName = sanitizedFilePathName(trackCover, trackName);
+      coverUrl = await uploadFile("track_cover", trackCover, coverPathName);
       // console.log(coverUrl, "coverUrl");
+    } else {
+      coverUrl = trackCover;
     }
 
     const audioPathName = sanitizedFilePathName(trackAudio, trackName);
@@ -32,19 +36,21 @@ export async function uploadTrack(
         {
           track_name: trackName,
           artist_id: artistId,
-          duration: trackDuration,
           is_single: isSingle,
+          duration: trackDuration,
           track_story: trackStory,
           cover_url: coverUrl,
           audio_url: audioUrl,
           cover_path_name: coverPathName,
           audio_path_name: audioPathName,
+          track_number: trackNumber,
+          album_id: albumId,
         },
       ])
       .select();
 
     if (error) throw new Error("Write into database issue: " + error);
-    // console.log(data, "write into database success");
+    console.log(data, "write into database success");
     return data;
   } catch (err) {
     // need to check and operate:

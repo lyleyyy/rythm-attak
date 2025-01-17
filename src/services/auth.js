@@ -8,10 +8,6 @@ import { encode, decode } from "next-auth/jwt";
 const authConfig = {
   secret: process.env.NEXT_PUBLIC_AUTH_SECRET,
   providers: [
-    // Google({
-    //   clientId: process.env.NEXT_PUBLIC_AUTH_GOOGLE_ID,
-    //   clientSecret: process.env.NEXT_PUBLIC_AUTH_GOOGLE_SECRET,
-    // }),
     Google({
       clientId: process.env.AUTH_GOOGLE_ID,
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
@@ -52,7 +48,6 @@ const authConfig = {
 
 export const {
   auth,
-  // handlers,
   handlers: { GET, POST },
   signIn,
   signOut,

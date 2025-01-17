@@ -1,6 +1,7 @@
 import sanitizedFilePathName from "@/utils/sanitizedFilePathName";
 import supabase from "./supabase";
 import uploadFile from "./uploadFile";
+import { uploadTrack } from "./apiTrack";
 
 export async function createAlbum(albumName, artistId, albumStory, albumCover) {
   try {
@@ -34,5 +35,41 @@ export async function createAlbum(albumName, artistId, albumStory, albumCover) {
   } catch (err) {
     // need to check and operate:
     // if (coverUrl) delete uploaded cover
+  }
+}
+
+export async function uploadTracksToAlbum(albumTracks) {
+  try {
+    const res = await Promise.all(
+      albumTracks.map((albumTrack) => {
+        const {
+          trackName,
+          artistId,
+          trackDuration,
+          isSingle,
+          trackStory,
+          trackCover,
+          trackAudio,
+          trackNumber,
+          albumId,
+        } = albumTrack;
+
+        uploadTrack(
+          trackName,
+          artistId,
+          trackDuration,
+          isSingle,
+          trackStory,
+          trackCover,
+          trackAudio,
+          trackNumber,
+          albumId,
+        );
+      }),
+    );
+
+    console.log(res, "hmmm??????");
+  } catch (err) {
+    console.error(err);
   }
 }
