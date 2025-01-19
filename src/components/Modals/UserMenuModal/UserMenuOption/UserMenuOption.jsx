@@ -1,7 +1,7 @@
 import { TbUserSquare } from "react-icons/tb";
 import { LuMusic4 } from "react-icons/lu";
 
-function MenuButton({
+function UserMenuOption({
   children,
   label,
   hoverUnderline = true,
@@ -26,4 +26,4 @@ function MenuButton({
   );
 }
 
-export default MenuButton;
+export default UserMenuOption;

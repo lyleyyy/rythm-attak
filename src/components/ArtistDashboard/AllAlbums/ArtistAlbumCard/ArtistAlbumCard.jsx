@@ -1,13 +1,12 @@
 import ConfirmationModal from "@/components/Modals/ConfirmationModal/ConfirmationModal";
 import useModalToggle from "@/hooks/useModalToggle";
 import ThemeButton from "@/ui/ThemeButton";
-import IconButton from "@/ui/IconButton";
 import MediaOperationButton from "@/ui/MediaOperationButton";
 import MediaOperationButtonsContainer from "@/ui/MediaOperationButtonsContainer";
 import ModalContainer from "@/ui/ModalContainer";
 import Image from "next/image";
 import { useState } from "react";
-import { RiPlayLargeFill } from "react-icons/ri";
+import ThemePlayButton from "@/ui/ThemePlayButton";
 
 function ArtistAlbumCard({
   album,
@@ -69,16 +68,7 @@ function ArtistAlbumCard({
       )}
 
       {(isHover || isSelected) && (
-        <IconButton
-          position="absolute top-1/2 right-1/2"
-          bgColor="bg-purple-700"
-          width="w-12"
-          height="h-12"
-          isHover={true}
-          isTranslateCenter={true}
-        >
-          <RiPlayLargeFill />
-        </IconButton>
+        <ThemePlayButton absoluteOffsetCenter={true} />
       )}
 
       <span className="flex w-full justify-center">

@@ -1,6 +1,6 @@
-import BorderedButton from "@/ui/BorderedButton";
-import Link from "next/link";
 import { GrLanguage } from "react-icons/gr";
+import Link from "next/link";
+import BorderedButton from "@/ui/BorderedButton";
 
 function SidebarFooter() {
   return (

@@ -57,10 +57,10 @@ function Track({ id }) {
   const track = songsList.find((track) => track.id.toString() === id);
   const { imageUrl, name, artist } = track;
 
-  const imageStyle = {
-    borderRadius: "50%",
-    border: "1px solid #fff",
-  };
+  // const imageStyle = {
+  //   borderRadius: "50%",
+  //   border: "1px solid #fff",
+  // };
 
   return (
     <div className="mb-20 space-y-4">

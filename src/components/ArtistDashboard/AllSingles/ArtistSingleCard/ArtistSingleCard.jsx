@@ -1,14 +1,13 @@
+import { useState } from "react";
 import { deleteTrack, updateTrackPublish } from "@/services/apiTrack";
 import ThemeButton from "@/ui/ThemeButton";
 import MediaOperationButton from "@/ui/MediaOperationButton";
-import IconButton from "@/ui/IconButton";
 import Image from "next/image";
-import { useState } from "react";
-import { RiPlayLargeFill } from "react-icons/ri";
 import MediaOperationButtonsContainer from "@/ui/MediaOperationButtonsContainer";
 import ModalContainer from "@/ui/ModalContainer";
 import useModalToggle from "@/hooks/useModalToggle";
 import ConfirmationModal from "@/components/Modals/ConfirmationModal/ConfirmationModal";
+import ThemePlayButton from "@/ui/ThemePlayButton";
 
 function ArtistSingleCard({
   single,
@@ -101,18 +100,7 @@ function ArtistSingleCard({
         </MediaOperationButtonsContainer>
       )}
 
-      {isHover && (
-        <IconButton
-          position="absolute top-1/2 right-1/2"
-          bgColor="bg-purple-700"
-          width="w-12"
-          height="h-12"
-          isHover={true}
-          isTranslateCenter={true}
-        >
-          <RiPlayLargeFill />
-        </IconButton>
-      )}
+      {isHover && <ThemePlayButton absoluteOffsetCenter={true} />}
 
       <span className="flex w-full justify-center">
         <ThemeButton

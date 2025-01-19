@@ -33,12 +33,7 @@ function AlbumTrackInput({ index, onClick }) {
           required
         />
       </div>
-      <IconButton
-        iconSize="text-2xl"
-        textColor="text-zinc-400"
-        hoverTextColor="hover:text-white"
-        onClick={onClick}
-      >
+      <IconButton iconSize="text-2xl" onClick={onClick}>
         <RxCross2 />
       </IconButton>
     </div>

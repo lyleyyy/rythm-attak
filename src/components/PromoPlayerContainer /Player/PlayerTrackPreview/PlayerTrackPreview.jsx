@@ -1,7 +1,7 @@
 import capitalizeEachWord from "@/helper/capitalizeEachWord";
 
-function MusicCard({ music }) {
-  const { name, artist, imageUrl } = music;
+function PlayerTrackPreview({ track }) {
+  const { name, artist, imageUrl } = track;
 
   return (
     <div className="flex w-1/4 gap-4">
@@ -14,4 +14,4 @@ function MusicCard({ music }) {
   );
 }
 
-export default MusicCard;
+export default PlayerTrackPreview;

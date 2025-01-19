@@ -11,7 +11,7 @@ function SidebarContent({ loggedInUser, isArtist, isOnAlbums, currentAlbum }) {
       </span>
     );
 
-  if (loggedInUser && isArtist && currentAlbum)
+  if (loggedInUser && isArtist && isOnAlbums && currentAlbum)
     return (
       <div className="h-full">{currentAlbum.id + currentAlbum.album_name}</div>
     );

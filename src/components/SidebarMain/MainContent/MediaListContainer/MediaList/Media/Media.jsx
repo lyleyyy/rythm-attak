@@ -1,10 +1,9 @@
 "use client";
-import capitalizeEachWord from "@/helper/capitalizeEachWord";
-import MediaCategory from "@/types/MediaCategory";
-import IconButton from "@/ui/IconButton";
-import Link from "next/link";
 import { useState } from "react";
-import { RiPlayLargeFill } from "react-icons/ri";
+import Link from "next/link";
+import ThemePlayButton from "@/ui/ThemePlayButton";
+import MediaCategory from "@/types/MediaCategory";
+import capitalizeEachWord from "@/helper/capitalizeEachWord";
 
 function Media({ media }) {
   let { id, type, name, artist, imageUrl } = media;
@@ -40,16 +39,7 @@ function Media({ media }) {
         </Link>
       )}
       {type === MediaCategory.Track && isHover && (
-        <IconButton
-          position="absolute top-1/2 right-1/2"
-          bgColor="bg-purple-700"
-          width="w-12"
-          height="h-12"
-          isHover={true}
-          isTranslateCenter={true}
-        >
-          <RiPlayLargeFill />
-        </IconButton>
+        <ThemePlayButton absoluteOffsetCenter={true} />
       )}
 
       {type === MediaCategory.Artist && (

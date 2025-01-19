@@ -1,4 +1,4 @@
-function PlayerController({ children }) {
+function PlayerControllerContainer({ children }) {
   return (
     <div className="flex w-1/2 flex-col items-center justify-center gap-4">
       {children}
@@ -6,4 +6,4 @@ function PlayerController({ children }) {
   );
 }
 
-export default PlayerController;
+export default PlayerControllerContainer;

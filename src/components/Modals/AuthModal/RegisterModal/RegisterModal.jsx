@@ -1,9 +1,8 @@
 import { useForm, Controller } from "react-hook-form";
 import { useState } from "react";
-import SeparateLine from "../../../../ui/SeparateLine";
 import { createUser } from "@/services/apiUsers";
+import SeparateLine from "../../../../ui/SeparateLine";
 import UserTypeSelector from "./UserTypeSelector/UserTypeSelector";
-import ModalCloseBtn from "@/ui/ModalCloseBtn";
 import OAuthForm from "../OAuthForm/OAuthForm";
 import AuthModalContainer from "../AuthModalContainer/AuthModalContainer";
 import AuthModalHeader from "../AuthModalHeader/AuthModalHeader";
@@ -52,8 +51,7 @@ function RegisterModal({ closeModal }) {
 
   if (userType === "")
     return (
-      <AuthModalContainer>
-        <ModalCloseBtn onClick={closeModal} />
+      <AuthModalContainer onClick={closeModal}>
         <AuthModalHeader>
           Choose how you&apos;d like to register.
           <br />
@@ -76,8 +74,7 @@ function RegisterModal({ closeModal }) {
 
   if (userType === "user")
     return (
-      <AuthModalContainer>
-        <ModalCloseBtn onClick={closeModal} />
+      <AuthModalContainer onClick={closeModal}>
         {!isFinishRegister && (
           <>
             <AuthModalHeader>
@@ -190,8 +187,7 @@ function RegisterModal({ closeModal }) {
 
   if (userType === "artist")
     return (
-      <AuthModalContainer>
-        <ModalCloseBtn onClick={closeModal} />
+      <AuthModalContainer onClick={closeModal}>
         {!isFinishRegister && (
           <>
             <AuthModalHeader>

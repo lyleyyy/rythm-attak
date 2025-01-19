@@ -2,7 +2,6 @@ import { Controller, useForm } from "react-hook-form";
 import { useState } from "react";
 import { CredentialsSignIn } from "@/lib/auth-action";
 import { useAuth } from "@/contexts/AuthContext";
-import ModalCloseBtn from "@/ui/ModalCloseBtn";
 import OAuthForm from "../OAuthForm/OAuthForm";
 import AuthModalContainer from "../AuthModalContainer/AuthModalContainer";
 import AuthModalHeader from "../AuthModalHeader/AuthModalHeader";
@@ -26,8 +25,7 @@ function SigninModal({ closeModal }) {
   const { setIsLoggedIn } = useAuth();
 
   return (
-    <AuthModalContainer>
-      <ModalCloseBtn onClick={closeModal} />
+    <AuthModalContainer onClick={closeModal}>
       <AuthModalHeader>Sign in to RythmAttak</AuthModalHeader>
       {isEmailPwdWrong && <ErrorMessage />}
       <div className="flex flex-col gap-4">

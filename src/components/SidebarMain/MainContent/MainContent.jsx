@@ -1,8 +1,8 @@
 "use client";
-import MediaCategory from "@/types/MediaCategory";
-import MediaListContainer from "./MediaListContainer/MediaListContainer";
 import { useAuth } from "@/contexts/AuthContext";
+import MediaListContainer from "./MediaListContainer/MediaListContainer";
 import ArtistDashboard from "@/components/ArtistDashboard/ArtistDashboard";
+import MediaCategory from "@/types/MediaCategory";
 
 const songsList = [
   {
