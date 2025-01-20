@@ -7,7 +7,7 @@ import ModalContainer from "@/ui/ModalContainer";
 import useModalToggle from "@/hooks/useModalToggle";
 import AlbumTracksUploaderModal from "@/components/Modals/AlbumTracksUploaderModal/AlbumTracksUploaderModal";
 
-function SidebarHeader({ loggedInUser, isArtist, isOnAlbums, currentAlbum }) {
+function SidebarHeader({ loggedInUser, isArtist, currentAlbum }) {
   const [isModalOpen, setIsModalOpen] = useModalToggle();
 
   return (
@@ -29,7 +29,7 @@ function SidebarHeader({ loggedInUser, isArtist, isOnAlbums, currentAlbum }) {
           loggedInUser && isArtist && currentAlbum ? setIsModalOpen(true) : null
         }
       >
-        {loggedInUser && isArtist && isOnAlbums && currentAlbum ? (
+        {loggedInUser && isArtist && currentAlbum ? (
           <MdFileUpload />
         ) : loggedInUser && isArtist ? null : (
           <RiAddLargeFill />

@@ -8,20 +8,18 @@ import { useCurrentAlbum } from "@/contexts/CurrentAlbumContext";
 
 function Sidebar() {
   const { loggedInUser, isArtist } = useAuth();
-  const { isOnAlbums, currentAlbum } = useCurrentAlbum();
+  const { currentAlbum } = useCurrentAlbum();
 
   return (
     <SidebarContainer>
       <SidebarHeader
         loggedInUser={loggedInUser}
         isArtist={isArtist}
-        isOnAlbums={isOnAlbums}
         currentAlbum={currentAlbum}
       />
       <SidebarContent
         loggedInUser={loggedInUser}
         isArtist={isArtist}
-        isOnAlbums={isOnAlbums}
         currentAlbum={currentAlbum}
       />
       <SidebarFooter />

@@ -73,3 +73,18 @@ export async function uploadTracksToAlbum(albumTracks) {
     console.error(err);
   }
 }
+
+export async function getTracksOfAlbum(albumId) {
+  try {
+    let { data: tracks, error } = await supabase
+      .from("tracks")
+      .select("*")
+      .eq("album_id", albumId)
+      .order("track_number", { ascending: true });
+
+    if (error) throw new Error("Tracks not found for current album.");
+    return tracks;
+  } catch (err) {
+    console.error("getTracksOfAlbum issue: " + err);
+  }
+}

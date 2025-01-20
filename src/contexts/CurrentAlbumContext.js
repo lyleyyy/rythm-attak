@@ -4,13 +4,10 @@ import { createContext, useContext, useState } from "react";
 const CurrentAlbumContext = createContext();
 
 function CurrentAlbumProvider({ children }) {
-  const [isOnAlbums, setIsOnAlbums] = useState(false);
   const [currentAlbum, setCurrentAlbum] = useState(null);
 
   return (
-    <CurrentAlbumContext.Provider
-      value={{ isOnAlbums, setIsOnAlbums, currentAlbum, setCurrentAlbum }}
-    >
+    <CurrentAlbumContext.Provider value={{ currentAlbum, setCurrentAlbum }}>
       {children}
     </CurrentAlbumContext.Provider>
   );

@@ -19,7 +19,7 @@ function ArtistDashboard() {
   const { loggedInUser } = useAuth();
   const artistId = loggedInUser.is_artist && loggedInUser.id;
 
-  const { setIsOnAlbums, setCurrentAlbum } = useCurrentAlbum();
+  const { setCurrentAlbum } = useCurrentAlbum();
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
@@ -33,10 +33,10 @@ function ArtistDashboard() {
             isActive={activeIndex === i}
             onClick={() => {
               setActiveIndex(i);
-              if (dashboardNavTags.at(i) === "All Albums") {
-                setIsOnAlbums(true);
-              } else {
-                setIsOnAlbums(false);
+              if (dashboardNavTags.at(i) !== "All Albums") {
+                // setIsOnAlbums(true);
+                // } else {
+                // setIsOnAlbums(false);
                 setCurrentAlbum(null);
               }
             }}
