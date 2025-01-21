@@ -50,7 +50,7 @@ export async function uploadTrack(
       .select();
 
     if (error) throw new Error("Write into database issue: " + error);
-    console.log(data, "write into database success");
+    // console.log(data, "write into database success");
     return data;
   } catch (err) {
     // need to check and operate:
@@ -61,12 +61,14 @@ export async function uploadTrack(
 export async function deleteTrack(trackId, coverPathName, audioPathName) {
   try {
     // remove the cover and audio files in storage (pathnames)
-    await deleteTrackCover(coverPathName);
+    if (coverPathName) await deleteTrackCover(coverPathName);
     await deleteTrackAudio(audioPathName);
+
     // delete table row (trackId)
     const { error } = await supabase.from("tracks").delete().eq("id", trackId);
 
     if (error) throw new Error("deleteTrack database table issue: " + error);
+
     return "deleted";
   } catch (err) {
     console.error(err);

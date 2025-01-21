@@ -8,7 +8,7 @@ import { useCurrentAlbum } from "@/contexts/CurrentAlbumContext";
 
 function Sidebar() {
   const { loggedInUser, isArtist } = useAuth();
-  const { currentAlbum } = useCurrentAlbum();
+  const { currentAlbum, uploadDeleteRefresh } = useCurrentAlbum();
 
   return (
     <SidebarContainer>
@@ -21,6 +21,7 @@ function Sidebar() {
         loggedInUser={loggedInUser}
         isArtist={isArtist}
         currentAlbum={currentAlbum}
+        uploadDeleteRefresh={uploadDeleteRefresh}
       />
       <SidebarFooter />
     </SidebarContainer>

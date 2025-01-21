@@ -5,9 +5,17 @@ const CurrentAlbumContext = createContext();
 
 function CurrentAlbumProvider({ children }) {
   const [currentAlbum, setCurrentAlbum] = useState(null);
+  const [uploadDeleteRefresh, setUploadDeleteRefresh] = useState(false);
 
   return (
-    <CurrentAlbumContext.Provider value={{ currentAlbum, setCurrentAlbum }}>
+    <CurrentAlbumContext.Provider
+      value={{
+        currentAlbum,
+        setCurrentAlbum,
+        uploadDeleteRefresh,
+        setUploadDeleteRefresh,
+      }}
+    >
       {children}
     </CurrentAlbumContext.Provider>
   );

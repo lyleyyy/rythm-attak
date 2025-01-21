@@ -5,8 +5,22 @@ import { getTracksOfAlbum } from "@/services/apiAlbum";
 import SidebarTracksPreviewContainer from "./SidebarTrackPreviewContainer/SidebarTracksPreviewContainer";
 import SidebarTrackPreview from "./SidebarTrackPreview/SidebarTrackPreview";
 
-function SidebarContent({ loggedInUser, isArtist, currentAlbum }) {
+function SidebarContent({
+  loggedInUser,
+  isArtist,
+  currentAlbum,
+  uploadDeleteRefresh,
+}) {
   const [tracksCurrentAlbum, setTracksCurrentAlbum] = useState([]);
+
+  // const tracksContainerRef = useRef(null);
+
+  // useEffect(() => {
+  //   if (tracksContainerRef.current) {
+  //     tracksContainerRef.current.scrollTop =
+  //       tracksContainerRef.current.scrollHeight;
+  //   }
+  // }, [tracksCurrentAlbum]);
 
   useEffect(
     function () {
@@ -26,7 +40,7 @@ function SidebarContent({ loggedInUser, isArtist, currentAlbum }) {
 
       getTracksOfCurrentAlbum();
     },
-    [currentAlbum],
+    [currentAlbum, uploadDeleteRefresh],
   );
 
   if (loggedInUser && isArtist && currentAlbum === null)
@@ -56,7 +70,10 @@ function SidebarContent({ loggedInUser, isArtist, currentAlbum }) {
   }
 
   return (
-    <div className="h- flex h-3/4 w-full flex-col gap-4">
+    <div
+      className="h- flex h-3/4 w-full flex-col gap-4"
+      // ref={tracksContainerRef}
+    >
       <SidebarAppInstruction
         heading="Create your first playlist"
         instruction="It's easy, we'll help you"

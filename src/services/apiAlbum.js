@@ -54,7 +54,7 @@ export async function uploadTracksToAlbum(albumTracks) {
           albumId,
         } = albumTrack;
 
-        uploadTrack(
+        return uploadTrack(
           trackName,
           artistId,
           trackDuration,
@@ -68,7 +68,8 @@ export async function uploadTracksToAlbum(albumTracks) {
       }),
     );
 
-    console.log(res, "hmmm??????");
+    // console.log(res, "hmmm??????");
+    if (res.at(0).length >= 1) return "uploadTracksToAlbum success";
   } catch (err) {
     console.error(err);
   }

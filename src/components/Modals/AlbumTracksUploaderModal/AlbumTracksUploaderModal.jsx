@@ -10,7 +10,7 @@ import getTrackDuration from "@/utils/getTrackDuration";
 
 function AlbumTracksUploaderModal({ setIsModalOpen }) {
   const { loggedInUser, isArtist } = useAuth();
-  const { currentAlbum } = useCurrentAlbum();
+  const { currentAlbum, setUploadDeleteRefresh } = useCurrentAlbum();
   const [inputs, setInputs] = useState([{ id: Date.now() }]);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -63,12 +63,13 @@ function AlbumTracksUploaderModal({ setIsModalOpen }) {
 
     // console.log(albumTracks);
 
-    await uploadTracksToAlbum(albumTracks);
-
-    // if success
-
-    setIsUploading(false);
-    setIsModalOpen(false);
+    const res = await uploadTracksToAlbum(albumTracks);
+    if (res === "uploadTracksToAlbum success") {
+      // if success
+      setUploadDeleteRefresh((uploadDeleteRefresh) => !uploadDeleteRefresh);
+      setIsUploading(false);
+      setIsModalOpen(false);
+    }
   }
 
   return (
