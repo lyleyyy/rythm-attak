@@ -7,6 +7,7 @@ import ModalContainer from "@/ui/ModalContainer";
 import Image from "next/image";
 import { useState } from "react";
 import ThemePlayButton from "@/ui/ThemePlayButton";
+import { updateAlbumPublish } from "@/services/apiAlbum";
 
 function ArtistAlbumCard({
   album,
@@ -27,6 +28,23 @@ function ArtistAlbumCard({
   const [isHover, setIsHover] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
   const [confirmation, setConfirmation] = useState("");
+
+  function confirmPublish() {
+    setConfirmation("publish");
+    setIsModalOpen(true);
+  }
+
+  async function publishAlbum() {
+    setIsPublishing(true);
+
+    try {
+      const res = await updateAlbumPublish(id);
+      setIsPublishing(false);
+      setIsPublishFinished(true);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <div
@@ -72,7 +90,10 @@ function ArtistAlbumCard({
       )}
 
       <span className="flex w-full justify-center">
-        <ThemeButton disabled={isPublished || isPublishing}>
+        <ThemeButton
+          disabled={isPublished || isPublishing}
+          onClick={confirmPublish}
+        >
           {!isPublishing && isPublished ? "Published" : "Publish"}
           {isPublishing && "Publishing..."}
         </ThemeButton>
@@ -84,9 +105,9 @@ function ArtistAlbumCard({
             confirmation={confirmation}
             action={
               confirmation === "publish"
-                ? publishTrack
+                ? publishAlbum
                 : confirmation === "remove"
-                  ? removeTrack
+                  ? removeAlbum
                   : null
             }
             closeModal={() => setIsModalOpen(false)}

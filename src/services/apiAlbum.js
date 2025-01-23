@@ -89,3 +89,19 @@ export async function getTracksOfAlbum(albumId) {
     console.error("getTracksOfAlbum issue: " + err);
   }
 }
+
+export async function updateAlbumPublish(albumId) {
+  try {
+    const { data, error } = await supabase
+      .from("albums")
+      .update({ is_published: true })
+      .eq("id", albumId)
+      .select();
+
+    if (error) throw new Error(error);
+
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+}
