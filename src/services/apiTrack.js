@@ -101,13 +101,13 @@ async function deleteTrackAudio(audioPathName) {
   }
 }
 
-export async function updateTrackPublish(trackId, artistId) {
+export async function updateTrackPublish(trackId) {
   try {
     const { data, error } = await supabase
       .from("tracks")
       .update({ is_published: true })
       .eq("id", trackId)
-      .eq("artist_id", artistId)
+      // .eq("artist_id", artistId)
       .select();
 
     if (error) throw new Error(error);

@@ -7,12 +7,10 @@ export async function createAlbum(albumName, artistId, albumStory, albumCover) {
   try {
     // upload to storage
     let coverUrl = null;
+    let coverPathName = null;
     if (albumCover.name) {
-      coverUrl = await uploadFile(
-        "album_covers",
-        albumCover,
-        sanitizedFilePathName(albumCover, albumName),
-      );
+      coverPathName = sanitizedFilePathName(albumCover, albumName);
+      coverUrl = await uploadFile("album_covers", albumCover, coverPathName);
       //   console.log(coverUrl, "coverUrl");
     }
 
@@ -25,6 +23,7 @@ export async function createAlbum(albumName, artistId, albumStory, albumCover) {
           artist_id: artistId,
           album_story: albumStory,
           album_cover_url: coverUrl,
+          cover_path_name: coverPathName,
         },
       ])
       .select();
@@ -87,6 +86,24 @@ export async function getTracksOfAlbum(albumId) {
     return tracks;
   } catch (err) {
     console.error("getTracksOfAlbum issue: " + err);
+  }
+}
+
+export async function deleteAlbum(albumId, coverPathName) {
+  try {
+    const albumTracks = await getTracksOfAlbum(albumId);
+    console.log(albumTracks);
+    if (albumTracks.length > 0)
+      await Promise.all(albumTracks.map((track) => {}));
+
+    // const { data, error } = await supabase.storage
+    //   .from("album_covers")
+    //   .remove([coverPathName]);
+
+    // if (error) throw new Error("deleteAlbum issue: " + error);
+    // return data;
+  } catch (err) {
+    console.error(err);
   }
 }
 

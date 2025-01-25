@@ -7,7 +7,13 @@ import ModalContainer from "@/ui/ModalContainer";
 import Image from "next/image";
 import { useState } from "react";
 import ThemePlayButton from "@/ui/ThemePlayButton";
-import { updateAlbumPublish } from "@/services/apiAlbum";
+import {
+  deleteAlbum,
+  getTracksOfAlbum,
+  updateAlbumPublish,
+} from "@/services/apiAlbum";
+import { updateTrackPublish } from "@/services/apiTrack";
+import PromptModal from "@/components/Modals/PromptModal/PromptModal";
 
 function ArtistAlbumCard({
   album,
@@ -22,14 +28,19 @@ function ArtistAlbumCard({
     album_story: albumStory,
     album_cover_url: albumCoverUrl,
     is_published: isPublished,
+    cover_path_name: coverPathName,
   } = album;
 
   const [isModalOpen, setIsModalOpen] = useModalToggle();
   const [isHover, setIsHover] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
   const [confirmation, setConfirmation] = useState("");
+  const [promptNoTracks, setPromptNoTracks] = useState(false);
 
-  function confirmPublish() {
+  async function confirmPublish() {
+    const albumTracks = await getTracksOfAlbum(id);
+    if (albumTracks.length === 0) setPromptNoTracks(true);
+
     setConfirmation("publish");
     setIsModalOpen(true);
   }
@@ -38,9 +49,29 @@ function ArtistAlbumCard({
     setIsPublishing(true);
 
     try {
-      const res = await updateAlbumPublish(id);
+      const albumTracks = await getTracksOfAlbum(id);
+
+      await Promise.all(
+        albumTracks.map((track) => updateTrackPublish(track.id)),
+      );
+      await updateAlbumPublish(id);
+
       setIsPublishing(false);
       setIsPublishFinished(true);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  function confirmDelete() {
+    setConfirmation("remove");
+    setIsModalOpen(true);
+  }
+
+  async function removeAlbum() {
+    try {
+      const res = await deleteAlbum(id, coverPathName);
+      if (res === "deleted") setIsDeleteFinished(true);
     } catch (err) {
       console.log(err);
     }
@@ -75,7 +106,7 @@ function ArtistAlbumCard({
         <MediaOperationButtonsContainer>
           <MediaOperationButton info={true} />
           <MediaOperationButton edit={true} />
-          <MediaOperationButton remove={true} />
+          <MediaOperationButton remove={true} onClick={confirmDelete} />
         </MediaOperationButtonsContainer>
       )}
 
@@ -99,7 +130,7 @@ function ArtistAlbumCard({
         </ThemeButton>
       </span>
 
-      {isModalOpen && (
+      {!promptNoTracks && isModalOpen && (
         <ModalContainer onClick={() => setIsModalOpen(false)}>
           <ConfirmationModal
             confirmation={confirmation}
@@ -111,6 +142,15 @@ function ArtistAlbumCard({
                   : null
             }
             closeModal={() => setIsModalOpen(false)}
+          />
+        </ModalContainer>
+      )}
+
+      {promptNoTracks && isModalOpen && (
+        <ModalContainer onClick={() => setIsModalOpen(false)}>
+          <PromptModal
+            text="The album cannot be published because it currently has no tracks. Please upload some tracks first, and then try publishing the album."
+            onClick={() => setIsModalOpen(false)}
           />
         </ModalContainer>
       )}
