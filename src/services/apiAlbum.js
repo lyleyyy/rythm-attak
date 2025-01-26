@@ -1,7 +1,7 @@
 import sanitizedFilePathName from "@/utils/sanitizedFilePathName";
 import supabase from "./supabase";
 import uploadFile from "./uploadFile";
-import { uploadTrack } from "./apiTrack";
+import { deleteTrack, updateTrackPublish, uploadTrack } from "./apiTrack";
 
 export async function createAlbum(albumName, artistId, albumStory, albumCover) {
   try {
@@ -92,16 +92,28 @@ export async function getTracksOfAlbum(albumId) {
 export async function deleteAlbum(albumId, coverPathName) {
   try {
     const albumTracks = await getTracksOfAlbum(albumId);
-    console.log(albumTracks);
     if (albumTracks.length > 0)
-      await Promise.all(albumTracks.map((track) => {}));
+      await Promise.all(
+        albumTracks.map((track) => {
+          const {
+            id: trackId,
+            cover_path_name: coverPathName,
+            audio_path_name: audioPathName,
+          } = track;
+          deleteTrack(trackId, coverPathName, audioPathName);
+        }),
+      );
 
-    // const { data, error } = await supabase.storage
-    //   .from("album_covers")
-    //   .remove([coverPathName]);
+    await deleteAlbumCover(coverPathName);
 
-    // if (error) throw new Error("deleteAlbum issue: " + error);
-    // return data;
+    const { data, error } = await supabase
+      .from("albums")
+      .delete()
+      .eq("id", albumId);
+
+    if (error) throw new Error("deleteAlbum issue: " + error);
+
+    return data;
   } catch (err) {
     console.error(err);
   }
@@ -109,14 +121,35 @@ export async function deleteAlbum(albumId, coverPathName) {
 
 export async function updateAlbumPublish(albumId) {
   try {
+    const albumTracks = await getTracksOfAlbum(albumId);
+    if (albumTracks.length > 0)
+      await Promise.all(
+        albumTracks.map((track) => {
+          updateTrackPublish(track.id);
+        }),
+      );
+
     const { data, error } = await supabase
       .from("albums")
       .update({ is_published: true })
       .eq("id", albumId)
       .select();
 
-    if (error) throw new Error(error);
+    if (error) throw new Error("updateAlbumPublish issue: " + error);
 
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+async function deleteAlbumCover(coverPathName) {
+  try {
+    const { data, error } = await supabase.storage
+      .from("album_covers")
+      .remove([coverPathName]);
+
+    if (error) throw new Error("deleteAlbumCover issue: " + error);
     return data;
   } catch (err) {
     console.error(err);

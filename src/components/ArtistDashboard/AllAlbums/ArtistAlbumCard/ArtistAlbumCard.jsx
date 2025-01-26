@@ -12,8 +12,8 @@ import {
   getTracksOfAlbum,
   updateAlbumPublish,
 } from "@/services/apiAlbum";
-import { updateTrackPublish } from "@/services/apiTrack";
 import PromptModal from "@/components/Modals/PromptModal/PromptModal";
+import { useCurrentAlbum } from "@/contexts/CurrentAlbumContext";
 
 function ArtistAlbumCard({
   album,
@@ -36,6 +36,7 @@ function ArtistAlbumCard({
   const [isPublishing, setIsPublishing] = useState(false);
   const [confirmation, setConfirmation] = useState("");
   const [promptNoTracks, setPromptNoTracks] = useState(false);
+  const { currentAlbum, setCurrentAlbum } = useCurrentAlbum();
 
   async function confirmPublish() {
     const albumTracks = await getTracksOfAlbum(id);
@@ -49,11 +50,6 @@ function ArtistAlbumCard({
     setIsPublishing(true);
 
     try {
-      const albumTracks = await getTracksOfAlbum(id);
-
-      await Promise.all(
-        albumTracks.map((track) => updateTrackPublish(track.id)),
-      );
       await updateAlbumPublish(id);
 
       setIsPublishing(false);
@@ -70,8 +66,9 @@ function ArtistAlbumCard({
 
   async function removeAlbum() {
     try {
-      const res = await deleteAlbum(id, coverPathName);
-      if (res === "deleted") setIsDeleteFinished(true);
+      await deleteAlbum(id, coverPathName);
+      if (currentAlbum.id === id) setCurrentAlbum(null);
+      setIsDeleteFinished(true);
     } catch (err) {
       console.log(err);
     }
