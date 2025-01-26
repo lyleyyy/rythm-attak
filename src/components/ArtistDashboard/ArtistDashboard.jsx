@@ -1,12 +1,12 @@
 import { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useCurrentAlbum } from "@/contexts/CurrentAlbumContext";
 import DashboardNav from "./DashboardNav/DashboardNav";
 import DashboardNavButton from "./DashboardNav/DashboarNavButton/DashboardNavButton";
 import AllSingles from "./AllSingles/AllSingles";
 import AllAlbums from "./AllAlbums/AllAlbums";
 import AllTracks from "./AllTracks/AllTracks";
 import ArtistProfile from "./ArtistProfile/ArtistProfile";
-import { useAuth } from "@/contexts/AuthContext";
-import { useCurrentAlbum } from "@/contexts/CurrentAlbumContext";
 
 const dashboardNavTags = [
   "All Singles",
@@ -23,7 +23,7 @@ function ArtistDashboard() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <div className="mb-20 h-full px-8">
+    <div className="mb-12 px-8">
       <DashboardNav>
         {dashboardNavTags.map((el, i) => (
           <DashboardNavButton
@@ -34,9 +34,6 @@ function ArtistDashboard() {
             onClick={() => {
               setActiveIndex(i);
               if (dashboardNavTags.at(i) !== "All Albums") {
-                // setIsOnAlbums(true);
-                // } else {
-                // setIsOnAlbums(false);
                 setCurrentAlbum(null);
               }
             }}
@@ -46,8 +43,8 @@ function ArtistDashboard() {
       {[
         <AllSingles artistId={artistId} />,
         <AllAlbums artistId={artistId} />,
-        <AllTracks />,
-        <ArtistProfile />,
+        <AllTracks artistId={artistId} />,
+        <ArtistProfile loggedInUser={loggedInUser} />,
       ].at(activeIndex)}
     </div>
   );

@@ -30,9 +30,6 @@ function AllAlbums({ artistId }) {
       }
 
       fetchMediasOfArtist();
-      setIsDeleteFinished(false);
-      setIsCreateFinished(false);
-      setIsPublishFinished(false);
     },
     [isCreateFinished, isDeleteFinished, isPublishFinished],
   );
@@ -60,7 +57,7 @@ function AllAlbums({ artistId }) {
       )}
 
       <ArtistMediasContainer>
-        {!albums && <LoadingSpinner />}
+        {/* {!albums && <LoadingSpinner />} */}
         {albums &&
           albums.map((album, index) => (
             <ArtistAlbumCard

@@ -50,7 +50,7 @@ function AllSingles({ artistId }) {
       )}
 
       <ArtistMediasContainer>
-        {!singles && <LoadingSpinner />}
+        {/* {!singles && <LoadingSpinner />} */}
         {singles &&
           singles.map((single) => (
             <ArtistSingleCard

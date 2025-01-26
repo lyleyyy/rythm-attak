@@ -105,7 +105,7 @@ export async function updateTrackPublish(trackId) {
   try {
     const { data, error } = await supabase
       .from("tracks")
-      .update({ is_published: true })
+      .update({ is_published: true, publish_date: new Date().toISOString() })
       .eq("id", trackId)
       // .eq("artist_id", artistId)
       .select();

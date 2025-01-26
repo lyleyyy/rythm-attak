@@ -74,6 +74,21 @@ export async function uploadTracksToAlbum(albumTracks) {
   }
 }
 
+export async function getAlbum(albumId) {
+  try {
+    let { data: album, error } = await supabase
+      .from("albums")
+      .select("*")
+      .eq("album_id", albumId);
+
+    if (error) throw new Error("Album not found.");
+
+    return album;
+  } catch (err) {
+    console.error("getAlbum issue: " + err);
+  }
+}
+
 export async function getTracksOfAlbum(albumId) {
   try {
     let { data: tracks, error } = await supabase
@@ -131,7 +146,7 @@ export async function updateAlbumPublish(albumId) {
 
     const { data, error } = await supabase
       .from("albums")
-      .update({ is_published: true })
+      .update({ is_published: true, publish_date: new Date().toISOString() })
       .eq("id", albumId)
       .select();
 
