@@ -2,37 +2,81 @@ import { useState } from "react";
 import Image from "next/image";
 import PlainButton from "@/ui/PlainButton";
 import ThemeButton from "@/ui/ThemeButton";
+import { updateArtistBanner, updateBiography } from "@/services/apiArtist";
+import UpdatingOverlay from "@/ui/UpdatingOverlay";
 
 function ArtistProfile({ loggedInUser }) {
-  const {
-    id,
-    name,
-    image: avatarUrl,
-    banner_url: bannerUrl,
-    biography,
-  } = loggedInUser;
+  const { id, name, image: avatarUrl, banner_url, biography } = loggedInUser;
 
   const [isEditing, setIsEditing] = useState(false);
+  const [bannerUrl, setBannerUrl] = useState(banner_url);
+  const [artistBiography, setArtistBiography] = useState(biography);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [updatingOverlay, setUpdatingOverlay] = useState(false);
+
+  async function bannerSubmitHandler(e) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const bannerFile = formData.get("banner");
+
+    setIsUpdating(true);
+    setUpdatingOverlay(true);
+    const updatedBannerUrl = await updateArtistBanner(bannerFile, id);
+    setBannerUrl(updatedBannerUrl);
+  }
+
+  async function biographyUpdateHandler(e) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const biography = formData.get("biography");
+
+    setIsUpdating(true);
+    const updatedBiography = await updateBiography(id, biography);
+    setArtistBiography(updatedBiography);
+    setIsEditing(false);
+    setIsUpdating(false);
+  }
 
   return (
-    <div className="flex flex-col gap-8">
-      <form className="flex flex-col gap-4">
+    <div
+      className={`flex flex-col gap-8 ${isUpdating && "pointer-events-none"}`}
+    >
+      <form className="flex flex-col gap-4" onSubmit={bannerSubmitHandler}>
         <label className="text-xl">Banner</label>
         <div className="flex gap-16">
-          <Image
-            src={
-              bannerUrl
-                ? bannerUrl
-                : process.env.NEXT_PUBLIC_USER_BANNER_DEFAULT
-            }
-            alt={name}
-            width={820}
-            height={500}
-          />
+          <div className="relative h-[300px] w-[1375px] rounded-sm">
+            {updatingOverlay && <UpdatingOverlay />}
+            <Image
+              className="rounded-sm"
+              src={
+                bannerUrl
+                  ? bannerUrl
+                  : process.env.NEXT_PUBLIC_USER_BANNER_DEFAULT
+              }
+              alt={name}
+              loading="lazy"
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              // priority={true}
+              style={{ objectFit: "cover" }}
+              onLoad={() => {
+                setUpdatingOverlay(false);
+                setIsUpdating(false);
+              }}
+            />
+          </div>
 
           <div className="flex flex-col gap-4">
-            <label>*Choose an image to upload as your banner.</label>
-            <input type="file" />
+            <label>
+              *Choose an 2500 x 750 image (.jpg, .jpeg, .png) to upload as your
+              banner.
+            </label>
+            <input
+              type="file"
+              name="banner"
+              accept=".jpg, .jpeg, .png"
+              required
+            />
             <ThemeButton>Update</ThemeButton>
           </div>
         </div>
@@ -41,17 +85,15 @@ function ArtistProfile({ loggedInUser }) {
       <div className="flex gap-16">
         <form
           className={`flex w-full flex-col gap-4 ${isEditing && "justify-between"}`}
+          onSubmit={biographyUpdateHandler}
         >
           <label className="text-xl">Biography</label>
           {!isEditing && (
-            <div>
-              {biography ? (
-                biography
-              ) : (
-                <p className="h-2/3">
-                  You don't have a biography yet. Please update it.
-                </p>
-              )}
+            <div className="flex flex-col gap-4">
+              <p>
+                {artistBiography ||
+                  "You don't have a biography yet. Please update it."}
+              </p>
               <PlainButton onClick={() => setIsEditing(true)}>Edit</PlainButton>
             </div>
           )}
@@ -60,11 +102,17 @@ function ArtistProfile({ loggedInUser }) {
             <>
               <textarea
                 className="h-2/3 rounded border border-white bg-black p-2 text-lg focus:outline-none"
+                name="biography"
                 placeholder="Your biography..."
+                defaultValue={artistBiography}
+                required
               />
-              <ThemeButton onClick={() => setIsEditing(false)}>
-                Update
-              </ThemeButton>
+              <div className="space-x-8">
+                <ThemeButton>Update</ThemeButton>
+                <PlainButton onClick={() => setIsEditing(false)}>
+                  Cancel
+                </PlainButton>
+              </div>
             </>
           )}
         </form>
@@ -91,9 +139,11 @@ function ArtistProfile({ loggedInUser }) {
           </div>
 
           <div className="flex flex-col gap-4">
-            <label>*Choose an image to upload as your avatar.</label>
-            <input type="file" />
-            <ThemeButton>Upate</ThemeButton>
+            <label>
+              *Choose an image (.jpg, .jpeg, .png) to upload as your banner.
+            </label>
+            <input type="file" accept=".jpg, .jpeg, .png" required />
+            <ThemeButton>Update</ThemeButton>
           </div>
         </form>
       </div>

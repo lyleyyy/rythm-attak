@@ -1,9 +1,9 @@
-function sanitizedFilePathName(file, trackName) {
+function sanitizedFilePathName(file, mediaName) {
   const timestamp = Date.now();
   const randomSuffix = Math.floor(Math.random() * 1000);
 
   const sanitizedPathName =
-    trackName +
+    mediaName +
     (file.type.includes("image")
       ? "_cover_"
       : file.type.includes("audio")

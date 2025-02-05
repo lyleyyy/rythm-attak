@@ -72,7 +72,10 @@ function ArtistSingleCard({
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <div style={{ width: "180px", height: "180px", position: "relative" }}>
+      <div
+        className="relative h-[180px] w-[180px]"
+        // style={{ width: "180px", height: "180px", position: "relative" }}
+      >
         <Image
           src={coverUrl}
           alt={trackName}
