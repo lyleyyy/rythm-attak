@@ -2,50 +2,68 @@ import { useState } from "react";
 import Image from "next/image";
 import PlainButton from "@/ui/PlainButton";
 import ThemeButton from "@/ui/ThemeButton";
-import { updateArtistBanner, updateBiography } from "@/services/apiArtist";
 import UpdatingOverlay from "@/ui/UpdatingOverlay";
+import {
+  updateArtistBanner,
+  updateAvatar,
+  updateBiography,
+} from "@/services/apiUser";
 
-function ArtistProfile({ loggedInUser }) {
-  const { id, name, image: avatarUrl, banner_url, biography } = loggedInUser;
+function ArtistProfile({ loggedInUser, setIsUserInfoUpdated }) {
+  const { id, name, image, banner_url, biography } = loggedInUser;
 
-  const [isEditing, setIsEditing] = useState(false);
   const [bannerUrl, setBannerUrl] = useState(banner_url);
   const [artistBiography, setArtistBiography] = useState(biography);
-  const [isUpdating, setIsUpdating] = useState(false);
-  const [updatingOverlay, setUpdatingOverlay] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState(image);
+  const [isUpdating, setIsUpdating] = useState(null);
 
   async function bannerSubmitHandler(e) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const bannerFile = formData.get("banner");
 
-    setIsUpdating(true);
-    setUpdatingOverlay(true);
+    setIsUpdating("banner");
     const updatedBannerUrl = await updateArtistBanner(bannerFile, id);
     setBannerUrl(updatedBannerUrl);
+    setIsUserInfoUpdated((isUserInfoUpdated) => !isUserInfoUpdated);
   }
 
-  async function biographyUpdateHandler(e) {
+  async function biographySubmitHandler(e) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const biography = formData.get("biography");
 
-    setIsUpdating(true);
+    setIsUpdating("biography");
     const updatedBiography = await updateBiography(id, biography);
     setArtistBiography(updatedBiography);
     setIsEditing(false);
-    setIsUpdating(false);
+    setIsUpdating(null);
+  }
+
+  async function avatarSubmitHandler(e) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const avatar = formData.get("avatar");
+
+    setIsUpdating("avatar");
+    const updatedAvatarUrl = await updateAvatar(id, avatar);
+    setAvatarUrl(updatedAvatarUrl);
+    setIsUserInfoUpdated((isUserInfoUpdated) => !isUserInfoUpdated);
   }
 
   return (
     <div
       className={`flex flex-col gap-8 ${isUpdating && "pointer-events-none"}`}
     >
-      <form className="flex flex-col gap-4" onSubmit={bannerSubmitHandler}>
+      <form
+        className="flex flex-col gap-4"
+        onSubmit={(e) => bannerSubmitHandler(e)}
+      >
         <label className="text-xl">Banner</label>
         <div className="flex gap-16">
           <div className="relative h-[300px] w-[1375px] rounded-sm">
-            {updatingOverlay && <UpdatingOverlay />}
+            {isUpdating === "banner" && <UpdatingOverlay />}
             <Image
               className="rounded-sm"
               src={
@@ -59,10 +77,10 @@ function ArtistProfile({ loggedInUser }) {
               sizes="(max-width: 768px) 100vw, 33vw"
               // priority={true}
               style={{ objectFit: "cover" }}
-              onLoad={() => {
-                setUpdatingOverlay(false);
-                setIsUpdating(false);
-              }}
+              onLoad={() =>
+                // setUpdatingOverlay(false);
+                setIsUpdating(null)
+              }
             />
           </div>
 
@@ -85,7 +103,7 @@ function ArtistProfile({ loggedInUser }) {
       <div className="flex gap-16">
         <form
           className={`flex w-full flex-col gap-4 ${isEditing && "justify-between"}`}
-          onSubmit={biographyUpdateHandler}
+          onSubmit={(e) => biographySubmitHandler(e)}
         >
           <label className="text-xl">Biography</label>
           {!isEditing && (
@@ -117,23 +135,32 @@ function ArtistProfile({ loggedInUser }) {
           )}
         </form>
 
-        <form className="flex flex-col gap-4">
+        <form
+          className="flex flex-col gap-4"
+          onSubmit={(e) => avatarSubmitHandler(e)}
+        >
           <div className="flex flex-col gap-4">
             <label className="text-xl">Avatar</label>
-            <span
-              style={{ width: "100px", height: "100px", position: "relative" }}
-            >
+            <span className="relative h-[100px] w-[100px] rounded-full">
+              {isUpdating === "avatar" && (
+                <UpdatingOverlay isBorderRadiusFull={true} />
+              )}
               <Image
+                className="rounded-full"
                 src={
                   avatarUrl
                     ? avatarUrl
                     : process.env.NEXT_PUBLIC_USER_AVATAR_DEFAULT
                 }
                 alt={name}
+                loading="lazy"
                 fill
                 sizes="(max-width: 768px) 100vw, 33vw"
-                priority={true}
                 style={{ objectFit: "cover" }}
+                onLoad={() => {
+                  // setUpdatingOverlay(false);
+                  setIsUpdating(null);
+                }}
               />
             </span>
           </div>
@@ -142,7 +169,12 @@ function ArtistProfile({ loggedInUser }) {
             <label>
               *Choose an image (.jpg, .jpeg, .png) to upload as your banner.
             </label>
-            <input type="file" accept=".jpg, .jpeg, .png" required />
+            <input
+              type="file"
+              name="avatar"
+              accept=".jpg, .jpeg, .png"
+              required
+            />
             <ThemeButton>Update</ThemeButton>
           </div>
         </form>

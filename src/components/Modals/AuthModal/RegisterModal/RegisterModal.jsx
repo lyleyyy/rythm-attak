@@ -1,6 +1,6 @@
 import { useForm, Controller } from "react-hook-form";
 import { useState } from "react";
-import { createUser } from "@/services/apiUsers";
+import { createUser } from "@/services/apiUser";
 import SeparateLine from "../../../../ui/SeparateLine";
 import UserTypeSelector from "./UserTypeSelector/UserTypeSelector";
 import OAuthForm from "../OAuthForm/OAuthForm";

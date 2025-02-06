@@ -1,7 +1,7 @@
 "use client";
 import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { getUserByEmail } from "@/services/apiUsers";
+import { getUserByEmail } from "@/services/apiUser";
 
 const AuthContext = createContext();
 
@@ -9,6 +9,7 @@ function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [isArtist, setIsArtist] = useState(null);
+  const [isUserInfoUpdated, setIsUserInfoUpdated] = useState(false);
   const [authContextLoading, setAuthContextLoading] = useState(true);
 
   useEffect(
@@ -37,7 +38,7 @@ function AuthProvider({ children }) {
 
       getLoggedInToken();
     },
-    [isLoggedIn],
+    [isLoggedIn, isUserInfoUpdated],
   );
 
   return (
@@ -50,6 +51,8 @@ function AuthProvider({ children }) {
         setLoggedInUser,
         authContextLoading,
         setAuthContextLoading,
+        isUserInfoUpdated,
+        setIsUserInfoUpdated,
       }}
     >
       {children}

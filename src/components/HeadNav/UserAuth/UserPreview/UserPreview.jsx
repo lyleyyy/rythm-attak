@@ -4,7 +4,7 @@ import UserMenuModal from "@/components/Modals/UserMenuModal/UserMenuModal";
 
 function UserPreview({ loggedInUser }) {
   const { image } = loggedInUser;
-  const imageUrl = image || "/user_icon.png";
+  const imageUrl = image || "/default_avatar.png";
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
 
   const modalRef = useRef(null);

@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import { SupabaseAdapter } from "@auth/supabase-adapter";
-import { getUser } from "./apiUsers";
+import { getUser } from "./apiUser";
 import { encode, decode } from "next-auth/jwt";
 
 const authConfig = {

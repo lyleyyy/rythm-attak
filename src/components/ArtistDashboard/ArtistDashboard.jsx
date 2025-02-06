@@ -16,7 +16,7 @@ const dashboardNavTags = [
 ];
 
 function ArtistDashboard() {
-  const { loggedInUser } = useAuth();
+  const { loggedInUser, setIsUserInfoUpdated } = useAuth();
   const artistId = loggedInUser.is_artist && loggedInUser.id;
 
   const { setCurrentAlbum } = useCurrentAlbum();
@@ -44,7 +44,10 @@ function ArtistDashboard() {
         <AllSingles artistId={artistId} />,
         <AllAlbums artistId={artistId} />,
         <AllTracks artistId={artistId} />,
-        <ArtistProfile loggedInUser={loggedInUser} />,
+        <ArtistProfile
+          loggedInUser={loggedInUser}
+          setIsUserInfoUpdated={setIsUserInfoUpdated}
+        />,
       ].at(activeIndex)}
     </div>
   );
