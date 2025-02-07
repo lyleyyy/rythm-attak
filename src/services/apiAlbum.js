@@ -76,14 +76,14 @@ export async function uploadTracksToAlbum(albumTracks) {
 
 export async function getAlbum(albumId) {
   try {
-    let { data: album, error } = await supabase
+    let { data, error } = await supabase
       .from("albums")
       .select("*")
-      .eq("album_id", albumId);
+      .eq("id", albumId);
 
     if (error) throw new Error("Album not found.");
 
-    return album;
+    return data[0];
   } catch (err) {
     console.error("getAlbum issue: " + err);
   }

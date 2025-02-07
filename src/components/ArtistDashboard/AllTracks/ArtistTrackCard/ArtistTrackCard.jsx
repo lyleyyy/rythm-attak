@@ -4,6 +4,7 @@ import MediaOperationButtonsContainer from "@/ui/MediaOperationButtonsContainer"
 import MediaOperationButton from "@/ui/MediaOperationButton";
 import ThemePlayButton from "@/ui/ThemePlayButton";
 import isoDateToEuropeanDateFormat from "@/helper/isoDateToEuropeanDateFormat";
+import { getAlbum } from "@/services/apiAlbum";
 
 function ArtistTrackCard({ track }) {
   const {
@@ -32,6 +33,8 @@ function ArtistTrackCard({ track }) {
     getAlbumName();
   }, []);
 
+  if (!albumName) return null;
+
   return (
     <div
       className="relative flex flex-col gap-2 rounded-lg p-2 transition-all duration-200 ease-in-out hover:bg-zinc-800"
@@ -54,7 +57,11 @@ function ArtistTrackCard({ track }) {
           Name:{" "}
           {trackName.length > 15 ? trackName.slice(0, 15) + "..." : trackName}
         </span>
-        <span>{isSingle ? "Single Track" : `Album: ${albumName}`}</span>
+        <span>
+          {isSingle
+            ? "Single Track"
+            : `Album: ${albumName && (albumName.length > 15 ? albumName.slice(0, 15) + "..." : albumName)}`}
+        </span>
         <span>Duration: {duration}</span>
         <span>Publish Date: {isoDateToEuropeanDateFormat(publishDate)}</span>
         <span>Play Count: {playCounts}</span>

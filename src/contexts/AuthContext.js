@@ -23,6 +23,9 @@ function AuthProvider({ children }) {
 
           if (token) {
             const user = await getUserByEmail(token.email);
+
+            if (!user) return;
+
             setLoggedInUser(user);
             setIsLoggedIn(true);
             setIsArtist(user.is_artist);

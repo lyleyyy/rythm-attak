@@ -88,7 +88,7 @@ export async function createUser(userData) {
           password_hash: hashedPwd,
           name: name,
           biography: biography,
-          artist: isArtist,
+          is_artist: isArtist,
         },
       ])
       .select();

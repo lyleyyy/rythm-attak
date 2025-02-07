@@ -10,7 +10,7 @@ function FinishRegister({ label, closeModal }) {
         <>
           <FcOk className="text-6xl" />
           <span className="w-76 mb-24 text-center text-xl">
-            You’ve signed up successfully! <br />
+            You&apos;ve signed up successfully! <br />
             Please sign in to start exploring.
           </span>
         </>
