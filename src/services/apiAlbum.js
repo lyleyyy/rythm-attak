@@ -74,7 +74,7 @@ export async function uploadTracksToAlbum(albumTracks) {
   }
 }
 
-export async function getAlbum(albumId) {
+export async function getAlbumById(albumId) {
   try {
     let { data, error } = await supabase
       .from("albums")

@@ -4,7 +4,7 @@ import MediaOperationButtonsContainer from "@/ui/MediaOperationButtonsContainer"
 import MediaOperationButton from "@/ui/MediaOperationButton";
 import ThemePlayButton from "@/ui/ThemePlayButton";
 import isoDateToEuropeanDateFormat from "@/helper/isoDateToEuropeanDateFormat";
-import { getAlbum } from "@/services/apiAlbum";
+import { getAlbumById } from "@/services/apiAlbum";
 
 function ArtistTrackCard({ track }) {
   const {
@@ -25,7 +25,7 @@ function ArtistTrackCard({ track }) {
     async function getAlbumName() {
       let album;
       if (albumId) {
-        album = await getAlbum(albumId);
+        album = await getAlbumById(albumId);
         setAlbumName(album.album_name);
       }
     }

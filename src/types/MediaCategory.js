@@ -1,7 +1,7 @@
 const MediaCategory = {
-  Artist: "ARTIST",
   Track: "TRACK",
   Album: "ALBUM",
+  Artist: "ARTIST",
 };
 
 export default MediaCategory;

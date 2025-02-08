@@ -117,3 +117,18 @@ export async function updateTrackPublish(trackId) {
     console.error(err);
   }
 }
+
+export async function getTrackById(id) {
+  try {
+    let { data, error } = await supabase
+      .from("tracks")
+      .select("*")
+      .eq("id", id);
+
+    if (error) throw new Error("Track not found.");
+
+    return data[0];
+  } catch (err) {
+    console.error("getTrackById issue: " + err);
+  }
+}

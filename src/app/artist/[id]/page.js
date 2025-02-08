@@ -1,9 +1,9 @@
-import Artist from "@/components/Artist/Artist";
+import ArtistDetails from "@/components/MediaInfo/ArtistDetails/ArtistDetails";
 
-function ArtistPage({ params }) {
-  const { id } = params;
+async function ArtistPage({ params }) {
+  const { id } = await params;
 
-  return <Artist id={id}>ArtistPage, ID: {id}</Artist>;
+  return <ArtistDetails id={id} />;
 }
 
 export default ArtistPage;

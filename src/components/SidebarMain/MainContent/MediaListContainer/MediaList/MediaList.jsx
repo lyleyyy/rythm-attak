@@ -1,4 +1,4 @@
-import Media from "@/components/SidebarMain/MainContent/MediaListContainer/MediaList/Media/Media";
+import Media from "@/components/SidebarMain/MainContent/MediaListContainer/MediaList/MediaCard/MediaCard";
 
 function MediaList({ mediaList }) {
   return (

@@ -47,6 +47,24 @@ export async function getUserByEmail(email) {
   }
 }
 
+export async function getUserById(id) {
+  try {
+    const { data, error } = await supabase
+      .schema("next_auth")
+      .from("users")
+      .select("*")
+      .eq("id", id);
+
+    if (error) throw new Error("getUserById issue: " + error);
+
+    const user = data[0];
+
+    return user;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 export async function getAllEmails() {
   try {
     let { data: emails, error } = await supabase

@@ -29,3 +29,53 @@ export async function getAllTracksOfArtist(artistId) {
     console.error("getAllTracksOfArtist issue: " + err);
   }
 }
+
+export async function getPopularSingles(numberOfSingles) {
+  try {
+    let { data: tracks, error } = await supabase
+      .from("tracks")
+      .select("*")
+      .eq("is_single", true)
+      .order("play_counts", { ascending: false })
+      .limit(numberOfSingles);
+
+    if (error) throw new Error("Singles not found.");
+
+    return tracks;
+  } catch (err) {
+    console.error("getPopularSingles issue: " + err);
+  }
+}
+
+export async function getPopularTracks(numberOfTracks) {
+  try {
+    let { data: tracks, error } = await supabase
+      .from("tracks")
+      .select("*")
+      .order("play_counts", { ascending: false })
+      .limit(numberOfTracks);
+
+    if (error) throw new Error("Tracks not found.");
+
+    return tracks;
+  } catch (err) {
+    console.error("getPopularTracks issue: " + err);
+  }
+}
+
+export async function getArtistPopularTracks(id) {
+  try {
+    let { data: tracks, error } = await supabase
+      .from("tracks")
+      .select("*")
+      .eq("artist_id", id)
+      .order("play_counts", { ascending: false })
+      .limit(6);
+
+    if (error) throw new Error("Tracks not found.");
+
+    return tracks;
+  } catch (err) {
+    console.error("getArtistPopularTracks issue: " + err);
+  }
+}

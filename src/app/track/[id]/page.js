@@ -1,9 +1,9 @@
-import Track from "@/components/Track/Track";
+import TrackDetails from "@/components/MediaInfo/TrackDetails/TrackDetails";
 
-function TrackPage({ params }) {
-  const { id } = params;
+async function TrackPage({ params }) {
+  const { id } = await params;
 
-  return <Track id={id} />;
+  return <TrackDetails id={id} />;
 }
 
 export default TrackPage;
