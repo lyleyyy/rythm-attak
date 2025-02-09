@@ -5,7 +5,6 @@ import ArtistSingleCard from "./ArtistSingleCard/ArtistSingleCard";
 import ArtistMediasContainer from "../ArtistMediasContainer/ArtistMediasContainer";
 import { useEffect, useState } from "react";
 import { getAllSinglesOfArtist } from "@/services/apiTracks";
-import LoadingSpinner from "@/ui/LoadingSpinner";
 import MediaUploaderModal from "@/components/Modals/MediaUploaderModal/MediaUploaderModal";
 
 function AllSingles({ artistId }) {

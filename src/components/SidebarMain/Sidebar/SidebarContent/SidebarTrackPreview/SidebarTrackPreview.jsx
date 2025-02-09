@@ -1,16 +1,18 @@
 import { useState } from "react";
 import Image from "next/image";
 import IconButton from "@/ui/IconButton";
-import { RxCross2 } from "react-icons/rx";
-import { deleteTrack } from "@/services/apiTrack";
 import { useCurrentAlbum } from "@/contexts/CurrentAlbumContext";
+import { deleteTrack } from "@/services/apiTrack";
+import { updateAlbumTrackCountAndPlayTime } from "@/services/apiAlbum";
 import ModalContainer from "@/ui/ModalContainer";
 import useModalToggle from "@/hooks/useModalToggle";
 import ConfirmationModal from "@/components/Modals/ConfirmationModal/ConfirmationModal";
+import convertSecsToHrsMinsSecs from "@/helper/convertSecsToHrsMinsSecs";
+import { RxCross2 } from "react-icons/rx";
 
 function SidebarTrackPreview({ track }) {
   const [isHoverOn, setIsHoverOn] = useState(false);
-  const { setUploadDeleteRefresh } = useCurrentAlbum();
+  const { currentAlbum, setUploadDeleteRefresh } = useCurrentAlbum();
   const [isModalOpen, setIsModalOpen] = useModalToggle();
 
   const {
@@ -29,6 +31,7 @@ function SidebarTrackPreview({ track }) {
   }
 
   async function deleteTrackHandler() {
+    await updateAlbumTrackCountAndPlayTime(currentAlbum.id, -1, -duration);
     const res = await deleteTrack(id, coverPathName, audioPathName);
     if (res === "deleted")
       setUploadDeleteRefresh((uploadDeleteRefresh) => !uploadDeleteRefresh);
@@ -45,7 +48,7 @@ function SidebarTrackPreview({ track }) {
         <Image src={trackCoverUrl} alt={trackName} width={50} height={50} />
       </span>
       <span className="w-7/12">{trackName}</span>
-      <span className="w-1/12">{duration}</span>
+      <span className="w-1/12">{convertSecsToHrsMinsSecs(duration)}</span>
       <span className="w-1/12">
         {isHoverOn && (
           <IconButton iconSize="text-xl" onClick={onClickHandler}>

@@ -1,3 +1,4 @@
+import convertSecsToHrsMinsSecs from "@/helper/convertSecsToHrsMinsSecs";
 import Image from "next/image";
 
 function MediaInfoOverview({
@@ -31,7 +32,7 @@ function MediaInfoOverview({
         <>
           <div>
             <label>Duration: </label>
-            <span>{duration}</span>
+            <span>{convertSecsToHrsMinsSecs(duration)}</span>
           </div>
           <div>
             <label>Playcounts: </label>

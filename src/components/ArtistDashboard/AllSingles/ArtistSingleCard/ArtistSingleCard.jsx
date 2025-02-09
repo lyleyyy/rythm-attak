@@ -68,7 +68,7 @@ function ArtistSingleCard({
 
   return (
     <div
-      className="relative flex flex-col gap-2 rounded-lg p-2 transition-all duration-200 ease-in-out hover:bg-zinc-800"
+      className="relative flex flex-col gap-2 rounded-lg p-1 transition-all duration-200 ease-in-out hover:bg-zinc-800"
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
@@ -86,7 +86,7 @@ function ArtistSingleCard({
         />
       </div>
       <h3>
-        {trackName.length > 15 ? trackName.slice(0, 15) + "..." : trackName}
+        {trackName.length > 25 ? trackName.slice(0, 25) + "..." : trackName}
       </h3>
 
       {isHover && !isPublished && (

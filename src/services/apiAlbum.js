@@ -52,7 +52,6 @@ export async function uploadTracksToAlbum(albumTracks) {
           trackNumber,
           albumId,
         } = albumTrack;
-
         return uploadTrack(
           trackName,
           artistId,
@@ -66,11 +65,55 @@ export async function uploadTracksToAlbum(albumTracks) {
         );
       }),
     );
-
     // console.log(res, "hmmm??????");
+
+    const albumId = albumTracks[0].albumId;
+    const trackCount = albumTracks.length;
+    const totalPlaytime = albumTracks.reduce(
+      (acc, track) => (acc += track.trackDuration),
+      0,
+    );
+
+    await updateAlbumTrackCountAndPlayTime(albumId, trackCount, totalPlaytime);
+
     if (res.at(0).length >= 1) return "uploadTracksToAlbum success";
   } catch (err) {
     console.error(err);
+  }
+}
+
+export async function updateAlbumTrackCountAndPlayTime(
+  albumId,
+  trackCount,
+  totalPlaytime,
+) {
+  try {
+    let { data: album, error } = await supabase
+      .from("albums")
+      .select("*")
+      .eq("id", albumId);
+
+    if (error)
+      throw new Error("updateAlbumTrackCountAndPlayTime getAlbum error");
+
+    const newTrackCount = album[0].track_count + trackCount;
+    const newTotalPlayTime = album[0].total_playtime + totalPlaytime;
+
+    let { data, errorUpdate } = await supabase
+      .from("albums")
+      .update({
+        track_count: newTrackCount,
+        total_playtime: newTotalPlayTime,
+      })
+      .eq("id", albumId)
+      .select();
+
+    if (errorUpdate)
+      throw new Error("updateAlbumTrackCountAndPlayTime update album error");
+
+    return data;
+  } catch (err) {
+    console.error("updateAlbumTrackCountAndPlayTime issue: " + err);
   }
 }
 

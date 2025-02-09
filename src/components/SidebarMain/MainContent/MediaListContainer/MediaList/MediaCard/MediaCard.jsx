@@ -22,7 +22,7 @@ function MediaCard({ media }) {
   }
 
   const id = media.id;
-  const image_url = media.cover_url || media.album_cover_url || media.image;
+  const imageUrl = media.cover_url || media.album_cover_url || media.image;
   const name = media.track_name || media.album_name || media.name;
   const [isHover, setIsHover] = useState(false);
   const [artistName, setArtistName] = useState(null);
@@ -46,14 +46,16 @@ function MediaCard({ media }) {
       onMouseLeave={() => setIsHover(false)}
     >
       <div className="relative h-[190px] w-[190px] overflow-hidden">
-        <Image
-          src={image_url}
-          alt={name}
-          fill
-          sizes="(max-width: 768px) 100vw, 33vw"
-          priority={true}
-          style={{ objectFit: "cover" }}
-        />
+        {imageUrl && (
+          <Image
+            src={imageUrl}
+            alt={name}
+            fill
+            sizes="(max-width: 768px) 100vw, 33vw"
+            priority={true}
+            style={{ objectFit: "cover" }}
+          />
+        )}
       </div>
 
       <div className="flex flex-col">

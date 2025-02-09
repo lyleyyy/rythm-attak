@@ -1,4 +1,3 @@
-import convertSecsToHrsMinsSecs from "@/helper/convertSecsToHrsMinsSecs";
 import { Howl } from "howler";
 
 async function getTrackDuration(trackAudioFile) {
@@ -10,7 +9,7 @@ async function getTrackDuration(trackAudioFile) {
       format: [trackAudioFile.name.slice(-3)],
       html5: true,
       preload: "metadata",
-      onload: () => resolve(convertSecsToHrsMinsSecs(track.duration())),
+      onload: () => resolve(Math.round(track.duration())),
       onloaderror: (id, error) =>
         reject(new Error("Fail to load the audio: " + error)),
     });

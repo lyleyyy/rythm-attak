@@ -1,3 +1,4 @@
+import convertSecsToHrsMinsSecs from "@/helper/convertSecsToHrsMinsSecs";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -33,7 +34,7 @@ function ArtistTrackPreview({ track, number }) {
       <span className="w-2/12">
         {new Intl.NumberFormat().format(playCount)}
       </span>
-      <span className="w-1/12">{duration}</span>
+      <span className="w-1/12">{convertSecsToHrsMinsSecs(duration)}</span>
     </div>
   );
 }
