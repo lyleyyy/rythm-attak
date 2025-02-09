@@ -40,6 +40,7 @@ function TrackDetails({ id }) {
     <div className="mb-20 space-y-4">
       <MediaDetailsHeader
         type="Track"
+        isSingle={isSingle}
         coverUrl={coverUrl}
         name={trackName}
         publishDate={publishDate}
@@ -49,7 +50,7 @@ function TrackDetails({ id }) {
         avatarUrl={avatarUrl}
       />
 
-      <MediaController />
+      <MediaController track={track} />
       <MediaOwner
         avatarUrl={avatarUrl}
         artistId={artistId}

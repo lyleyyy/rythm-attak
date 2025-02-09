@@ -20,6 +20,7 @@ export async function getPopularAlbums(numberOfAlbums) {
     let { data: albums, error } = await supabase
       .from("albums")
       .select("*")
+      .eq("is_published", true)
       .order("likes", { ascending: false })
       .limit(numberOfAlbums);
 

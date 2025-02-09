@@ -16,42 +16,55 @@ import PlayerTrackTimer from "./PlayerTrackTimer/PlayerTrackTimer";
 import PlayerVolumeBar from "./PlayerVolumeBar/PlayerVolumeBar";
 import PlayerUserOperation from "./PlayerUserOperation/PlayerUserOperation";
 import * as Slider from "@radix-ui/react-slider";
-
-const track = {
-  id: 1,
-  type: "song",
-  name: "Feeling Free",
-  artist: "nicole willis",
-  imageUrl: "/images/song-covers/feelingfree.jpg",
-  url: "/audios/the computer sound of genesis.mp3",
-};
+import { useCurrentPlaying } from "@/contexts/CurrentPlayingContext";
 
 function Player() {
+  const { currentPlaying, currentPlayingArtistName } = useCurrentPlaying();
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [playerTimer, setPlayerTimer] = useState(0);
   const [isHoverSlider, setIsHoverSlider] = useState(false);
   const [isHoverVolume, setIsHoverVolume] = useState(false);
+  const trackRef = useRef(null);
 
-  const song = new Howl({
-    src: track.url,
-    // src: "https://rzybqapngtswcbfvwpgw.supabase.co/storage/v1/object/sign/track_audio/lyleLemenTree_audio_1736765850377_78.mp3?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0cmFja19hdWRpby9seWxlTGVtZW5UcmVlX2F1ZGlvXzE3MzY3NjU4NTAzNzdfNzgubXAzIiwiaWF0IjoxNzM2NzY1ODUxLCJleHAiOjQ4NTg4Mjk4NTF9.4yKrpT407M1Vv40nfrPQ2LoQhzxEknOrkTdR5CG3OzE",
-    html5: true,
-    preload: false,
-    onload: () => setDuration(song.duration()),
-    onend: () => setIsPlaying(false),
-  });
+  useEffect(
+    function () {
+      if (!currentPlaying || !currentPlaying.audio_url) return;
 
-  const songRef = useRef(song);
+      if (trackRef.current) {
+        trackRef.current.stop();
+        trackRef.current.unload();
+        setIsPlaying(false);
+        setProgress(0);
+        setDuration(0);
+        setPlayerTimer(0);
+      }
 
-  const loadStatus = songRef.current.state();
+      const newTrack = new Howl({
+        src: currentPlaying.audio_url,
+        html5: true,
+        preload: true,
+        onload: () => setDuration(newTrack.duration()),
+        onend: () => setIsPlaying(false),
+      });
+
+      // setTrack(newTrack);
+      trackRef.current = newTrack;
+    },
+    [currentPlaying],
+  );
+
+  const loadStatus = trackRef.current ? trackRef.current.state() : null;
 
   function onClickHandler() {
+    if (!trackRef.current) return;
+
     if (!isPlaying) {
-      songRef.current.play();
+      trackRef.current.play();
     } else {
-      songRef.current.pause();
+      trackRef.current.pause();
     }
 
     setIsPlaying((isPlaying) => !isPlaying);
@@ -60,13 +73,13 @@ function Player() {
   //player timer
   useEffect(
     function () {
-      if (isPlaying) {
-        const interval = setInterval(() => {
-          setPlayerTimer((playerTimer) => playerTimer + 1);
-        }, 1000);
+      if (!isPlaying || !trackRef.current) return;
 
-        return () => clearInterval(interval);
-      }
+      const interval = setInterval(() => {
+        setPlayerTimer((playerTimer) => playerTimer + 1);
+      }, 1000);
+
+      return () => clearInterval(interval);
     },
     [isPlaying],
   );
@@ -74,26 +87,34 @@ function Player() {
   //progress bar
   useEffect(
     function () {
-      if (isPlaying) {
-        const interval = setInterval(() => {
-          setProgress((songRef.current.seek() / duration) * 100);
-        }, 1000);
+      if (!isPlaying || !trackRef.current) return;
 
-        return () => clearInterval(interval);
-      }
+      const interval = setInterval(() => {
+        setProgress((trackRef.current.seek() / duration) * 100);
+      }, 1000);
+
+      return () => clearInterval(interval);
     },
     [isPlaying, duration],
   );
 
   function progressChangeHandler(e) {
+    if (!trackRef.current) return;
+
     const newSeek = (e.at(0) / 100) * duration;
-    songRef.current.seek(newSeek);
+    trackRef.current.seek(newSeek);
     setProgress(e);
   }
 
   return (
     <div className="m-2 flex h-24 w-full items-center px-4">
-      <PlayerTrackPreview track={track} />
+      {!currentPlaying && <div className="flex w-1/4 gap-4"></div>}
+      {currentPlaying && (
+        <PlayerTrackPreview
+          track={currentPlaying}
+          artistName={currentPlayingArtistName}
+        />
+      )}
       <PlayerControllerContainer>
         <div className="flex items-center justify-center gap-4">
           <IconButton iconSize="text-lg">

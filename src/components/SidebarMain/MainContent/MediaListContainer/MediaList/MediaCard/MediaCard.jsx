@@ -6,8 +6,12 @@ import MediaCategory from "@/types/MediaCategory";
 import capitalizeEachWord from "@/helper/capitalizeEachWord";
 import Image from "next/image";
 import { getUserById } from "@/services/apiUser";
+import { useCurrentPlaying } from "@/contexts/CurrentPlayingContext";
 
 function MediaCard({ media }) {
+  const { setCurrentPlaying, setCurrentPlayingArtistName } =
+    useCurrentPlaying();
+
   let type;
   if (media.track_name) {
     type = MediaCategory.Track;
@@ -77,7 +81,7 @@ function MediaCard({ media }) {
             href={`/artist/${media.artist_id}`}
             className="text-sm text-zinc-400 hover:underline"
           >
-            {capitalizeEachWord(artistName)}
+            {artistName}
           </Link>
         )}
 
@@ -86,7 +90,13 @@ function MediaCard({ media }) {
         )}
 
         {type !== MediaCategory.Artist && isHover && (
-          <ThemePlayButton absoluteOffsetCenter={true} />
+          <ThemePlayButton
+            absoluteOffsetCenter={true}
+            onClick={() => {
+              setCurrentPlaying(media.track_name ? media : null);
+              setCurrentPlayingArtistName(artistName);
+            }}
+          />
         )}
       </div>
     </div>

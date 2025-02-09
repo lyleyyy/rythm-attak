@@ -39,7 +39,7 @@ function SidebarTrackPreview({ track }) {
 
   return (
     <div
-      className={`flex w-full items-center justify-between rounded py-1 ${isHoverOn && "hover:bg-zinc-700 hover:shadow-lg"}`}
+      className={`flex w-full items-center justify-between rounded py-1 pl-1 ${isHoverOn && "hover:bg-zinc-700 hover:shadow-lg"}`}
       onMouseEnter={() => setIsHoverOn(true)}
       onMouseLeave={() => setIsHoverOn(false)}
     >
@@ -47,7 +47,9 @@ function SidebarTrackPreview({ track }) {
       <span className="flex w-1/12">
         <Image src={trackCoverUrl} alt={trackName} width={50} height={50} />
       </span>
-      <span className="w-7/12">{trackName}</span>
+      <span className="w-7/12">
+        {trackName.length > 25 ? trackName.slice(0, 25) + "..." : trackName}
+      </span>
       <span className="w-1/12">{convertSecsToHrsMinsSecs(duration)}</span>
       <span className="w-1/12">
         {isHoverOn && (

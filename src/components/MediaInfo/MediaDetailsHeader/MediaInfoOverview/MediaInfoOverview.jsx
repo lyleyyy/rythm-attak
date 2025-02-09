@@ -16,7 +16,7 @@ function MediaInfoOverview({
       <div className="flex items-center gap-2">
         <Image
           src={avatarUrl}
-          alt="artist"
+          alt={artistName}
           width={30}
           height={30}
           style={{ borderRadius: "50%" }}

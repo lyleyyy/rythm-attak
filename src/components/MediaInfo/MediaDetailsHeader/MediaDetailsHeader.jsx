@@ -3,6 +3,7 @@ import MediaInfoOverview from "./MediaInfoOverview/MediaInfoOverview";
 
 function MediaDetailsHeader({
   type,
+  isSingle,
   coverUrl,
   name,
   publishDate,
@@ -19,7 +20,9 @@ function MediaDetailsHeader({
         <Image src={coverUrl} alt={name} fill style={{ objectFit: "cover" }} />
       </div>
       <div className="flex flex-col justify-end gap-2 text-zinc-400">
-        <span className="text-lg font-bold text-white">{type}</span>
+        <span className="text-lg font-bold text-white">
+          {isSingle ? "Single" : "Track"}
+        </span>
         <h1 className="text-6xl font-bold text-white">{name}</h1>
         <MediaInfoOverview
           type={type}

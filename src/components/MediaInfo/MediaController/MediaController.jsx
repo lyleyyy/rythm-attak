@@ -3,8 +3,11 @@ import { GrAddCircle } from "react-icons/gr";
 import IconButton from "@/ui/IconButton";
 import ThemePlayButton from "@/ui/ThemePlayButton";
 import BorderedButton from "@/ui/BorderedButton";
+import { useCurrentPlaying } from "@/contexts/CurrentPlayingContext";
 
-function MediaController({ type }) {
+function MediaController({ type, track }) {
+  // const { setCurrentPlaying } = useCurrentPlaying();
+
   return (
     <div className="mb-8 flex items-center gap-8 p-4">
       <ThemePlayButton />

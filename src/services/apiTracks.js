@@ -36,6 +36,7 @@ export async function getPopularSingles(numberOfSingles) {
       .from("tracks")
       .select("*")
       .eq("is_single", true)
+      .eq("is_published", true)
       .order("play_counts", { ascending: false })
       .limit(numberOfSingles);
 
@@ -52,6 +53,7 @@ export async function getPopularTracks(numberOfTracks) {
     let { data: tracks, error } = await supabase
       .from("tracks")
       .select("*")
+      .eq("is_published", true)
       .order("play_counts", { ascending: false })
       .limit(numberOfTracks);
 
