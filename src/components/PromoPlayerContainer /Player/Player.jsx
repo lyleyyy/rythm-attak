@@ -19,9 +19,15 @@ import * as Slider from "@radix-ui/react-slider";
 import { useCurrentPlaying } from "@/contexts/CurrentPlayingContext";
 
 function Player() {
-  const { currentPlaying, currentPlayingArtistName } = useCurrentPlaying();
+  const {
+    currentPlayTrack,
+    currentPlayArtistName,
+    isPlaying,
+    setIsPlaying,
+    currentPlayTrackRef,
+    setCurrentPlayTrackRef,
+  } = useCurrentPlaying();
 
-  const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [playerTimer, setPlayerTimer] = useState(0);
@@ -31,7 +37,7 @@ function Player() {
 
   useEffect(
     function () {
-      if (!currentPlaying || !currentPlaying.audio_url) return;
+      if (!currentPlayTrack || !currentPlayTrack.audio_url) return;
 
       if (trackRef.current) {
         trackRef.current.stop();
@@ -43,17 +49,22 @@ function Player() {
       }
 
       const newTrack = new Howl({
-        src: currentPlaying.audio_url,
+        src: currentPlayTrack.audio_url,
         html5: true,
         preload: true,
-        onload: () => setDuration(newTrack.duration()),
+        onload: () => {
+          setDuration(newTrack.duration());
+          setCurrentPlayTrackRef(trackRef);
+          // currentTrackRef.current.play();
+          trackRef.current.play();
+          setIsPlaying(true);
+        },
         onend: () => setIsPlaying(false),
       });
 
-      // setTrack(newTrack);
       trackRef.current = newTrack;
     },
-    [currentPlaying],
+    [currentPlayTrack],
   );
 
   const loadStatus = trackRef.current ? trackRef.current.state() : null;
@@ -108,11 +119,11 @@ function Player() {
 
   return (
     <div className="m-2 flex h-24 w-full items-center px-4">
-      {!currentPlaying && <div className="flex w-1/4 gap-4"></div>}
-      {currentPlaying && (
+      {!currentPlayTrack && <div className="flex w-1/4 gap-4"></div>}
+      {currentPlayTrack && (
         <PlayerTrackPreview
-          track={currentPlaying}
-          artistName={currentPlayingArtistName}
+          track={currentPlayTrack}
+          artistName={currentPlayArtistName}
         />
       )}
       <PlayerControllerContainer>

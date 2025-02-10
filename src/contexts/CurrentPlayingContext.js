@@ -1,21 +1,25 @@
 "use client";
-import { getUserById } from "@/services/apiUser";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 const CurrentPlayingContext = createContext();
 
 function CurrentPlayingProvider({ children }) {
-  const [currentPlaying, setCurrentPlaying] = useState(null);
-  const [currentPlayingArtistName, setCurrentPlayingArtistName] =
-    useState(null);
+  const [currentPlayTrack, setCurrentPlayTrack] = useState(null);
+  const [currentPlayArtistName, setCurrentPlayArtistName] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentPlayTrackRef, setCurrentPlayTrackRef] = useState(null);
 
   return (
     <CurrentPlayingContext.Provider
       value={{
-        currentPlaying,
-        setCurrentPlaying,
-        currentPlayingArtistName,
-        setCurrentPlayingArtistName,
+        currentPlayTrack,
+        setCurrentPlayTrack,
+        currentPlayArtistName,
+        setCurrentPlayArtistName,
+        isPlaying,
+        setIsPlaying,
+        currentPlayTrackRef,
+        setCurrentPlayTrackRef,
       }}
     >
       {children}

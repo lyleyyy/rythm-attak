@@ -9,8 +9,14 @@ import { getUserById } from "@/services/apiUser";
 import { useCurrentPlaying } from "@/contexts/CurrentPlayingContext";
 
 function MediaCard({ media }) {
-  const { setCurrentPlaying, setCurrentPlayingArtistName } =
-    useCurrentPlaying();
+  const {
+    currentPlayTrack,
+    setCurrentPlayTrack,
+    setCurrentPlayArtistName,
+    isPlaying,
+    setIsPlaying,
+    currentPlayTrackRef,
+  } = useCurrentPlaying();
 
   let type;
   if (media.track_name) {
@@ -89,15 +95,34 @@ function MediaCard({ media }) {
           <span className="text-sm text-zinc-400">Artist</span>
         )}
 
-        {type !== MediaCategory.Artist && isHover && (
-          <ThemePlayButton
-            absoluteOffsetCenter={true}
-            onClick={() => {
-              setCurrentPlaying(media.track_name ? media : null);
-              setCurrentPlayingArtistName(artistName);
-            }}
-          />
-        )}
+        {type !== MediaCategory.Artist &&
+          ((currentPlayTrack?.id === media.id && isPlaying) || isHover) && (
+            <ThemePlayButton
+              absoluteOffsetCenter={true}
+              displayPause={currentPlayTrack?.id === media.id && isPlaying}
+              onClick={() => {
+                // if no track is select, then initialize this
+                if (!currentPlayTrack) {
+                  setCurrentPlayTrack(media.track_name ? media : null);
+                }
+                // if there is track selected, but click to select another track, then play that track
+                else if (currentPlayTrack && currentPlayTrack.id !== media.id) {
+                  setCurrentPlayTrack(media);
+                }
+                // if there is track selected, and click the same track again, if it is not playing, then play it
+                else if (currentPlayTrack && !isPlaying) {
+                  setIsPlaying(true);
+                  currentPlayTrackRef.current.play();
+                }
+                // pause the playing track
+                else {
+                  setIsPlaying(false);
+                  currentPlayTrackRef.current.pause();
+                }
+                setCurrentPlayArtistName(artistName);
+              }}
+            />
+          )}
       </div>
     </div>
   );
