@@ -1,11 +1,9 @@
-import useModalToggle from "@/hooks/useModalToggle";
 import ThemeButton from "@/ui/ThemeButton";
 import Image from "next/image";
-import Link from "next/link";
-import RegisterModal from "../AuthModal/RegisterModal/RegisterModal";
+import { useAuthModal } from "@/contexts/AuthModalContext";
 
-function AuthRequiredModal({ closeLoginPrompt }) {
-  const [isModalOpen, setIsModalOpen] = useModalToggle();
+function AuthRequiredModal({ closeModal }) {
+  const { setIsRegisterModalOpen, setIsSigninModalOpen } = useAuthModal();
 
   return (
     <>
@@ -27,22 +25,27 @@ function AuthRequiredModal({ closeLoginPrompt }) {
           </h3>
           <ThemeButton
             onClick={() => {
-              closeLoginPrompt();
-              // setIsModalOpen(true);
+              setIsRegisterModalOpen(true);
+              closeModal();
             }}
           >
             Create Account
           </ThemeButton>
           <span className="mt-10 text-zinc-400">
             Already have account? Sign in{" "}
-            <Link href="/" className="text-white underline">
+            <button
+              href="/"
+              className="text-white underline"
+              onClick={() => {
+                setIsSigninModalOpen(true);
+                closeModal();
+              }}
+            >
               here
-            </Link>
+            </button>
           </span>
         </div>
       </div>
-
-      {/* <RegisterModal closeModal={() => setIsModalOpen(false)} /> */}
     </>
   );
 }

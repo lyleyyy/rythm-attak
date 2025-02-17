@@ -8,6 +8,7 @@ import PromoPlayerContainer from "@/components/PromoPlayerContainer /PromoPlayer
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CurrentAlbumProvider } from "@/contexts/CurrentAlbumContext";
 import { CurrentPlayingProvider } from "@/contexts/CurrentPlayingContext";
+import { AuthModalProvider } from "@/contexts/AuthModalContext";
 
 export const metadata = { title: "RA" };
 
@@ -16,18 +17,20 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <AuthProvider>
-          <CurrentPlayingProvider>
-            <CurrentAlbumProvider>
-              <Main>
-                <HeadNav />
-                <SidebarMain>
-                  <Sidebar />
-                  <MainContentContainer>{children}</MainContentContainer>
-                </SidebarMain>
-                <PromoPlayerContainer />
-              </Main>
-            </CurrentAlbumProvider>
-          </CurrentPlayingProvider>
+          <AuthModalProvider>
+            <CurrentPlayingProvider>
+              <CurrentAlbumProvider>
+                <Main>
+                  <HeadNav />
+                  <SidebarMain>
+                    <Sidebar />
+                    <MainContentContainer>{children}</MainContentContainer>
+                  </SidebarMain>
+                  <PromoPlayerContainer />
+                </Main>
+              </CurrentAlbumProvider>
+            </CurrentPlayingProvider>
+          </AuthModalProvider>
         </AuthProvider>
       </body>
     </html>

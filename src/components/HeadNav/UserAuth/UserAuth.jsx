@@ -1,15 +1,23 @@
 "use client";
 import ThemeButton from "@/ui/ThemeButton";
-import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import UserPreview from "./UserPreview/UserPreview";
 import BorderedButton from "@/ui/BorderedButton";
 import RegisterModal from "@/components/Modals/AuthModal/RegisterModal/RegisterModal";
 import SigninModal from "@/components/Modals/AuthModal/SigninModal/SigninModal";
+import { useAuthModal } from "@/contexts/AuthModalContext";
+import AuthRequiredModal from "@/components/Modals/AuthRequiredModal/AuthRequiredModal";
+import ModalContainer from "@/ui/ModalContainer";
 
 function UserAuth() {
-  const [register, setRegister] = useState(false);
-  const [signin, setSignin] = useState(false);
+  const {
+    isRegisterModalOpen,
+    setIsRegisterModalOpen,
+    isSigninModalOpen,
+    setIsSigninModalOpen,
+    isLoginPromptOpen,
+    setIsLoginPromptOpen,
+  } = useAuthModal();
 
   const { loggedInUser } = useAuth();
 
@@ -18,11 +26,11 @@ function UserAuth() {
       <div className="flex items-center justify-end gap-4">
         {!loggedInUser && (
           <>
-            <BorderedButton onClick={() => setSignin(true)}>
+            <BorderedButton onClick={() => setIsSigninModalOpen(true)}>
               Sign in
             </BorderedButton>
             <ThemeButton
-              onClick={() => setRegister(true)}
+              onClick={() => setIsRegisterModalOpen(true)}
               hoverBgColor="hover:bg-purple-600"
             >
               Create Account
@@ -38,8 +46,17 @@ function UserAuth() {
         )}
       </div>
 
-      {register && <RegisterModal closeModal={() => setRegister(false)} />}
-      {signin && <SigninModal closeModal={() => setSignin(false)} />}
+      {isRegisterModalOpen && (
+        <RegisterModal closeModal={() => setIsRegisterModalOpen(false)} />
+      )}
+      {isSigninModalOpen && (
+        <SigninModal closeModal={() => setIsSigninModalOpen(false)} />
+      )}
+      {isLoginPromptOpen && (
+        <ModalContainer onClick={() => setIsLoginPromptOpen(false)}>
+          <AuthRequiredModal />
+        </ModalContainer>
+      )}
     </div>
   );
 }

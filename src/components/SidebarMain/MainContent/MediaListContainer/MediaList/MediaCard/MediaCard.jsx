@@ -7,6 +7,8 @@ import capitalizeEachWord from "@/helper/capitalizeEachWord";
 import Image from "next/image";
 import { getUserById } from "@/services/apiUser";
 import { useCurrentPlaying } from "@/contexts/CurrentPlayingContext";
+import { useAuthModal } from "@/contexts/AuthModalContext";
+import { useAuth } from "@/contexts/AuthContext";
 
 function MediaCard({ media }) {
   const {
@@ -36,6 +38,9 @@ function MediaCard({ media }) {
   const name = media.track_name || media.album_name || media.name;
   const [isHover, setIsHover] = useState(false);
   const [artistName, setArtistName] = useState(null);
+
+  const { isLoggedIn } = useAuth();
+  const { setIsLoginPromptOpen } = useAuthModal();
 
   useEffect(function () {
     async function getArtistName() {
@@ -101,6 +106,7 @@ function MediaCard({ media }) {
               absoluteOffsetCenter={true}
               displayPause={currentPlayTrack?.id === media.id && isPlaying}
               onClick={() => {
+                if (!isLoggedIn) setIsLoginPromptOpen(true);
                 // if no track is select, then initialize this
                 if (!currentPlayTrack) {
                   setCurrentPlayTrack(media.track_name ? media : null);
