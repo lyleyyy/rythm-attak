@@ -8,7 +8,8 @@ import SigninModal from "@/components/Modals/AuthModal/SigninModal/SigninModal";
 import { useAuthModal } from "@/contexts/AuthModalContext";
 import AuthRequiredModal from "@/components/Modals/AuthRequiredModal/AuthRequiredModal";
 import ModalContainer from "@/ui/ModalContainer";
-import { redirect } from "next/navigation";
+import CheckoutModal from "@/components/Modals/CheckoutModal/CheckoutModal";
+import { useState } from "react";
 
 function UserAuth() {
   const {
@@ -22,26 +23,7 @@ function UserAuth() {
 
   const { loggedInUser } = useAuth();
 
-  async function handleSubscribe() {
-    try {
-      const res = await fetch("/api/create-checkout-session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({}), // 可根據需要傳遞參數
-      });
-
-      if (!res.ok) {
-        throw new Error("Failed to create checkout session");
-      }
-
-      const { url } = await res.json();
-      window.location.href = url; // 跳轉到 Stripe Checkout 頁面
-    } catch (error) {
-      console.error("Checkout error:", error);
-    }
-  }
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div className="w-1/3">
@@ -62,7 +44,9 @@ function UserAuth() {
 
         {loggedInUser && (
           <>
-            <ThemeButton onClick={handleSubscribe}>Subscribe RA</ThemeButton>
+            <ThemeButton onClick={() => setIsModalOpen(true)}>
+              Subscribe RA
+            </ThemeButton>
             <UserPreview loggedInUser={loggedInUser} />
           </>
         )}
@@ -79,6 +63,7 @@ function UserAuth() {
           <AuthRequiredModal />
         </ModalContainer>
       )}
+      {isModalOpen && <CheckoutModal />}
     </div>
   );
 }

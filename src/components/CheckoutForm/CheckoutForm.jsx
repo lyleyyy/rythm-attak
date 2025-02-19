@@ -1,42 +1,39 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
+import {
+  useStripe,
+  useElements,
+  PaymentElement,
+} from "@stripe/react-stripe-js";
+import convertToSubcurrency from "@/lib/convertToSubcurrency";
 
-function CheckoutForm() {
+function CheckoutForm({ amount }) {
   const stripe = useStripe();
   const elements = useElements();
-  const [clientSecret, setClientSecret] = useState(null);
 
-  useEffect(() => {
-    fetch("/api/create-checkout-session", { method: "POST" })
-      .then((res) => res.json())
-      .then((data) => setClientSecret(data.clientSecret));
-  }, []);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [clientSecret, setClientSecret] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!stripe || !elements) return;
-
-    const { error, paymentIntent } = await stripe.confirmCardPayment(
-      clientSecret,
-      {
-        payment_method: { card: elements.getElement(CardElement) },
-      },
-    );
-
-    if (error) {
-      console.error(error);
-    } else if (paymentIntent.status === "succeeded") {
-      console.log("Payment successful");
-    }
-  };
+  useEffect(
+    function () {
+      fetch("/api/create-payment-intent", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ amount: convertToSubcurrency(amount) }),
+      })
+        .then((res) => res.json())
+        .then((data) => setClientSecret(data.clientSecret));
+    },
+    [amount],
+  );
 
   return (
-    <form onSubmit={handleSubmit}>
-      <CardElement />
-      <button type="submit" disabled={!stripe || !clientSecret}>
-        Pay
-      </button>
+    <form>
+      {clientSecret && <PaymentElement />}
+      <button>Pay</button>
     </form>
   );
 }
