@@ -23,7 +23,7 @@ function UserAuth() {
 
   const { loggedInUser } = useAuth();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCheckOut, setIsCheckOut] = useState(false);
 
   return (
     <div className="w-1/3">
@@ -44,7 +44,7 @@ function UserAuth() {
 
         {loggedInUser && (
           <>
-            <ThemeButton onClick={() => setIsModalOpen(true)}>
+            <ThemeButton onClick={() => setIsCheckOut(true)}>
               Subscribe RA
             </ThemeButton>
             <UserPreview loggedInUser={loggedInUser} />
@@ -63,7 +63,7 @@ function UserAuth() {
           <AuthRequiredModal />
         </ModalContainer>
       )}
-      {isModalOpen && <CheckoutModal />}
+      {isCheckOut && <CheckoutModal closeModal={() => setIsCheckOut(false)} />}
     </div>
   );
 }
