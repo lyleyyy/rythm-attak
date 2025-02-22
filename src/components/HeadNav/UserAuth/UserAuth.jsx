@@ -8,7 +8,7 @@ import SigninModal from "@/components/Modals/AuthModal/SigninModal/SigninModal";
 import { useAuthModal } from "@/contexts/AuthModalContext";
 import AuthRequiredModal from "@/components/Modals/AuthRequiredModal/AuthRequiredModal";
 import ModalContainer from "@/ui/ModalContainer";
-import CheckoutModal from "@/components/Modals/CheckoutModal/CheckoutModal";
+import SubscribeModal from "@/components/Modals/SubscribeModal/SubscribeModal";
 import { useState } from "react";
 
 function UserAuth() {
@@ -22,6 +22,7 @@ function UserAuth() {
   } = useAuthModal();
 
   const { loggedInUser } = useAuth();
+  const userId = loggedInUser.id;
 
   const [isCheckOut, setIsCheckOut] = useState(false);
 
@@ -63,7 +64,12 @@ function UserAuth() {
           <AuthRequiredModal />
         </ModalContainer>
       )}
-      {isCheckOut && <CheckoutModal closeModal={() => setIsCheckOut(false)} />}
+      {isCheckOut && (
+        <SubscribeModal
+          userId={userId}
+          closeModal={() => setIsCheckOut(false)}
+        />
+      )}
     </div>
   );
 }

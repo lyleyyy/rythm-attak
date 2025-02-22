@@ -241,3 +241,20 @@ async function removeAvatarFile(id) {
     console.error(err);
   }
 }
+
+export async function updateUserSubscription(userId) {
+  try {
+    const { data, error } = await supabase
+      .schema("next_auth")
+      .from("users")
+      .update({ isSubscribed: true })
+      .eq("id", userId)
+      .select();
+
+    if (error) throw new Error("updateUserSubscription issue: " + error);
+
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+}
