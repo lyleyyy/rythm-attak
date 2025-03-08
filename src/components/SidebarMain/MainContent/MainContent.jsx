@@ -37,13 +37,26 @@ function MainContent() {
 
   return (
     <div className="mb-20 space-y-10 p-4">
-      <MediaListContainer label="Popular Singles" mediaList={popularSingles} />
-      <MediaListContainer label="Popular Albums" mediaList={popularAlbums} />
       <MediaListContainer
+        mediaType="track"
+        label="Popular Singles"
+        mediaList={popularSingles}
+      />
+      <MediaListContainer
+        mediaType="album"
+        label="Popular Albums"
+        mediaList={popularAlbums}
+      />
+      <MediaListContainer
+        mediaType="artist"
         label="Trending Artists"
         mediaList={trendingArtists}
       />
-      <MediaListContainer label="RA Picks" mediaList={popularTracks} />
+      <MediaListContainer
+        mediaType="track"
+        label="RA Picks"
+        mediaList={popularTracks}
+      />
     </div>
   );
 }

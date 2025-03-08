@@ -33,7 +33,7 @@ function ArtistTrackCard({ track }) {
     getAlbumName();
   }, []);
 
-  if (!albumName) return null;
+  // if (!albumName) return null;
 
   return (
     <div

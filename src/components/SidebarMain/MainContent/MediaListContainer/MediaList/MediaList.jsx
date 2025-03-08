@@ -2,7 +2,7 @@ import Media from "@/components/SidebarMain/MainContent/MediaListContainer/Media
 
 function MediaList({ mediaList }) {
   return (
-    <div className="flex items-center justify-start">
+    <div className="flex flex-wrap items-center justify-start">
       {mediaList.map((media) => (
         <Media key={media.id} media={media} />
       ))}

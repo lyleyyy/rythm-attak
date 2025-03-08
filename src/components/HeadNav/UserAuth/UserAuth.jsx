@@ -22,7 +22,7 @@ function UserAuth() {
   } = useAuthModal();
 
   const { loggedInUser } = useAuth();
-  const userId = loggedInUser.id;
+  const userId = loggedInUser ? loggedInUser.id : null;
 
   const [isCheckOut, setIsCheckOut] = useState(false);
 

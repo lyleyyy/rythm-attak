@@ -1,6 +1,6 @@
 function ArtistMediasContainer({ children }) {
   return (
-    <div className="flex flex-wrap justify-start gap-x-1.5 gap-y-4">
+    <div className="flex flex-wrap justify-start gap-x-1 gap-y-4">
       {children}
     </div>
   );

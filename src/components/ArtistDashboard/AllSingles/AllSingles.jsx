@@ -6,6 +6,7 @@ import ArtistMediasContainer from "../ArtistMediasContainer/ArtistMediasContaine
 import { useEffect, useState } from "react";
 import { getAllSinglesOfArtist } from "@/services/apiTracks";
 import MediaUploaderModal from "@/components/Modals/MediaUploaderModal/MediaUploaderModal";
+import LoadingSpinner from "@/ui/LoadingSpinner";
 
 function AllSingles({ artistId }) {
   const [singles, setSingles] = useState(null);
@@ -49,7 +50,7 @@ function AllSingles({ artistId }) {
       )}
 
       <ArtistMediasContainer>
-        {/* {!singles && <LoadingSpinner />} */}
+        {!singles && <LoadingSpinner />}
         {singles &&
           singles.map((single) => (
             <ArtistSingleCard

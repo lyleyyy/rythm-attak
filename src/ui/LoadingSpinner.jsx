@@ -1,17 +1,10 @@
-import Image from "next/image";
-
 function LoadingSpinner() {
   return (
-    <div className="flex flex-col gap-4">
-      <Image
-        src="/logo.png"
-        alt="ra_logo"
-        width={100}
-        height={100}
-        className="rounded-full border-2 border-white bg-white"
-        priority
-      />
-      <span className="text-2xl">Loading...</span>
+    <div className="flex items-center justify-center text-white">
+      <span
+        className="text-surface inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
+        role="status"
+      ></span>
     </div>
   );
 }

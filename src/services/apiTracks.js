@@ -1,5 +1,19 @@
 import supabase from "./supabase";
 
+export async function getAllTracks() {
+  try {
+    let { data: allTracks, error } = await supabase
+      .from("tracks")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) throw new Error("Tracks not found.");
+    return allTracks;
+  } catch (err) {
+    console.error("getAllTracks issue: " + err);
+  }
+}
+
 export async function getAllSinglesOfArtist(artistId) {
   try {
     let { data: singles, error } = await supabase

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getAllTracksOfArtist } from "@/services/apiTracks";
 import ArtistTrackCard from "./ArtistTrackCard/ArtistTrackCard";
 import ArtistMediasContainer from "../ArtistMediasContainer/ArtistMediasContainer";
+import LoadingSpinner from "@/ui/LoadingSpinner";
 
 function AllTracks({ artistId }) {
   const [tracks, setTracks] = useState(null);
@@ -21,6 +22,7 @@ function AllTracks({ artistId }) {
 
   return (
     <ArtistMediasContainer>
+      {!tracks && <LoadingSpinner />}
       {tracks &&
         tracks.map((track) => <ArtistTrackCard key={track.id} track={track} />)}
     </ArtistMediasContainer>

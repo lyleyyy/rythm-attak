@@ -35,7 +35,8 @@ function MediaCard({ media }) {
 
   const id = media.id;
   const imageUrl = media.cover_url || media.album_cover_url || media.image;
-  const name = media.track_name || media.album_name || media.name;
+  let name = media.track_name || media.album_name || media.name;
+  name = name.length > 20 ? name.slice(0, 20) + "..." : name;
   const [isHover, setIsHover] = useState(false);
   const [artistName, setArtistName] = useState(null);
 
