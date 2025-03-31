@@ -4,16 +4,21 @@ import { IoSearch } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 import { MdOutlineLibraryMusic } from "react-icons/md";
 import IconButton from "@/ui/IconButton";
+import { searchTracks } from "@/services/apiTracks";
 
 function SearchBar() {
   const [deleteBtn, setDeleteBtn] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const inputRef = useRef(null);
 
-  function onChangHandler(e) {
+  async function onChangHandler(e) {
     setInputValue(e.target.value);
+    // console.log(e.target.value);
+
     if (e.target.value !== "") setDeleteBtn(true);
     else setDeleteBtn(false);
+
+    if (e.target.value.length > 2) await searchTracks(e.target.value);
   }
 
   function onClickHandler(e) {

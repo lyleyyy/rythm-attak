@@ -36,7 +36,7 @@ function MainContent() {
     return null;
 
   return (
-    <div className="mb-20 space-y-10 p-4">
+    <div className="mb-20 space-y-10 px-3 py-4">
       <MediaListContainer
         mediaType="track"
         label="Popular Singles"

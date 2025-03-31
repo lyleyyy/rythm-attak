@@ -95,3 +95,7 @@ export async function getArtistPopularTracks(id) {
     console.error("getArtistPopularTracks issue: " + err);
   }
 }
+
+export async function searchTracks(keyword) {
+  console.log(keyword, "waya!!!");
+}
